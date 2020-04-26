@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
 
 class CityTest {
+    private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String IATA_CODE = "IATA_CODE";
     private static final String ANOTHER_IATA_CODE = "ANOTHER_IATA_CODE";
@@ -44,6 +45,7 @@ class CityTest {
         nameTranslations = Maps.newHashMap();
 
         firstCity = City.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .geographicLocation(geographicLocation)
@@ -52,6 +54,7 @@ class CityTest {
                 .build();
 
         sameCityAsFirstCity = City.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .geographicLocation(geographicLocation)
@@ -60,11 +63,21 @@ class CityTest {
                 .build();
 
         anotherCity = City.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(ANOTHER_IATA_CODE)
                 .geographicLocation(geographicLocation)
                 .country(country)
                 .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        City city = City.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, city.getId());
     }
 
     @Test
@@ -117,6 +130,7 @@ class CityTest {
     @Test
     void builderTest_toBuilder() {
         City city = City.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .build();
@@ -126,6 +140,7 @@ class CityTest {
                 .build();
 
         City expectedCity = City.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(ANOTHER_IATA_CODE)
                 .build();

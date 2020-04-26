@@ -12,6 +12,7 @@ import static lombok.AccessLevel.*;
 @Builder(toBuilder = true)
 @Value
 public class City {
+    String id;
     String name;
     String iataCode;
     GeographicLocation geographicLocation;
