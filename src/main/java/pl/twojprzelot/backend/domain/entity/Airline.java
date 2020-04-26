@@ -10,6 +10,7 @@ import static lombok.AccessLevel.*;
 @Builder(toBuilder = true)
 @Value
 public class Airline {
+    String id;
     String name;
     String iataCode;
     String icaoCode;

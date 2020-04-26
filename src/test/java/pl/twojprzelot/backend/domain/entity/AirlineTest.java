@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AirlineTest {
+    private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String ANOTHER_NAME = "ANOTHER_NAME";
     private static final String IATA_CODE = "IATA_CODE";
@@ -18,22 +19,34 @@ class AirlineTest {
     @BeforeEach
     void setUp() {
         firstAirline = Airline.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .build();
 
         sameAirlineAsFirstArline = Airline.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .build();
 
         anotherAirline = Airline.builder()
+                .id(ID)
                 .name(ANOTHER_NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        Airline airline = Airline.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, airline.getId());
     }
 
     @Test
@@ -66,6 +79,7 @@ class AirlineTest {
     @Test
     void builderTest_toBuilder() {
         Airline airline = Airline.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -76,6 +90,7 @@ class AirlineTest {
                 .build();
 
         Airline expectedAirline = Airline.builder()
+                .id(ID)
                 .name(ANOTHER_NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
