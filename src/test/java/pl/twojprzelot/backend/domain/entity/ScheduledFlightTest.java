@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScheduledFlightTest {
+    private static final String ID = "ID";
     private static final String FLIGHT_IATA_NUMBER = "FLIGHT_IATA_NUMBER";
     private static final int FIRST_DELAY_MINUTES = 10;
     private static final int SECOND_DELAY_MINUTES = 20;
@@ -44,6 +45,7 @@ class ScheduledFlightTest {
                 .build();
 
         firstScheduledFlight = ScheduledFlight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)
@@ -51,6 +53,7 @@ class ScheduledFlightTest {
                 .build();
 
         sameScheduledFlightFirstScheduledFlight = ScheduledFlight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)
@@ -58,11 +61,21 @@ class ScheduledFlightTest {
                 .build();
 
         anotherScheduledFlight = ScheduledFlight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)
                 .airline(anotherAirline)
                 .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        ScheduledFlight scheduledFlight = ScheduledFlight.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, scheduledFlight.getId());
     }
 
     @Test
@@ -104,6 +117,7 @@ class ScheduledFlightTest {
     @Test
     void builderTest_toBuilder() {
         ScheduledFlight scheduledFlight = ScheduledFlight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)
@@ -114,6 +128,7 @@ class ScheduledFlightTest {
                 .build();
 
         ScheduledFlight expectedScheduledFlight = ScheduledFlight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)

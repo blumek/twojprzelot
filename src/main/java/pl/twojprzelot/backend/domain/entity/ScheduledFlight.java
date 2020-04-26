@@ -10,6 +10,7 @@ import static lombok.AccessLevel.*;
 @Builder(toBuilder = true)
 @Value
 public class ScheduledFlight {
+    String id;
     FlightIdentifier flightIdentifier;
     FlightEndpointDetails departure;
     FlightEndpointDetails arrival;
