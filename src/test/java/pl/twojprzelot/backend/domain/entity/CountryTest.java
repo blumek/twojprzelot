@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.domain.entity;
 
 import com.google.common.collect.Maps;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
 
 class CountryTest {
+    private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String ANOTHER_NAME = "ANOTHER_NAME";
     private static final String ISO_2_CODE = "ISO_2_CODE";
@@ -20,6 +22,56 @@ class CountryTest {
     private static final int ANOTHER_POPULATION = 20;
     private static final String CURRENCY_NAME = "CURRENCY_NAME";
     private static final String NAME_TRANSLATION = "NAME_TRANSLATION";
+
+    private Country firstCountry;
+    private Country sameCountryAsFirstCountry;
+    private Country anotherCountry;
+
+    private Map<Language, String> nameTranslations;
+
+    @BeforeEach
+    void setUp() {
+        nameTranslations = Maps.newHashMap();
+
+        firstCountry = Country.builder()
+                .id(ID)
+                .name(NAME)
+                .iso2Code(ISO_2_CODE)
+                .iso3Code(ISO_3_CODE)
+                .isoNumber(ISO_NUMBER)
+                .population(POPULATION)
+                .nameTranslations(nameTranslations)
+                .build();
+
+        sameCountryAsFirstCountry = Country.builder()
+                .id(ID)
+                .name(NAME)
+                .iso2Code(ISO_2_CODE)
+                .iso3Code(ISO_3_CODE)
+                .isoNumber(ISO_NUMBER)
+                .population(POPULATION)
+                .nameTranslations(nameTranslations)
+                .build();
+
+        anotherCountry = Country.builder()
+                .id(ID)
+                .name(ANOTHER_NAME)
+                .iso2Code(ISO_2_CODE)
+                .iso3Code(ISO_3_CODE)
+                .isoNumber(ISO_NUMBER)
+                .population(ANOTHER_POPULATION)
+                .nameTranslations(nameTranslations)
+                .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        Country country = Country.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, country.getId());
+    }
 
     @Test
     void builderTest_name() {
@@ -81,7 +133,6 @@ class CountryTest {
 
     @Test
     void builderTest_nameTranslations() {
-        Map<Language, String> nameTranslations = Maps.newHashMap();
         nameTranslations.put(POLISH, NAME_TRANSLATION);
 
         Country country = Country.builder()
@@ -119,85 +170,21 @@ class CountryTest {
 
     @Test
     void equalsTest_equalObjects() {
-        Country country = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        Country anotherCountry = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        assertEquals(country, anotherCountry);
+        assertEquals(firstCountry, sameCountryAsFirstCountry);
     }
 
     @Test
     void equalsTest_notEqualObjects() {
-        Country country = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        Country anotherCountry = Country.builder()
-                .name(ANOTHER_NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(ANOTHER_POPULATION)
-                .build();
-
-        assertNotEquals(country, anotherCountry);
+        assertNotEquals(firstCountry, anotherCountry);
     }
 
     @Test
     void hashCodeTest_equalObjects() {
-        Country country = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        Country anotherCountry = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        assertEquals(country.hashCode(), anotherCountry.hashCode());
+        assertEquals(firstCountry.hashCode(), sameCountryAsFirstCountry.hashCode());
     }
 
     @Test
     void hashCodeTest_notEqualObjects() {
-        Country country = Country.builder()
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        Country anotherCountry = Country.builder()
-                .name(ANOTHER_NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(ANOTHER_POPULATION)
-                .build();
-
-        assertNotEquals(country.hashCode(), anotherCountry.hashCode());
+        assertNotEquals(firstCountry.hashCode(), anotherCountry.hashCode());
     }
 }
