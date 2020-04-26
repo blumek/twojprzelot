@@ -1,15 +1,54 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CurrencyTest {
+    private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String CODE = "CODE";
     private static final int ISO_NUMBER = 1;
     private static final String ANOTHER_CODE = "ANOTHER_CODE";
     private static final int ANOTHER_ISO_NUMBER = 2;
+
+    private Currency firstCurrency;
+    private Currency sameCurrencyAsFirstCurrency;
+    private Currency anotherCurrency;
+
+    @BeforeEach
+    void setUp() {
+        firstCurrency = Currency.builder()
+                .id(ID)
+                .name(NAME)
+                .code(CODE)
+                .isoNumber(ISO_NUMBER)
+                .build();
+
+        sameCurrencyAsFirstCurrency = Currency.builder()
+                .id(ID)
+                .name(NAME)
+                .code(CODE)
+                .isoNumber(ISO_NUMBER)
+                .build();
+
+        anotherCurrency = Currency.builder()
+                .id(ID)
+                .name(NAME)
+                .code(ANOTHER_CODE)
+                .isoNumber(ANOTHER_ISO_NUMBER)
+                .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        Currency currency = Currency.builder()
+                .id(ID)
+                .build();
+
+            assertEquals(ID, currency.getId());
+    }
 
     @Test
     void builderTest_name() {
@@ -60,69 +99,21 @@ class CurrencyTest {
 
     @Test
     void equalsTest_equalObjects() {
-        Currency currency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        Currency anotherCurrency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        assertEquals(currency, anotherCurrency);
+        assertEquals(firstCurrency, sameCurrencyAsFirstCurrency);
     }
 
     @Test
     void equalsTest_notEqualObjects() {
-        Currency currency = Currency.builder()
-                .name(NAME)
-                .code(ANOTHER_CODE)
-                .isoNumber(ANOTHER_ISO_NUMBER)
-                .build();
-
-        Currency anotherCurrency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        assertNotEquals(currency, anotherCurrency);
+        assertNotEquals(firstCurrency, anotherCurrency);
     }
 
     @Test
     void hashCodeTest_equalObjects() {
-        Currency currency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        Currency anotherCurrency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        assertEquals(currency.hashCode(), anotherCurrency.hashCode());
+        assertEquals(firstCurrency.hashCode(), sameCurrencyAsFirstCurrency.hashCode());
     }
 
     @Test
     void hashCodeTest_notEqualObjects() {
-        Currency currency = Currency.builder()
-                .name(NAME)
-                .code(ANOTHER_CODE)
-                .isoNumber(ANOTHER_ISO_NUMBER)
-                .build();
-
-        Currency anotherCurrency = Currency.builder()
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        assertNotEquals(currency.hashCode(), anotherCurrency.hashCode());
+        assertNotEquals(firstCurrency.hashCode(), anotherCurrency.hashCode());
     }
 }
