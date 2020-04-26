@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FlightTest {
+    private static final String ID = "ID";
     private static final String FLIGHT_IATA_NUMBER = "FLIGHT_IATA_NUMBER";
     private static final double LATITUDE = 2.0;
     private static final double LONGITUDE = 3.0;
@@ -49,6 +50,7 @@ class FlightTest {
                 .build();
 
         firstFlight = Flight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .geographicPosition(geographicPosition)
                 .departure(departure)
@@ -57,6 +59,7 @@ class FlightTest {
                 .build();
 
         sameFlightAsFirstFlight = Flight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .geographicPosition(geographicPosition)
                 .departure(departure)
@@ -65,12 +68,22 @@ class FlightTest {
                 .build();
 
         anotherFlight = Flight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .geographicPosition(geographicPosition)
                 .departure(arrival)
                 .arrival(arrival)
                 .airline(airline)
                 .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        Flight flight = Flight.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, flight.getId());
     }
 
     @Test
@@ -121,6 +134,7 @@ class FlightTest {
     @Test
     void builderTest_toBuilder() {
         Flight flight = Flight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .airline(airline)
                 .build();
@@ -131,6 +145,7 @@ class FlightTest {
                 .build();
 
         Flight expectedFlight = Flight.builder()
+                .id(ID)
                 .flightIdentifier(flightIdentifier)
                 .departure(departure)
                 .arrival(arrival)

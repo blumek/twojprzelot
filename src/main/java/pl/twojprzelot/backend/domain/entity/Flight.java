@@ -10,6 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(toBuilder = true)
 @Value
 public class Flight {
+    String id;
     FlightIdentifier flightIdentifier;
     GeographicPosition geographicPosition;
     Airport departure;
