@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
 
 class AirportTest {
+    private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String ANOTHER_AIRPORT_NAME = "ANOTHER_AIRPORT_NAME";
     private static final String IATA_CODE = "IATA_CODE";
@@ -43,6 +44,7 @@ class AirportTest {
         nameTranslations = Maps.newHashMap();
 
         firsAirport = Airport.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -52,6 +54,7 @@ class AirportTest {
                 .build();
 
         sameAirportAsFirsAirport = Airport.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -61,6 +64,7 @@ class AirportTest {
                 .build();
 
         anotherAirport = Airport.builder()
+                .id(ID)
                 .name(ANOTHER_AIRPORT_NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -68,6 +72,15 @@ class AirportTest {
                 .geographicLocation(geographicLocation)
                 .nameTranslations(nameTranslations)
                 .build();
+    }
+
+    @Test
+    void builderTest_id() {
+        Airport airport = Airport.builder()
+                .id(ID)
+                .build();
+
+        assertEquals(ID, airport.getId());
     }
 
     @Test
@@ -129,6 +142,7 @@ class AirportTest {
     @Test
     void builderTest_toBuilder() {
         Airport airport = Airport.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .build();
@@ -138,6 +152,7 @@ class AirportTest {
                 .build();
 
         Airport expectedAirport = Airport.builder()
+                .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
