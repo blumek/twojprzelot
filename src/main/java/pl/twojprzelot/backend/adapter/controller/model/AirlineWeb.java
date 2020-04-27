@@ -8,6 +8,7 @@ import static lombok.AccessLevel.*;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Getter
+@ToString
 @EqualsAndHashCode
 public class AirlineWeb {
     private String id;

@@ -10,6 +10,7 @@ import static lombok.AccessLevel.*;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Getter
+@ToString
 @EqualsAndHashCode
 public class FlightEndpointDetailsWeb {
     private AirportWeb airport;
