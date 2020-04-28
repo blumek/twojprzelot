@@ -49,4 +49,8 @@ public class ScheduledFlightEntity extends BaseEntity {
     public static ScheduledFlightEntity from(ScheduledFlight scheduledFlight) {
         return mapper.mapToScheduledFlightEntity(scheduledFlight);
     }
+
+    public ScheduledFlight toScheduledFlight() {
+        return mapper.mapFromScheduledFlightEntity(this);
+    }
 }

@@ -104,6 +104,69 @@ class ScheduledFlightEntityTest {
         assertEquals(scheduledFlightEntity, ScheduledFlightEntity.from(scheduledFlight));
     }
 
+    @Test
+    void toScheduledFlightTest_fullObjects() {
+        ScheduledFlightEntity scheduledFlightEntity = createScheduledFlightEntity();
+        ScheduledFlight scheduledFlight = createScheduledFlight();
+        assertEquals(scheduledFlight, scheduledFlightEntity.toScheduledFlight());
+    }
+
+    @Test
+    void toScheduledFlightTest_withoutFlightIdentifier() {
+        ScheduledFlightEntity scheduledFlightEntity = createScheduledFlightEntity();
+        scheduledFlightEntity.setFlightIdentifier(null);
+
+        ScheduledFlight scheduledFlight = createScheduledFlight();
+        scheduledFlight = scheduledFlight.toBuilder()
+                .flightIdentifier(null)
+                .build();
+
+
+        assertEquals(scheduledFlightEntity, ScheduledFlightEntity.from(scheduledFlight));
+    }
+
+    @Test
+    void toScheduledFlightTest_withoutDeparture() {
+        ScheduledFlightEntity scheduledFlightEntity = createScheduledFlightEntity();
+        scheduledFlightEntity.setDeparture(null);
+
+        ScheduledFlight scheduledFlight = createScheduledFlight();
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(null)
+                .build();
+
+
+        assertEquals(scheduledFlightEntity, ScheduledFlightEntity.from(scheduledFlight));
+    }
+
+    @Test
+    void toScheduledFlightTest_withoutArrival() {
+        ScheduledFlightEntity scheduledFlightEntity = createScheduledFlightEntity();
+        scheduledFlightEntity.setArrival(null);
+
+        ScheduledFlight scheduledFlight = createScheduledFlight();
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(null)
+                .build();
+
+
+        assertEquals(scheduledFlightEntity, ScheduledFlightEntity.from(scheduledFlight));
+    }
+
+    @Test
+    void toScheduledFlightTest_withoutAirline() {
+        ScheduledFlightEntity scheduledFlightEntity = createScheduledFlightEntity();
+        scheduledFlightEntity.setAirline(null);
+
+        ScheduledFlight scheduledFlight = createScheduledFlight();
+        scheduledFlight = scheduledFlight.toBuilder()
+                .airline(null)
+                .build();
+
+
+        assertEquals(scheduledFlightEntity, ScheduledFlightEntity.from(scheduledFlight));
+    }
+
     public ScheduledFlight createScheduledFlight() {
         return ScheduledFlight.builder()
                 .id(SCHEDULED_FLIGHT_ID)
