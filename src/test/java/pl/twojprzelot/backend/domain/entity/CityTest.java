@@ -128,6 +128,15 @@ class CityTest {
     }
 
     @Test
+    void builderTest_addSingularNameTranslation() {
+        City city = City.builder()
+                .nameTranslation(POLISH, NAME_TRANSLATION)
+                .build();
+
+        assertThat(city.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
+    }
+
+    @Test
     void builderTest_toBuilder() {
         City city = City.builder()
                 .id(ID)

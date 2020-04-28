@@ -2,6 +2,7 @@ package pl.twojprzelot.backend.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 
 import java.util.Map;
@@ -17,5 +18,6 @@ public class City {
     String iataCode;
     GeographicLocation geographicLocation;
     Country country;
+    @Singular
     Map<Language, String> nameTranslations;
 }
