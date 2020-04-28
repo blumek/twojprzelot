@@ -1,10 +1,7 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
 import com.google.common.collect.Maps;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import pl.twojprzelot.backend.domain.entity.Language;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import static javax.persistence.EnumType.STRING;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "airport")
 public class AirportEntity extends BaseEntity {
     private String name;
