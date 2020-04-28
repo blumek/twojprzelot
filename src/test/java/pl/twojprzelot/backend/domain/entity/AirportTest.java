@@ -140,6 +140,15 @@ class AirportTest {
     }
 
     @Test
+    void builderTest_addSingularNameTranslation() {
+        Airport airport = Airport.builder()
+                .nameTranslation(POLISH, NAME_TRANSLATION)
+                .build();
+
+        assertThat(airport.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
+    }
+
+    @Test
     void builderTest_toBuilder() {
         Airport airport = Airport.builder()
                 .id(ID)
