@@ -1,9 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -12,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @MappedSuperclass
 public class BaseEntity {
     @Id
