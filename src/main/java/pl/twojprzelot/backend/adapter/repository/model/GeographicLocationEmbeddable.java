@@ -1,9 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
@@ -11,6 +8,7 @@ import javax.persistence.Embeddable;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @Embeddable
 public class GeographicLocationEmbeddable {
     double latitude;
