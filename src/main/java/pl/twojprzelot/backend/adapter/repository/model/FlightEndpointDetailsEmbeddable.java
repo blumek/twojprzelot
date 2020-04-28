@@ -1,9 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @Embeddable
 public class FlightEndpointDetailsEmbeddable {
     @ManyToOne
