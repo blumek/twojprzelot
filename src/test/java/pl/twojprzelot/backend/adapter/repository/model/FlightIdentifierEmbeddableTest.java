@@ -10,6 +10,7 @@ class FlightIdentifierEmbeddableTest {
     private static final int ANOTHER_NUMBER = 700;
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
+
     private FlightIdentifierEmbeddable firstFlightIdentifierEmbeddable;
     private FlightIdentifierEmbeddable sameFlightIdentifierEmbeddableAsFirstFlightIdentifierEmbeddable;
     private FlightIdentifierEmbeddable anotherFlightIdentifierEmbeddable;
