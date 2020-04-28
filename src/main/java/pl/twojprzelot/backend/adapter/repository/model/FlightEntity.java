@@ -1,9 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,6 +11,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "flight")
 public class FlightEntity extends BaseEntity {
     @Embedded
