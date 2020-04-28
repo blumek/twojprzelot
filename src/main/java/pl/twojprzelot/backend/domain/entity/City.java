@@ -18,6 +18,4 @@ public class City {
     String iataCode;
     GeographicLocation geographicLocation;
     Country country;
-    @Singular
-    Map<Language, String> nameTranslations;
 }

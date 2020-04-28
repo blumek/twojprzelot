@@ -50,7 +50,6 @@ class CityTest {
                 .iataCode(IATA_CODE)
                 .geographicLocation(geographicLocation)
                 .country(country)
-                .nameTranslations(nameTranslations)
                 .build();
 
         sameCityAsFirstCity = City.builder()
@@ -59,7 +58,6 @@ class CityTest {
                 .iataCode(IATA_CODE)
                 .geographicLocation(geographicLocation)
                 .country(country)
-                .nameTranslations(nameTranslations)
                 .build();
 
         anotherCity = City.builder()
@@ -114,26 +112,6 @@ class CityTest {
                 .build();
 
         assertEquals(country, city.getCountry());
-    }
-
-    @Test
-    void builderTest_nameTranslations() {
-        nameTranslations.put(POLISH, NAME_TRANSLATION);
-
-        City city = City.builder()
-                .nameTranslations(nameTranslations)
-                .build();
-
-        assertThat(city.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
-    }
-
-    @Test
-    void builderTest_addSingularNameTranslation() {
-        City city = City.builder()
-                .nameTranslation(POLISH, NAME_TRANSLATION)
-                .build();
-
-        assertThat(city.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
     }
 
     @Test

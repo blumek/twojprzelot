@@ -157,7 +157,6 @@ class ScheduledFlightEntityTest {
                 .name(name)
                 .country(createCountry(name))
                 .geographicLocation(createGeographicLocation())
-                .nameTranslation(POLISH, name + CITY_TRANSLATION)
                 .build();
     }
 
@@ -255,7 +254,6 @@ class ScheduledFlightEntityTest {
         cityEntity.setIataCode(name + CITY_IATA_CODE);
         cityEntity.setCountry(createCountryEntity(name));
         cityEntity.setGeographicLocation(createGeographicLocationEmbeddable());
-        cityEntity.getNameTranslations().put(POLISH, name + CITY_TRANSLATION);
         return cityEntity;
     }
 
