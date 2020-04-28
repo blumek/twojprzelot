@@ -147,7 +147,6 @@ class ScheduledFlightEntityTest {
                 .name(name)
                 .city(createCity(name))
                 .geographicLocation(createGeographicLocation())
-                .nameTranslation(POLISH, name + AIRPORT_TRANSLATION)
                 .build();
     }
 
@@ -246,7 +245,6 @@ class ScheduledFlightEntityTest {
         airportEntity.setIcaoCode(name + AIRPORT_ICAO_CODE);
         airportEntity.setCity(createCityEntity(name));
         airportEntity.setGeographicLocation(createGeographicLocationEmbeddable());
-        airportEntity.getNameTranslations().put(POLISH, name + AIRPORT_TRANSLATION);
         return airportEntity;
     }
 

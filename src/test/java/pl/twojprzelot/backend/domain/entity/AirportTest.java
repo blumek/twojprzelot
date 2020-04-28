@@ -20,7 +20,6 @@ class AirportTest {
     private static final double LATITUDE = 1.0;
     private static final double LONGITUDE = 2.0;
     private static final String CITY_NAME = "CITY_NAME";
-    private static final String NAME_TRANSLATION = "NAME_TRANSLATION";
 
     private Airport firsAirport;
     private Airport sameAirportAsFirsAirport;
@@ -28,7 +27,6 @@ class AirportTest {
 
     private GeographicLocation geographicLocation;
     private City city;
-    private Map<Language, String> nameTranslations;
 
     @BeforeEach
     void setUp() {
@@ -41,8 +39,6 @@ class AirportTest {
                 .name(CITY_NAME)
                 .build();
 
-        nameTranslations = Maps.newHashMap();
-
         firsAirport = Airport.builder()
                 .id(ID)
                 .name(NAME)
@@ -50,7 +46,6 @@ class AirportTest {
                 .icaoCode(ICAO_CODE)
                 .city(city)
                 .geographicLocation(geographicLocation)
-                .nameTranslations(nameTranslations)
                 .build();
 
         sameAirportAsFirsAirport = Airport.builder()
@@ -60,7 +55,6 @@ class AirportTest {
                 .icaoCode(ICAO_CODE)
                 .city(city)
                 .geographicLocation(geographicLocation)
-                .nameTranslations(nameTranslations)
                 .build();
 
         anotherAirport = Airport.builder()
@@ -70,7 +64,6 @@ class AirportTest {
                 .icaoCode(ICAO_CODE)
                 .city(city)
                 .geographicLocation(geographicLocation)
-                .nameTranslations(nameTranslations)
                 .build();
     }
 
@@ -126,26 +119,6 @@ class AirportTest {
                 .build();
 
         assertEquals(city, airport.getCity());
-    }
-
-    @Test
-    void builderTest_nameTranslations() {
-        nameTranslations.put(POLISH, NAME_TRANSLATION);
-
-        Airport airport = Airport.builder()
-                .nameTranslations(nameTranslations)
-                .build();
-
-        assertThat(airport.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
-    }
-
-    @Test
-    void builderTest_addSingularNameTranslation() {
-        Airport airport = Airport.builder()
-                .nameTranslation(POLISH, NAME_TRANSLATION)
-                .build();
-
-        assertThat(airport.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
     }
 
     @Test
