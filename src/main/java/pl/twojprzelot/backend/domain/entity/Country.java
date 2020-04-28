@@ -2,6 +2,7 @@ package pl.twojprzelot.backend.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 
 import java.util.Map;
@@ -19,5 +20,6 @@ public class Country {
     int isoNumber;
     int population;
     Currency currency;
+    @Singular
     Map<Language, String> nameTranslations;
 }

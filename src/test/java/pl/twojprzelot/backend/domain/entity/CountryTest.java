@@ -143,6 +143,15 @@ class CountryTest {
     }
 
     @Test
+    void builderTest_addSingleNameTranslation() {
+        Country country = Country.builder()
+                .nameTranslation(POLISH, NAME_TRANSLATION)
+                .build();
+
+        assertThat(country.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
+    }
+
+    @Test
     void builderTest_toBuilder() {
         Country country = Country.builder()
                 .name(NAME)
