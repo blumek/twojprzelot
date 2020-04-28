@@ -3,6 +3,7 @@ package pl.twojprzelot.backend.adapter.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
+import pl.twojprzelot.backend.adapter.repository.model.ScheduledFlightEntity;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 @Mapper
@@ -16,4 +17,6 @@ public interface ScheduledFlightMapper {
     @Mapping(source = "arrival.flightAirportDetails.gate", target = "arrival.gate")
     @Mapping(source = "arrival.flightAirportDetails.terminal", target = "arrival.terminal")
     ScheduledFlightWeb mapToScheduledFlightWeb(ScheduledFlight scheduledFlight);
+
+    ScheduledFlightEntity mapToScheduledFlightEntity(ScheduledFlight scheduledFlight);
 }

@@ -1,9 +1,9 @@
 package pl.twojprzelot.backend.adapter.repository.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.adapter.mapper.ScheduledFlightMapper;
+import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import javax.persistence.*;
 
@@ -11,8 +11,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "scheduled_flight")
 public class ScheduledFlightEntity extends BaseEntity {
+    private static final ScheduledFlightMapper mapper = Mappers.getMapper(ScheduledFlightMapper.class);
+
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;
 
@@ -42,4 +45,8 @@ public class ScheduledFlightEntity extends BaseEntity {
 
     @ManyToOne
     AirlineEntity airline;
+
+    public static ScheduledFlightEntity from(ScheduledFlight scheduledFlight) {
+        return mapper.mapToScheduledFlightEntity(scheduledFlight);
+    }
 }
