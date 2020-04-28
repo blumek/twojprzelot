@@ -1,15 +1,10 @@
 package pl.twojprzelot.backend.domain.entity;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.junit.jupiter.api.Assertions.*;
-import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AirportTest {
     private static final String ID = "ID";

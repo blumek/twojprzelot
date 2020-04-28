@@ -1,15 +1,10 @@
 package pl.twojprzelot.backend.domain.entity;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.junit.jupiter.api.Assertions.*;
-import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CityTest {
     private static final String ID = "ID";
@@ -20,7 +15,6 @@ class CityTest {
     private static final double LONGITUDE = 2.0;
     private static final String COUNTRY_NAME = "COUNTRY_NAME";
     private static final int POPULATION = 10;
-    private static final String NAME_TRANSLATION = "NAME_TRANSLATION";
 
     private City firstCity;
     private City sameCityAsFirstCity;
@@ -28,7 +22,6 @@ class CityTest {
 
     private GeographicLocation geographicLocation;
     private Country country;
-    private Map<Language, String> nameTranslations;
 
     @BeforeEach
     void setUp() {
@@ -41,8 +34,6 @@ class CityTest {
                 .name(COUNTRY_NAME)
                 .population(POPULATION)
                 .build();
-
-        nameTranslations = Maps.newHashMap();
 
         firstCity = City.builder()
                 .id(ID)

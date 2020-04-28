@@ -7,7 +7,6 @@ import pl.twojprzelot.backend.domain.entity.*;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
 
 class ScheduledFlightEntityTest {
     private static final String DEPARTURE = "DEPARTURE";
@@ -26,9 +25,6 @@ class ScheduledFlightEntityTest {
     private static final String TERMINAL = "_TERMINAL";
     private static final double LATITUDE = 15.5;
     private static final double LONGITUDE = 40.5;
-    private static final String COUNTRY_TRANSLATION = "_COUNTRY_TRANSLATION";
-    private static final String AIRPORT_TRANSLATION = "_AIRPORT_TRANSLATION";
-    private static final String CITY_TRANSLATION = "_CITY_TRANSLATION";
     private static final String COUNTRY_ID = "_COUNTRY_ID";
     private static final int COUNTRY_ISO_NUMBER = 700;
     private static final String COUNTRY_ISO_2_CODE = "_COUNTRY_ISO_2_CODE";
@@ -168,7 +164,6 @@ class ScheduledFlightEntityTest {
                 .iso3Code(name + COUNTRY_ISO_3_CODE)
                 .name(name)
                 .population(COUNTRY_POPULATION)
-                .nameTranslation(POLISH, name + COUNTRY_TRANSLATION)
                 .currency(createCurrency(name))
                 .build();
     }
@@ -266,7 +261,6 @@ class ScheduledFlightEntityTest {
         countryEntity.setName(name);
         countryEntity.setPopulation(COUNTRY_POPULATION);
         countryEntity.setCurrency(createCurrencyEntity(name));
-        countryEntity.getNameTranslations().put(POLISH, name + COUNTRY_TRANSLATION);
         return countryEntity;
     }
 

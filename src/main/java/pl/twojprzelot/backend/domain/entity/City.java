@@ -2,12 +2,9 @@ package pl.twojprzelot.backend.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Singular;
 import lombok.Value;
 
-import java.util.Map;
-
-import static lombok.AccessLevel.*;
+import static lombok.AccessLevel.PRIVATE;
 
 @AllArgsConstructor(access = PRIVATE)
 @Builder(toBuilder = true)

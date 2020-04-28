@@ -1,15 +1,10 @@
 package pl.twojprzelot.backend.domain.entity;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static pl.twojprzelot.backend.domain.entity.Language.POLISH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CountryTest {
     private static final String ID = "ID";
@@ -21,18 +16,13 @@ class CountryTest {
     private static final int POPULATION = 10;
     private static final int ANOTHER_POPULATION = 20;
     private static final String CURRENCY_NAME = "CURRENCY_NAME";
-    private static final String NAME_TRANSLATION = "NAME_TRANSLATION";
 
     private Country firstCountry;
     private Country sameCountryAsFirstCountry;
     private Country anotherCountry;
 
-    private Map<Language, String> nameTranslations;
-
     @BeforeEach
     void setUp() {
-        nameTranslations = Maps.newHashMap();
-
         firstCountry = Country.builder()
                 .id(ID)
                 .name(NAME)
@@ -40,7 +30,6 @@ class CountryTest {
                 .iso3Code(ISO_3_CODE)
                 .isoNumber(ISO_NUMBER)
                 .population(POPULATION)
-                .nameTranslations(nameTranslations)
                 .build();
 
         sameCountryAsFirstCountry = Country.builder()
@@ -50,7 +39,6 @@ class CountryTest {
                 .iso3Code(ISO_3_CODE)
                 .isoNumber(ISO_NUMBER)
                 .population(POPULATION)
-                .nameTranslations(nameTranslations)
                 .build();
 
         anotherCountry = Country.builder()
@@ -60,7 +48,6 @@ class CountryTest {
                 .iso3Code(ISO_3_CODE)
                 .isoNumber(ISO_NUMBER)
                 .population(ANOTHER_POPULATION)
-                .nameTranslations(nameTranslations)
                 .build();
     }
 
@@ -129,26 +116,6 @@ class CountryTest {
                 .build();
 
         assertEquals(currency, country.getCurrency());
-    }
-
-    @Test
-    void builderTest_nameTranslations() {
-        nameTranslations.put(POLISH, NAME_TRANSLATION);
-
-        Country country = Country.builder()
-                .nameTranslations(nameTranslations)
-                .build();
-
-        assertThat(country.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
-    }
-
-    @Test
-    void builderTest_addSingleNameTranslation() {
-        Country country = Country.builder()
-                .nameTranslation(POLISH, NAME_TRANSLATION)
-                .build();
-
-        assertThat(country.getNameTranslations(), hasEntry(POLISH, NAME_TRANSLATION));
     }
 
     @Test
