@@ -10,7 +10,7 @@ import java.util.Optional;
 public class TimetableController {
     private final FindScheduledFlight findScheduledFlight;
 
-    public Optional<ScheduledFlightWeb> findByIdentifier(String identifier) {
+    public Optional<ScheduledFlightWeb> findByFlightIdentifier(String identifier) {
         return findScheduledFlight.findByFlightIdentifier(identifier)
                 .map(ScheduledFlightWeb::from);
     }

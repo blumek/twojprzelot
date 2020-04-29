@@ -29,7 +29,7 @@ class TimetableControllerTest {
         when(findScheduledFlight.findByFlightIdentifier(FLIGHT_IDENTIFIER))
                 .thenReturn(Optional.empty());
 
-        Optional<ScheduledFlightWeb> foundScheduledFlight = timetableController.findByIdentifier(FLIGHT_IDENTIFIER);
+        Optional<ScheduledFlightWeb> foundScheduledFlight = timetableController.findByFlightIdentifier(FLIGHT_IDENTIFIER);
         assertEquals(Optional.empty(), foundScheduledFlight);
     }
 
@@ -46,7 +46,7 @@ class TimetableControllerTest {
                 .id(ID)
                 .build();
 
-        Optional<ScheduledFlightWeb> foundScheduledFlight = timetableController.findByIdentifier(FLIGHT_IDENTIFIER);
+        Optional<ScheduledFlightWeb> foundScheduledFlight = timetableController.findByFlightIdentifier(FLIGHT_IDENTIFIER);
         assertEquals(Optional.of(scheduledFlightWeb), foundScheduledFlight);
     }
 }
