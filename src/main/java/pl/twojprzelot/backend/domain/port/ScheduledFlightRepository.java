@@ -2,10 +2,10 @@ package pl.twojprzelot.backend.domain.port;
 
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ScheduledFlightRepository {
-    Optional<ScheduledFlight> findByIataNumber(String iataNumber);
-    Optional<ScheduledFlight> findByIcaoNumber(String icaoNumber);
+    List<ScheduledFlight> findAllByIataNumber(String iataNumber);
+    List<ScheduledFlight> findAllByIcaoNumber(String icaoNumber);
     ScheduledFlight create(ScheduledFlight scheduledFlight);
 }

@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.application.spring_app.controller;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,11 +9,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.adapter.controller.TimetableController;
 import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
 
-import java.util.Optional;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static io.restassured.http.ContentType.*;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.*;
 
@@ -20,6 +20,7 @@ import static org.springframework.http.HttpStatus.*;
 class SpringTimetableControllerTest {
     private static final String FLIGHT_IDENTIFIER = "FLIGHT_IDENTIFIER";
     private static final String ID = "ID";
+    private static final String ANOTHER_ID = "ANOTHER_ID";
 
     @InjectMocks
     private SpringTimetableController springTimetableController;
@@ -27,35 +28,44 @@ class SpringTimetableControllerTest {
     private TimetableController timetableController;
 
     @Test
-    void findByFlightIdentifierTest_scheduledFlightWithGivenIdentifierNotExists() {
-        when(timetableController.findByFlightIdentifier(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.empty());
+    void findAllByFlightIdentifierTest_scheduledFlightsWithGivenIdentifierNotExist() {
+        when(timetableController.findAllByFlightIdentifier(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
 
         given()
                 .standaloneSetup(springTimetableController)
         .when()
                 .get("/timetable/" + FLIGHT_IDENTIFIER)
         .then()
-                .status(NOT_FOUND);
+                .contentType(JSON)
+                .status(OK)
+                .body(is(equalTo("[]")));
     }
 
     @Test
-    void findByFlightIdentifierTest_scheduledFlightWithGivenIdentifierExists() {
-        ScheduledFlightWeb scheduledFlightWeb = ScheduledFlightWeb.builder()
+    void findAllByFlightIdentifierTest_twoScheduledFlightsWithGivenIdentifierExist() {
+        ScheduledFlightWeb firstScheduledFlightWeb = ScheduledFlightWeb.builder()
                 .id(ID)
                 .build();
 
-        when(timetableController.findByFlightIdentifier(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.of(scheduledFlightWeb));
+        ScheduledFlightWeb secondScheduledFlightWeb = ScheduledFlightWeb.builder()
+                .id(ANOTHER_ID)
+                .build();
 
-        given()
+        when(timetableController.findAllByFlightIdentifier(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList(firstScheduledFlightWeb, secondScheduledFlightWeb));
+
+        ScheduledFlightWeb[] foundScheduledFlights = given()
                 .standaloneSetup(springTimetableController)
-                .when()
+        .when()
                 .get("/timetable/" + FLIGHT_IDENTIFIER)
-                .then()
-                .status(OK)
+        .then()
                 .contentType(JSON)
-                .assertThat()
-                .body("id", equalTo(ID));
+                .status(OK)
+                .extract()
+                .as(ScheduledFlightWeb[].class);
+
+        assertThat(Lists.newArrayList(foundScheduledFlights),
+                containsInAnyOrder(firstScheduledFlightWeb, secondScheduledFlightWeb));
     }
 }

@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.usecase;
 
+import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,9 +10,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
 
-import java.util.Optional;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,64 +22,70 @@ import static org.mockito.Mockito.when;
 class FindScheduledFlightTest {
     private static final String FLIGHT_IDENTIFIER = "FLIGHT_IDENTIFIER";
     private static final String ID = "ID";
+    private static final String ANOTHER_ID = "ID";
 
     @InjectMocks
     private FindScheduledFlight findScheduledFlight;
     @Mock
     private ScheduledFlightRepository scheduledFlightRepository;
 
-    private ScheduledFlight scheduledFlight;
+    private ScheduledFlight firstScheduledFlight;
+    private ScheduledFlight secondScheduledFlight;
 
     @BeforeEach
     void setUp() {
-        scheduledFlight = ScheduledFlight.builder()
+        firstScheduledFlight = ScheduledFlight.builder()
                 .id(ID)
+                .build();
+
+        secondScheduledFlight = ScheduledFlight.builder()
+                .id(ANOTHER_ID)
                 .build();
     }
 
     @Test
-    void findByFlightIdentifier_scheduledFlightNotExists() {
-        when(scheduledFlightRepository.findByIataNumber(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.empty());
+    void findAllByFlightIdentifier_scheduledFlightsWithGivenIdentifierNotExist() {
+        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
 
-        when(scheduledFlightRepository.findByIcaoNumber(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.empty());
+        when(scheduledFlightRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
 
-        Optional<ScheduledFlight> foundScheduledFlight =
-                findScheduledFlight.findByFlightIdentifier(FLIGHT_IDENTIFIER);
+        List<ScheduledFlight> foundScheduledFlights =
+                findScheduledFlight.findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
 
-        assertEquals(Optional.empty(), foundScheduledFlight);
+        assertTrue(foundScheduledFlights.isEmpty());
 
-        verify(scheduledFlightRepository).findByIataNumber(FLIGHT_IDENTIFIER);
-        verify(scheduledFlightRepository).findByIcaoNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
     }
 
     @Test
-    void findByFlightIdentifier_scheduledFlightWithGivenIataNumberExists() {
-        when(scheduledFlightRepository.findByIataNumber(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.of(scheduledFlight));
+    void findAllByFlightIdentifier_scheduledFlightsWithGivenIataNumberExist() {
+        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
 
-        Optional<ScheduledFlight> foundScheduledFlight =
-                findScheduledFlight.findByFlightIdentifier(FLIGHT_IDENTIFIER);
+        List<ScheduledFlight> foundScheduledFlights =
+                findScheduledFlight.findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
 
-        assertEquals(Optional.of(scheduledFlight), foundScheduledFlight);
+        assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlight, secondScheduledFlight));
 
-        verify(scheduledFlightRepository).findByIataNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
     }
 
     @Test
-    void findByFlightIdentifier_scheduledFlightWithGivenIcaoNumberExists() {
-        when(scheduledFlightRepository.findByIataNumber(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.empty());
+    void findAllByFlightIdentifier_scheduledFlightWithGivenIcaoNumberExists() {
+        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
 
-        when(scheduledFlightRepository.findByIcaoNumber(FLIGHT_IDENTIFIER))
-                .thenReturn(Optional.of(scheduledFlight));
+        when(scheduledFlightRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
 
-        Optional<ScheduledFlight> foundScheduledFlight =
-                findScheduledFlight.findByFlightIdentifier(FLIGHT_IDENTIFIER);
+        List<ScheduledFlight> foundScheduledFlights =
+                findScheduledFlight.findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
 
-        assertEquals(Optional.of(scheduledFlight), foundScheduledFlight);
+        assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlight, secondScheduledFlight));
 
-        verify(scheduledFlightRepository).findByIcaoNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
     }
 }

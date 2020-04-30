@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class FindScheduledFlight {
     private final ScheduledFlightRepository scheduledFlightRepository;
 
-    public Optional<ScheduledFlight> findByFlightIdentifier(String flightIdentifier) {
-        return scheduledFlightRepository.findByIataNumber(flightIdentifier)
-                .or(() -> scheduledFlightRepository.findByIcaoNumber(flightIdentifier));
+    public List<ScheduledFlight> findAllByFlightIdentifier(String flightIdentifier) {
+        List<ScheduledFlight> scheduledFlightsByIataNumber = scheduledFlightRepository.findAllByIataNumber(flightIdentifier);
+        if (!scheduledFlightsByIataNumber.isEmpty())
+            return scheduledFlightsByIataNumber;
+
+        return scheduledFlightRepository.findAllByIcaoNumber(flightIdentifier);
     }
 }
