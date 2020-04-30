@@ -3,8 +3,8 @@ package pl.twojprzelot.backend.application.spring_app.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.twojprzelot.backend.adapter.controller.TimetableController;
-import pl.twojprzelot.backend.adapter.repository.ScheduledFlightDatabaseRepository;
-import pl.twojprzelot.backend.adapter.repository.ScheduledFlightSpringRepository;
+import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightDatabaseRepository;
+import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightSpringRepository;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
 @Configuration

@@ -4,7 +4,7 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
-import pl.twojprzelot.backend.adapter.repository.model.ScheduledFlightEntity;
+import pl.twojprzelot.backend.adapter.repository.database.model.ScheduledFlightEntity;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 @Mapper

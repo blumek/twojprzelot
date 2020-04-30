@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan("pl.twojprzelot.backend.adapter.repository.model")
+@EntityScan("pl.twojprzelot.backend.adapter.repository.database.model")
 @EnableJpaRepositories("pl.twojprzelot.backend.adapter.repository")
 public class TwojPrzelotApplication {
 

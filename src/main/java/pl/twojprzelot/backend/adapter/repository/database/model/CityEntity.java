@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.model;
+package pl.twojprzelot.backend.adapter.repository.database.model;
 
 import com.google.common.collect.Maps;
 import lombok.*;

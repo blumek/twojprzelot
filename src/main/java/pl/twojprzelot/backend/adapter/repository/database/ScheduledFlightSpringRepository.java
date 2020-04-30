@@ -1,8 +1,8 @@
-package pl.twojprzelot.backend.adapter.repository;
+package pl.twojprzelot.backend.adapter.repository.database;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.twojprzelot.backend.adapter.repository.model.ScheduledFlightEntity;
+import pl.twojprzelot.backend.adapter.repository.database.model.ScheduledFlightEntity;
 
 import java.util.Optional;
 

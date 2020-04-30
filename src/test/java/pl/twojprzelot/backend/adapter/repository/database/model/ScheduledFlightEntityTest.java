@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.model;
+package pl.twojprzelot.backend.adapter.repository.database.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
