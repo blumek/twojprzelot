@@ -20,6 +20,6 @@ class SpringTimetableController {
     public ScheduledFlightWeb findByFlightIdentifier(@PathVariable String identifier) {
         return timetableController.findByFlightIdentifier(identifier)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
-                        format("Scheduled flight with given identifier not found, identifier = %s", identifier)));
+                        format("Scheduled flight with identifier '%s' not found", identifier)));
     }
 }
