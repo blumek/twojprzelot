@@ -13,13 +13,22 @@ public class ScheduledFlightDatabaseRepository implements ScheduledFlightReposit
 
     @Override
     public Optional<ScheduledFlight> findByIataNumber(String iataNumber) {
-        return scheduledFlightSpringRepository.findDistinctTopByFlightIdentifier_IataNumber(iataNumber)
+        return scheduledFlightSpringRepository.findByFlightIdentifier_IataNumber(iataNumber).stream()
+                .findFirst()
                 .map(ScheduledFlightEntity::toScheduledFlight);
     }
 
     @Override
     public Optional<ScheduledFlight> findByIcaoNumber(String icaoNumber) {
-        return scheduledFlightSpringRepository.findDistinctTopByFlightIdentifier_IcaoNumber(icaoNumber)
+        return scheduledFlightSpringRepository.findByFlightIdentifier_IcaoNumber(icaoNumber).stream()
+                .findFirst()
                 .map(ScheduledFlightEntity::toScheduledFlight);
+    }
+
+    @Override
+    public ScheduledFlight create(ScheduledFlight scheduledFlight) {
+        ScheduledFlightEntity scheduledFlightEntity = ScheduledFlightEntity.from(scheduledFlight);
+        ScheduledFlightEntity savedScheduledFlightEntity = scheduledFlightSpringRepository.save(scheduledFlightEntity);
+        return savedScheduledFlightEntity.toScheduledFlight();
     }
 }

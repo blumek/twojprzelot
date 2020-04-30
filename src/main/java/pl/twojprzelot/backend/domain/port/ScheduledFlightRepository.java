@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface ScheduledFlightRepository {
     Optional<ScheduledFlight> findByIataNumber(String iataNumber);
     Optional<ScheduledFlight> findByIcaoNumber(String icaoNumber);
+    ScheduledFlight create(ScheduledFlight scheduledFlight);
 }
