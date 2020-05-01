@@ -19,7 +19,7 @@ class ScheduledFlightEntityTest {
     private static final String AIRPORT_ID = "_AIRPORT_ID";
     private static final String AIRPORT_IATA_CODE = "_AIRPORT_IATA_CODE";
     private static final String AIRPORT_ICAO_CODE = "_AIRPORT_ICAO_CODE";
-    private static final String CITY_ID = "_CITY_ID";
+    private static final int CITY_ID = 2;
     private static final String CITY_IATA_CODE = "_CITY_IATA_CODE";
     private static final String GATE = "_GATE";
     private static final String TERMINAL = "_TERMINAL";
@@ -211,7 +211,7 @@ class ScheduledFlightEntityTest {
 
     public City createCity(String name) {
         return City.builder()
-                .id(name + CITY_ID)
+                .id(CITY_ID)
                 .iataCode(name + CITY_IATA_CODE)
                 .name(name)
                 .country(createCountry(name))
@@ -307,7 +307,7 @@ class ScheduledFlightEntityTest {
 
     private CityEntity createCityEntity(String name) {
         CityEntity cityEntity = new CityEntity();
-        cityEntity.setId(name + CITY_ID);
+        cityEntity.setId(CITY_ID);
         cityEntity.setName(name);
         cityEntity.setIataCode(name + CITY_IATA_CODE);
         cityEntity.setCountry(createCountryEntity(name));

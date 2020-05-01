@@ -13,9 +13,11 @@ import static javax.persistence.EnumType.STRING;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Entity(name = "city")
-public class CityEntity extends BaseEntity {
+public class CityEntity {
+    @Id
+    private int id;
     private String name;
     private String iataCode;
 
