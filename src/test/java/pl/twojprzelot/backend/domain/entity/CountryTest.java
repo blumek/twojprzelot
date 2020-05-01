@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CountryTest {
-    private static final String ID = "ID";
+    private static final int ID = 5;
     private static final String NAME = "NAME";
     private static final String ANOTHER_NAME = "ANOTHER_NAME";
     private static final String ISO_2_CODE = "ISO_2_CODE";

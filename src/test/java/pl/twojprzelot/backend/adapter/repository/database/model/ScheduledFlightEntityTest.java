@@ -25,7 +25,7 @@ class ScheduledFlightEntityTest {
     private static final String TERMINAL = "_TERMINAL";
     private static final double LATITUDE = 15.5;
     private static final double LONGITUDE = 40.5;
-    private static final String COUNTRY_ID = "_COUNTRY_ID";
+    private static final int COUNTRY_ID = 1;
     private static final int COUNTRY_ISO_NUMBER = 700;
     private static final String COUNTRY_ISO_2_CODE = "_COUNTRY_ISO_2_CODE";
     private static final String COUNTRY_ISO_3_CODE = "_COUNTRY_ISO_3_CODE";
@@ -221,7 +221,7 @@ class ScheduledFlightEntityTest {
 
     public Country createCountry(String name) {
         return Country.builder()
-                .id(name + COUNTRY_ID)
+                .id(COUNTRY_ID)
                 .isoNumber(COUNTRY_ISO_NUMBER)
                 .iso2Code(name + COUNTRY_ISO_2_CODE)
                 .iso3Code(name + COUNTRY_ISO_3_CODE)
@@ -317,7 +317,7 @@ class ScheduledFlightEntityTest {
 
     private CountryEntity createCountryEntity(String name) {
         CountryEntity countryEntity = new CountryEntity();
-        countryEntity.setId(name + COUNTRY_ID);
+        countryEntity.setId(COUNTRY_ID);
         countryEntity.setIsoNumber(COUNTRY_ISO_NUMBER);
         countryEntity.setIso2Code(name + COUNTRY_ISO_2_CODE);
         countryEntity.setIso3Code(name + COUNTRY_ISO_3_CODE);

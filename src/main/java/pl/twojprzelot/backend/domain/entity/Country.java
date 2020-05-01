@@ -10,7 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(toBuilder = true)
 @Value
 public class Country {
-    String id;
+    int id;
     String name;
     String iso2Code;
     String iso3Code;
