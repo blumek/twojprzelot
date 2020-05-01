@@ -12,7 +12,7 @@ import java.util.Map;
 @Setter
 @Getter
 @ToString
-class Country {
+class CountryAE {
     @JsonProperty("countryId")
     private int id;
 

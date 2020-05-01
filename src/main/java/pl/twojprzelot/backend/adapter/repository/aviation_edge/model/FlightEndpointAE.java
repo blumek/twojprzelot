@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-class FlightEndpoint {
+class FlightEndpointAE {
     private String iataCode;
     private String icaoCode;
     private String terminal;

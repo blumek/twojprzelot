@@ -12,23 +12,29 @@ import java.util.Map;
 @Setter
 @Getter
 @ToString
-class City {
-    @JsonProperty("cityId")
+class AirportAE {
+    @JsonProperty("airportId")
     private int id;
 
-    @JsonProperty("nameCity")
+    @JsonProperty("nameAirport")
     private String name;
 
-    @JsonProperty("codeIataCity")
+    @JsonProperty("codeIataAirport")
     private String iataCode;
+
+    @JsonProperty("codeIcaoAirport")
+    private String icaoCode;
 
     @JsonProperty("codeIso2Country")
     private String countryIso2Code;
 
-    @JsonProperty("latitudeCity")
+    @JsonProperty("codeIataCity")
+    private String cityIataCode;
+
+    @JsonProperty("latitudeAirport")
     private double latitude;
 
-    @JsonProperty("longitudeCity")
+    @JsonProperty("longitudeAirport")
     private double longitude;
 
     private String timezone;
@@ -37,6 +43,11 @@ class City {
     private String gmt;
 
     private int geonameId;
+    private String phone;
+
+    @JsonProperty("nameCountry")
+    private String countryName;
+
     private Translations translations;
 
     @NoArgsConstructor
@@ -46,5 +57,6 @@ class City {
     static class Translations {
         private Map<String, String> country;
         private Map<String, String> city;
+        private Map<String, String> airport;
     }
 }

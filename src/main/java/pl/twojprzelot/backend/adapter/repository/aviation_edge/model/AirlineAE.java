@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-class Airline {
+class AirlineAE {
     private int airlineId;
     @JsonProperty("nameAirline")
     private String airlineName;

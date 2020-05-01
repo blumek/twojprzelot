@@ -9,9 +9,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-class GeographicPosition {
-    private double latitude;
-    private double longitude;
-    private double altitude;
-    private double direction;
+class FlightIdentifierAE {
+    private String number;
+    private String iataNumber;
+    private String icaoNumber;
 }

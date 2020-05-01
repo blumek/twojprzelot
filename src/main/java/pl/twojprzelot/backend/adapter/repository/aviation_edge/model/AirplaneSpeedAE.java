@@ -10,13 +10,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-class ScheduledFlight {
-    @JsonProperty("flight")
-    private FlightIdentifier flightIdentifier;
+class AirplaneSpeedAE {
+    private double horizontal;
+    private double isGround;
 
-    private AirlineShort airline;
-    private FlightEndpoint departure;
-    private FlightEndpoint arrival;
-    private String status;
-    private String type;
+    @JsonProperty("vspeed")
+    private double vertical;
 }

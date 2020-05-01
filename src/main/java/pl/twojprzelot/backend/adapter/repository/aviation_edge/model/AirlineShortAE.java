@@ -9,8 +9,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-class FlightIdentifier {
-    private String number;
-    private String iataNumber;
-    private String icaoNumber;
+class AirlineShortAE {
+    private String iataCode;
+    private String icaoCode;
+    private String name;
 }
