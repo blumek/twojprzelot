@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.aviation_edge.model;
+package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

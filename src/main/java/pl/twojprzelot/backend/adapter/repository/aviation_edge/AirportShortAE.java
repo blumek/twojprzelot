@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.aviation_edge.model;
+package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-class AirlineShortAE {
+class AirportShortAE {
     private String iataCode;
     private String icaoCode;
-    private String name;
 }

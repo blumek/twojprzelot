@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.aviation_edge.model;
+package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,29 +12,23 @@ import java.util.Map;
 @Setter
 @Getter
 @ToString
-class AirportAE {
-    @JsonProperty("airportId")
+class CityAE {
+    @JsonProperty("cityId")
     private int id;
 
-    @JsonProperty("nameAirport")
+    @JsonProperty("nameCity")
     private String name;
 
-    @JsonProperty("codeIataAirport")
+    @JsonProperty("codeIataCity")
     private String iataCode;
-
-    @JsonProperty("codeIcaoAirport")
-    private String icaoCode;
 
     @JsonProperty("codeIso2Country")
     private String countryIso2Code;
 
-    @JsonProperty("codeIataCity")
-    private String cityIataCode;
-
-    @JsonProperty("latitudeAirport")
+    @JsonProperty("latitudeCity")
     private double latitude;
 
-    @JsonProperty("longitudeAirport")
+    @JsonProperty("longitudeCity")
     private double longitude;
 
     private String timezone;
@@ -43,11 +37,6 @@ class AirportAE {
     private String gmt;
 
     private int geonameId;
-    private String phone;
-
-    @JsonProperty("nameCountry")
-    private String countryName;
-
     private Translations translations;
 
     @NoArgsConstructor
@@ -57,6 +46,5 @@ class AirportAE {
     static class Translations {
         private Map<String, String> country;
         private Map<String, String> city;
-        private Map<String, String> airport;
     }
 }

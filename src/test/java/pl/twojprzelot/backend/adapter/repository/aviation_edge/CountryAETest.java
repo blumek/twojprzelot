@@ -1,9 +1,9 @@
-package pl.twojprzelot.backend.adapter.repository.aviation_edge.model;
+package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import org.junit.jupiter.api.Test;
 import pl.twojprzelot.backend.domain.entity.Country;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CountryAETest {
     private static final String ISO_2_CODE = "ISO_2_CODE";
