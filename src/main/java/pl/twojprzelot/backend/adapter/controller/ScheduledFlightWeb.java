@@ -1,8 +1,7 @@
-package pl.twojprzelot.backend.adapter.controller.model;
+package pl.twojprzelot.backend.adapter.controller;
 
 import lombok.*;
 import org.mapstruct.factory.Mappers;
-import pl.twojprzelot.backend.adapter.mapper.ScheduledFlightMapper;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import static lombok.AccessLevel.*;
@@ -13,8 +12,8 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class ScheduledFlightWeb {
-    private static final ScheduledFlightMapper mapper = Mappers.getMapper(ScheduledFlightMapper.class);
+class ScheduledFlightWeb {
+    private static final WebMapper mapper = Mappers.getMapper(WebMapper.class);
 
     private int id;
     private FlightIdentifierWeb flightIdentifier;

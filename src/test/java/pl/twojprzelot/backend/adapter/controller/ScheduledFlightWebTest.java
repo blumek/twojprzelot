@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.controller.model;
+package pl.twojprzelot.backend.adapter.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

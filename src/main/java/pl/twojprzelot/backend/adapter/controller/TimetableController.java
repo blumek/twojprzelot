@@ -1,15 +1,16 @@
 package pl.twojprzelot.backend.adapter.controller;
 
 import lombok.RequiredArgsConstructor;
-import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
+import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@Component
 @RequiredArgsConstructor
-public class TimetableController {
+class TimetableController {
     private final FindScheduledFlight findScheduledFlight;
 
     public List<ScheduledFlightWeb> findAllByFlightIdentifier(String identifier) {

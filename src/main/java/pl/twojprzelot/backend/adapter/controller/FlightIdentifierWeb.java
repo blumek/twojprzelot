@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.controller.model;
+package pl.twojprzelot.backend.adapter.controller;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class FlightIdentifierWeb {
+class FlightIdentifierWeb {
     private int number;
     private String iataNumber;
     private String icaoNumber;

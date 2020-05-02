@@ -1,12 +1,11 @@
-package pl.twojprzelot.backend.adapter.mapper;
+package pl.twojprzelot.backend.adapter.controller;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 @Mapper
-public interface ScheduledFlightMapper {
+interface WebMapper {
     @Mapping(source = "departure.airport.city.name", target = "departure.airport.cityName")
     @Mapping(source = "departure.airport.city.country.name", target = "departure.airport.countryName")
     @Mapping(source = "departure.flightAirportDetails.gate", target = "departure.gate")

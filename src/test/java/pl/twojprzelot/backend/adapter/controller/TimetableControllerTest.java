@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 

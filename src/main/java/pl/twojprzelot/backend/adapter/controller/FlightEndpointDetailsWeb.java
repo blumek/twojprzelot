@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.controller.model;
+package pl.twojprzelot.backend.adapter.controller;
 
 import lombok.*;
 
@@ -12,7 +12,7 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class FlightEndpointDetailsWeb {
+class FlightEndpointDetailsWeb {
     private AirportWeb airport;
     private String gate;
     private String terminal;

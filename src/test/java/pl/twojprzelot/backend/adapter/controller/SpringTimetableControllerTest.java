@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.application.spring_app.controller;
+package pl.twojprzelot.backend.adapter.controller;
 
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -6,15 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.twojprzelot.backend.adapter.controller.TimetableController;
-import pl.twojprzelot.backend.adapter.controller.model.ScheduledFlightWeb;
 
+import static io.restassured.http.ContentType.JSON;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static io.restassured.http.ContentType.*;
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(MockitoExtension.class)
 class SpringTimetableControllerTest {
