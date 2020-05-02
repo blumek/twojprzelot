@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.database.model;
+package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @ToString
 @EqualsAndHashCode
 @MappedSuperclass
-public class BaseEntity {
+class BaseEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     private int id;
 }

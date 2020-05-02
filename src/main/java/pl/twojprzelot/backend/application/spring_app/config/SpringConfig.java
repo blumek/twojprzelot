@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.twojprzelot.backend.adapter.controller.TimetableController;
 import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightDatabaseRepository;
 import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightSpringRepository;
+import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
 @Configuration
@@ -15,12 +16,12 @@ class SpringConfig {
     }
 
     @Bean
-    FindScheduledFlight findScheduledFlight(ScheduledFlightDatabaseRepository scheduledFlightDatabaseRepository) {
-        return new FindScheduledFlight(scheduledFlightDatabaseRepository);
+    FindScheduledFlight findScheduledFlight(ScheduledFlightRepository scheduledFlightRepository) {
+        return new FindScheduledFlight(scheduledFlightRepository);
     }
 
     @Bean
-    ScheduledFlightDatabaseRepository springScheduledFlightRepository(ScheduledFlightSpringRepository
+    ScheduledFlightRepository springScheduledFlightRepository(ScheduledFlightSpringRepository
                                                                               scheduledFlightSpringRepository) {
         return new ScheduledFlightDatabaseRepository(scheduledFlightSpringRepository);
     }

@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.database.model;
+package pl.twojprzelot.backend.adapter.repository.database;
 
 import com.google.common.collect.Maps;
 import lombok.*;
@@ -14,16 +14,16 @@ import static javax.persistence.EnumType.STRING;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-@Entity(name = "country")
-public class CountryEntity extends BaseEntity {
+@Entity(name = "city")
+class CityEntity extends BaseEntity {
     private String name;
-    private String iso2Code;
-    private String iso3Code;
-    private int isoNumber;
-    private int population;
+    private String iataCode;
+
+    @Embedded
+    private GeographicLocationEmbeddable geographicLocation;
 
     @ManyToOne
-    private CurrencyEntity currency;
+    private CountryEntity country;
 
     @ElementCollection
     @MapKeyEnumerated(STRING)

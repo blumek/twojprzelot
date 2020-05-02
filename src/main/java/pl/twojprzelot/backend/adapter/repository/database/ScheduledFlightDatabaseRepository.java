@@ -1,7 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.RequiredArgsConstructor;
-import pl.twojprzelot.backend.adapter.repository.database.model.ScheduledFlightEntity;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
 

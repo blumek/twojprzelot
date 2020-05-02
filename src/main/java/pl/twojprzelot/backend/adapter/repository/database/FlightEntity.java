@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.database.model;
+package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "flight")
-public class FlightEntity extends BaseEntity {
+class FlightEntity extends BaseEntity {
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;
 

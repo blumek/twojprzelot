@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.adapter.repository.database.model;
+package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.*;
 
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @Embeddable
-public class FlightEndpointDetailsEmbeddable {
+class FlightEndpointDetailsEmbeddable {
     @ManyToOne
     private AirportEntity airport;
 
