@@ -15,15 +15,15 @@ import java.time.LocalDateTime;
 @Embeddable
 public class FlightEndpointDetailsEmbeddable {
     @ManyToOne
-    AirportEntity airport;
+    private AirportEntity airport;
 
     @Embedded
     private FlightAirportDetailsEmbeddable flightAirportDetails;
 
-    int delayMinutes;
-    LocalDateTime scheduledTime;
-    LocalDateTime estimatedTime;
-    LocalDateTime actualTime;
-    LocalDateTime estimatedRunwayTime;
-    LocalDateTime actualRunwayTime;
+    private int delayMinutes;
+    private LocalDateTime scheduledTime;
+    private LocalDateTime estimatedTime;
+    private LocalDateTime actualTime;
+    private LocalDateTime estimatedRunwayTime;
+    private LocalDateTime actualRunwayTime;
 }

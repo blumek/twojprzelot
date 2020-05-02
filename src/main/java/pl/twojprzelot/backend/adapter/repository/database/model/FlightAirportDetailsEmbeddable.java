@@ -11,6 +11,6 @@ import javax.persistence.Embeddable;
 @EqualsAndHashCode
 @Embeddable
 public class FlightAirportDetailsEmbeddable {
-    String gate;
-    String terminal;
+    private String gate;
+    private String terminal;
 }

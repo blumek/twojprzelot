@@ -29,7 +29,7 @@ public class ScheduledFlightEntity extends BaseEntity {
     @AttributeOverride(name = "actualTime", column = @Column(name = "departure_actual_time"))
     @AttributeOverride(name = "estimatedRunwayTime", column = @Column(name = "departure_estimated_runway_time"))
     @AttributeOverride(name = "actualRunwayTime", column = @Column(name = "departure_actual_runway_time"))
-    FlightEndpointDetailsEmbeddable departure;
+    private FlightEndpointDetailsEmbeddable departure;
 
     @Embedded
     @AssociationOverride(name = "airport", joinColumns = @JoinColumn(name = "arrival_airport_id"))
@@ -41,10 +41,10 @@ public class ScheduledFlightEntity extends BaseEntity {
     @AttributeOverride(name = "actualTime", column = @Column(name = "arrival_actual_time"))
     @AttributeOverride(name = "estimatedRunwayTime", column = @Column(name = "arrival_estimated_runway_time"))
     @AttributeOverride(name = "actualRunwayTime", column = @Column(name = "arrival_actual_runway_time"))
-    FlightEndpointDetailsEmbeddable arrival;
+    private FlightEndpointDetailsEmbeddable arrival;
 
     @ManyToOne
-    AirlineEntity airline;
+    private AirlineEntity airline;
 
     public static ScheduledFlightEntity from(ScheduledFlight scheduledFlight) {
         return mapper.mapToScheduledFlightEntity(scheduledFlight);
