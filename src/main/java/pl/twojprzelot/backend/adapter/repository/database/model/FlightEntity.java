@@ -8,12 +8,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "flight")
-public class FlightEntity {
-    @Id
-    private int id;
-
+public class FlightEntity extends BaseEntity {
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;
 
