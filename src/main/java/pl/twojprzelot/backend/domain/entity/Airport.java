@@ -10,7 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(toBuilder = true)
 @Value
 public class Airport {
-    String id;
+    int id;
     String name;
     String iataCode;
     String icaoCode;

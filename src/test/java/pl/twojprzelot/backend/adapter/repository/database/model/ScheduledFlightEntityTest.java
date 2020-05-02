@@ -16,7 +16,7 @@ class ScheduledFlightEntityTest {
     private static final String FLIGHT_ID_IATA_NUMBER = "FLIGHT_ID_IATA_NUMBER";
     private static final String FLIGHT_ID_ICAO_NUMBER = "FLIGHT_ID_ICAO_NUMBER";
     private static final int DELAY_MINUTES = 5;
-    private static final String AIRPORT_ID = "_AIRPORT_ID";
+    private static final int AIRPORT_ID = 3;
     private static final String AIRPORT_IATA_CODE = "_AIRPORT_IATA_CODE";
     private static final String AIRPORT_ICAO_CODE = "_AIRPORT_ICAO_CODE";
     private static final int CITY_ID = 2;
@@ -200,7 +200,7 @@ class ScheduledFlightEntityTest {
 
     public Airport createAirport(String name) {
         return Airport.builder()
-                .id(name + AIRPORT_ID)
+                .id(AIRPORT_ID)
                 .iataCode(name + AIRPORT_IATA_CODE)
                 .icaoCode(name + AIRPORT_ICAO_CODE)
                 .name(name)
@@ -296,7 +296,7 @@ class ScheduledFlightEntityTest {
 
     private AirportEntity createAirportEntity(String name) {
         AirportEntity airportEntity = new AirportEntity();
-        airportEntity.setId(name + AIRPORT_ID);
+        airportEntity.setId(AIRPORT_ID);
         airportEntity.setName(name);
         airportEntity.setIataCode(name + AIRPORT_IATA_CODE);
         airportEntity.setIcaoCode(name + AIRPORT_ICAO_CODE);

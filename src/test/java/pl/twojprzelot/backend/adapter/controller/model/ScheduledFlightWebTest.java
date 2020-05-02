@@ -16,7 +16,7 @@ class ScheduledFlightWebTest {
     private static final String ANOTHER_COUNTRY_NAME = "ANOTHER_COUNTRY_NAME";
     private static final String CITY_NAME = "CITY_NAME";
     private static final String ANOTHER_CITY_NAME = "ANOTHER_CITY_NAME";
-    private static final String AIRPORT_ID = "AIRPORT_ID";
+    private static final int AIRPORT_ID = 3;
     private static final String AIRPORT_NAME = "AIRPORT_NAME";
     private static final String AIRPORT_IATA_CODE = "AIRPORT_IATA_CODE";
     private static final String AIRPORT_ICAO_CODE = "AIRPORT_ICAO_CODE";
