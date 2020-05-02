@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ScheduledFlightEntityTest {
     private static final String DEPARTURE = "DEPARTURE";
     private static final String ARRIVAL = "ARRIVAL";
-    private static final String SCHEDULED_FLIGHT_ID = "SCHEDULED_FLIGHT_ID";
+    private static final int SCHEDULED_FLIGHT_ID = 6;
     private static final int FLIGHT_ID_NUMBER = 500;
     private static final String FLIGHT_ID_IATA_NUMBER = "FLIGHT_ID_IATA_NUMBER";
     private static final String FLIGHT_ID_ICAO_NUMBER = "FLIGHT_ID_ICAO_NUMBER";

@@ -19,8 +19,8 @@ import static org.springframework.http.HttpStatus.*;
 @ExtendWith(MockitoExtension.class)
 class SpringTimetableControllerTest {
     private static final String FLIGHT_IDENTIFIER = "FLIGHT_IDENTIFIER";
-    private static final String ID = "ID";
-    private static final String ANOTHER_ID = "ANOTHER_ID";
+    private static final int ID = 1;
+    private static final int ANOTHER_ID = 2;
 
     @InjectMocks
     private SpringTimetableController springTimetableController;

@@ -11,10 +11,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Entity(name = "scheduled_flight")
-public class ScheduledFlightEntity extends BaseEntity {
+public class ScheduledFlightEntity {
     private static final ScheduledFlightMapper mapper = Mappers.getMapper(ScheduledFlightMapper.class);
+
+    @Id
+    private int id;
 
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;

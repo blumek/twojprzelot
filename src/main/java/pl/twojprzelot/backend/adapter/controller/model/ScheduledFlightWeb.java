@@ -16,7 +16,7 @@ import static lombok.AccessLevel.*;
 public class ScheduledFlightWeb {
     private static final ScheduledFlightMapper mapper = Mappers.getMapper(ScheduledFlightMapper.class);
 
-    private String id;
+    private int id;
     private FlightIdentifierWeb flightIdentifier;
     private FlightEndpointDetailsWeb departure;
     private FlightEndpointDetailsWeb arrival;

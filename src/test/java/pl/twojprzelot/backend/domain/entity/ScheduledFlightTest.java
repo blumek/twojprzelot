@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScheduledFlightTest {
-    private static final String ID = "ID";
+    private static final int ID = 1;
     private static final String FLIGHT_IATA_NUMBER = "FLIGHT_IATA_NUMBER";
     private static final int FIRST_DELAY_MINUTES = 10;
     private static final int SECOND_DELAY_MINUTES = 20;

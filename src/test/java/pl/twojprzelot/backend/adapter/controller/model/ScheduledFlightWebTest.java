@@ -33,7 +33,7 @@ class ScheduledFlightWebTest {
     private static final String AIRLINE_NAME = "AIRLINE_NAME";
     private static final String AIRLINE_IATA_CODE = "AIRLINE_IATA_CODE";
     private static final String AIRLINE_ICAO_CODE = "AIRLINE_ICAO_CODE";
-    private static final String SCHEDULED_FLIGHT_ID = "SCHEDULED_FLIGHT_ID";
+    private static final int SCHEDULED_FLIGHT_ID = 4;
 
     private ScheduledFlight scheduledFlight;
     private ScheduledFlightWeb scheduledFlightWeb;
