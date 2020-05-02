@@ -5,21 +5,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.Airline;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
 class AirlineAE {
-    private int airlineId;
+    private static final AirlineAEMapper mapper = Mappers.getMapper(AirlineAEMapper.class);
+
+    @JsonProperty("airlineId")
+    private int id;
+
     @JsonProperty("nameAirline")
-    private String airlineName;
+    private String name;
 
     @JsonProperty("codeIataAirline")
-    private String airlineIataCode;
+    private String iataCode;
 
     @JsonProperty("codeIcaoAirline")
-    private String airlineIcaoCode;
+    private String icaoCode;
 
     @JsonProperty("codeIso2Country")
     private String countryIso2Code;
@@ -27,19 +33,25 @@ class AirlineAE {
     @JsonProperty("iataPrefixAccounting")
     private String accountingIataPrefix;
 
+    @JsonProperty("callsign")
     private String callSign;
+
     private String type;
 
     @JsonProperty("statusAirline")
-    private String airlineStatus;
+    private String status;
 
     private int founding;
 
-    @JsonProperty("codeIataHub")
+    @JsonProperty("codeHub")
     private String hubIataCode;
 
     @JsonProperty("sizeAirline")
-    private int airlineSize;
+    private int size;
 
     private double ageFleet;
+
+    public Airline toAirline() {
+        return mapper.mapToAirline(this);
+    }
 }
