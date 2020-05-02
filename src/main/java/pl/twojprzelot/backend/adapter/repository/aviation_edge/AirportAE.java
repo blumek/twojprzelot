@@ -15,7 +15,7 @@ import java.util.Map;
 @Getter
 @ToString
 class AirportAE {
-    private static final AirportAEMapper mapper = Mappers.getMapper(AirportAEMapper.class);
+    private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
 
     @JsonProperty("airportId")
     private int id;

@@ -15,7 +15,7 @@ import java.util.Map;
 @Getter
 @ToString
 class CountryAE {
-    private static final CountryAEMapper mapper = Mappers.getMapper(CountryAEMapper.class);
+    private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
 
     @JsonProperty("countryId")
     private int id;

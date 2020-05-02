@@ -13,7 +13,7 @@ import pl.twojprzelot.backend.domain.entity.Airline;
 @Getter
 @ToString
 class AirlineAE {
-    private static final AirlineAEMapper mapper = Mappers.getMapper(AirlineAEMapper.class);
+    private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
 
     @JsonProperty("airlineId")
     private int id;
