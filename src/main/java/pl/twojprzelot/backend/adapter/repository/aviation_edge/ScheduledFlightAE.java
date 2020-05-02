@@ -5,12 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
 class ScheduledFlightAE {
+    private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
+
     @JsonProperty("flight")
     private FlightIdentifierAE flightIdentifier;
 
@@ -19,4 +23,8 @@ class ScheduledFlightAE {
     private FlightEndpointAE arrival;
     private String status;
     private String type;
+
+    public ScheduledFlight toScheduledFlight() {
+        return mapper.mapToScheduledFlight(this);
+    }
 }
