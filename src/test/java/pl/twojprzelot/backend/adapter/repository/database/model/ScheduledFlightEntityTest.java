@@ -33,7 +33,7 @@ class ScheduledFlightEntityTest {
     private static final String CURRENCY_ID = "_CURRENCY_ID";
     private static final int CURRENCY_ISO_NUMBER = 900;
     private static final String CURRENCY_CODE = "_CURRENCY_CODE";
-    private static final String AIRLINE_ID = "AIRLINE_ID";
+    private static final int AIRLINE_ID = 2;
     private static final String AIRLINE_NAME = "AIRLINE_NAME";
     private static final String AIRLINE_IATA_CODE = "AIRLINE_IATA_CODE";
     private static final String AIRLINE_ICAO_CODE = "AIRLINE_ICAO_CODE";

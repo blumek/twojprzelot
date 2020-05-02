@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AirlineTest {
-    private static final String ID = "ID";
+    private static final int ID = 1;
     private static final String NAME = "NAME";
     private static final String ANOTHER_NAME = "ANOTHER_NAME";
     private static final String IATA_CODE = "IATA_CODE";

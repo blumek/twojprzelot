@@ -29,7 +29,7 @@ class ScheduledFlightWebTest {
     private static final int HOUR = 10;
     private static final int MINUTE = 10;
     private static final int SECOND = 0;
-    private static final String AIRLINE_ID = "AIRLINE_ID";
+    private static final int AIRLINE_ID = 2;
     private static final String AIRLINE_NAME = "AIRLINE_NAME";
     private static final String AIRLINE_IATA_CODE = "AIRLINE_IATA_CODE";
     private static final String AIRLINE_ICAO_CODE = "AIRLINE_ICAO_CODE";
