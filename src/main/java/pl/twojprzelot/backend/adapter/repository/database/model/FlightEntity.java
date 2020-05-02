@@ -2,18 +2,18 @@ package pl.twojprzelot.backend.adapter.repository.database.model;
 
 import lombok.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Entity(name = "flight")
-public class FlightEntity extends BaseEntity {
+public class FlightEntity {
+    @Id
+    private int id;
+
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;
 
