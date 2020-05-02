@@ -30,7 +30,7 @@ class ScheduledFlightEntityTest {
     private static final String COUNTRY_ISO_2_CODE = "_COUNTRY_ISO_2_CODE";
     private static final String COUNTRY_ISO_3_CODE = "_COUNTRY_ISO_3_CODE";
     private static final int COUNTRY_POPULATION = 50000;
-    private static final String CURRENCY_ID = "_CURRENCY_ID";
+    private static final int CURRENCY_ID = 4;
     private static final int CURRENCY_ISO_NUMBER = 900;
     private static final String CURRENCY_CODE = "_CURRENCY_CODE";
     private static final int AIRLINE_ID = 2;
@@ -233,7 +233,7 @@ class ScheduledFlightEntityTest {
 
     public Currency createCurrency(String name) {
         return Currency.builder()
-                .id(name + CURRENCY_ID)
+                .id(CURRENCY_ID)
                 .name(name)
                 .isoNumber(CURRENCY_ISO_NUMBER)
                 .code(name + CURRENCY_CODE)
@@ -329,7 +329,7 @@ class ScheduledFlightEntityTest {
 
     private CurrencyEntity createCurrencyEntity(String name) {
         CurrencyEntity currencyEntity = new CurrencyEntity();
-        currencyEntity.setId(name + CURRENCY_ID);
+        currencyEntity.setId(CURRENCY_ID);
         currencyEntity.setIsoNumber(CURRENCY_ISO_NUMBER);
         currencyEntity.setCode(name + CURRENCY_CODE);
         currencyEntity.setName(name);

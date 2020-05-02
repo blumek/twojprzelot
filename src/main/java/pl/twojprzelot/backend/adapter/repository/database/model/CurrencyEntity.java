@@ -3,15 +3,18 @@ package pl.twojprzelot.backend.adapter.repository.database.model;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Entity(name = "currency")
-public class CurrencyEntity extends BaseEntity {
-    String name;
-    String code;
-    int isoNumber;
+public class CurrencyEntity {
+    @Id
+    private int id;
+    private String name;
+    private String code;
+    private int isoNumber;
 }

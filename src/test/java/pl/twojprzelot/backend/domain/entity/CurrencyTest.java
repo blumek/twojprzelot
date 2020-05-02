@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CurrencyTest {
-    private static final String ID = "ID";
+    private static final int ID = 2;
     private static final String NAME = "NAME";
     private static final String CODE = "CODE";
     private static final int ISO_NUMBER = 1;

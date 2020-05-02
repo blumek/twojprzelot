@@ -10,7 +10,7 @@ import static lombok.AccessLevel.*;
 @Builder(toBuilder = true)
 @Value
 public class Currency {
-    String id;
+    int id;
     String name;
     String code;
     int isoNumber;
