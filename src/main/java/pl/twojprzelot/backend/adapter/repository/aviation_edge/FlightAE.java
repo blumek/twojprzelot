@@ -5,12 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.Flight;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
 class FlightAE {
+    private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
+
     @JsonProperty("flight")
     private FlightIdentifierAE flightIdentifier;
 
@@ -35,5 +39,9 @@ class FlightAE {
     static class System {
         private String squawk;
         private long updated;
+    }
+
+    public Flight toFlight() {
+        return mapper.mapToFlight(this);
     }
 }

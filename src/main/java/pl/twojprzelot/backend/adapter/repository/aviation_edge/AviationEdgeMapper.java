@@ -2,10 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.twojprzelot.backend.domain.entity.Airline;
-import pl.twojprzelot.backend.domain.entity.Airport;
-import pl.twojprzelot.backend.domain.entity.City;
-import pl.twojprzelot.backend.domain.entity.Country;
+import pl.twojprzelot.backend.domain.entity.*;
 
 @Mapper
 interface AviationEdgeMapper {
@@ -25,4 +22,7 @@ interface AviationEdgeMapper {
 
     @Mapping(ignore = true, target = "currency")
     Country mapToCountry(CountryAE countryAE);
+
+    @Mapping(target = "id", ignore = true)
+    Flight mapToFlight(FlightAE flightAE);
 }
