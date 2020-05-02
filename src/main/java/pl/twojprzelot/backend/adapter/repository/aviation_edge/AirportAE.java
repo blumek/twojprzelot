@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.Airport;
 
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import java.util.Map;
 @Getter
 @ToString
 class AirportAE {
+    private static final AirportAEMapper mapper = Mappers.getMapper(AirportAEMapper.class);
+
     @JsonProperty("airportId")
     private int id;
 
@@ -58,5 +62,9 @@ class AirportAE {
         private Map<String, String> country;
         private Map<String, String> city;
         private Map<String, String> airport;
+    }
+
+    public Airport toAirport() {
+        return mapper.mapToAirport(this);
     }
 }

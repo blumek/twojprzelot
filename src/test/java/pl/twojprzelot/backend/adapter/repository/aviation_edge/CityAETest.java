@@ -8,7 +8,6 @@ import pl.twojprzelot.backend.domain.entity.GeographicLocation;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityAETest {
-
     private static final int ID = 1;
     private static final String IATA_CODE = "IATA_CODE";
     private static final String COUNTRY_ISO_2_CODE = "COUNTRY_ISO_2_CODE";
