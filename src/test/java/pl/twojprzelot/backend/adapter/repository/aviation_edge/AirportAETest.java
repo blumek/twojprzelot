@@ -1,6 +1,5 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.twojprzelot.backend.domain.entity.Airport;
 import pl.twojprzelot.backend.domain.entity.City;
@@ -19,12 +18,10 @@ class AirportAETest {
     private static final String CITY_IATA_CODE = "CITY_IATA_CODE";
     private static final String COUNTRY_NAME = "COUNTRY_NAME";
     private static final String COUNTRY_ISO_2_CODE = "COUNTRY_ISO_2_CODE";
-    private AirportAE airportAE;
-    private Airport airport;
 
-    @BeforeEach
-    void setUp() {
-        airportAE = new AirportAE();
+    @Test
+    void toAirportTest() {
+        AirportAE airportAE = new AirportAE();
         airportAE.setId(ID);
         airportAE.setName(NAME);
         airportAE.setIataCode(IATA_CODE);
@@ -35,7 +32,7 @@ class AirportAETest {
         airportAE.setCountryName(COUNTRY_NAME);
         airportAE.setCountryIso2Code(COUNTRY_ISO_2_CODE);
 
-        airport = Airport.builder()
+        Airport airport = Airport.builder()
                 .id(ID)
                 .name(NAME)
                 .iataCode(IATA_CODE)
@@ -52,10 +49,7 @@ class AirportAETest {
                                 .build())
                         .build())
                 .build();
-    }
 
-    @Test
-    void toAirportTest_fullObject() {
         assertEquals(airport, airportAE.toAirport());
     }
 }
