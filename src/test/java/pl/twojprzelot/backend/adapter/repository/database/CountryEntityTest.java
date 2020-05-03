@@ -55,7 +55,18 @@ class CountryEntityTest {
     }
 
     @Test
-    void toCountryTest() {
+    void toCountryTest_fullObject() {
+        assertEquals(country, countryEntity.toCountry());
+    }
+
+    @Test
+    void toCountryTest_withoutCurrency() {
+        countryEntity.setCurrency(null);
+
+        country = country.toBuilder()
+                .currency(null)
+                .build();
+
         assertEquals(country, countryEntity.toCountry());
     }
 }
