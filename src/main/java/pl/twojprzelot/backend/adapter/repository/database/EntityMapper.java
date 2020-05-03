@@ -26,4 +26,6 @@ public interface EntityMapper {
     City mapToCity(CityEntity cityEntity);
 
     Airline mapToAirline(AirlineEntity airlineEntity);
+
+    Airport mapToAirport(AirportEntity airportEntity);
 }
