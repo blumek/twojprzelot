@@ -3,10 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import pl.twojprzelot.backend.domain.entity.City;
-import pl.twojprzelot.backend.domain.entity.Country;
-import pl.twojprzelot.backend.domain.entity.Currency;
-import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
+import pl.twojprzelot.backend.domain.entity.*;
 
 @Mapper
 public interface EntityMapper {
@@ -27,4 +24,6 @@ public interface EntityMapper {
     Currency mapToCurrency(CurrencyEntity currencyEntity);
 
     City mapToCity(CityEntity cityEntity);
+
+    Airline mapToAirline(AirlineEntity airlineEntity);
 }
