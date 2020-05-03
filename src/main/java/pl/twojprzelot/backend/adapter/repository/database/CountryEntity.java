@@ -11,10 +11,7 @@ import java.util.Map;
 
 import static javax.persistence.EnumType.STRING;
 
-@NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "country")
 class CountryEntity extends BaseEntity {
