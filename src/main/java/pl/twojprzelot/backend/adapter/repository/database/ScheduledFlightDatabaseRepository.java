@@ -25,11 +25,4 @@ public class ScheduledFlightDatabaseRepository implements ScheduledFlightReposit
                 .map(ScheduledFlightEntity::toScheduledFlight)
                 .collect(toList());
     }
-
-    @Override
-    public ScheduledFlight create(ScheduledFlight scheduledFlight) {
-        ScheduledFlightEntity scheduledFlightEntity = ScheduledFlightEntity.from(scheduledFlight);
-        ScheduledFlightEntity savedScheduledFlightEntity = scheduledFlightSpringRepository.save(scheduledFlightEntity);
-        return savedScheduledFlightEntity.toScheduledFlight();
-    }
 }

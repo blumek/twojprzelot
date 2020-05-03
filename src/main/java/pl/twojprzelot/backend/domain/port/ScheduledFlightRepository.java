@@ -7,5 +7,4 @@ import java.util.List;
 public interface ScheduledFlightRepository {
     List<ScheduledFlight> findAllByIataNumber(String iataNumber);
     List<ScheduledFlight> findAllByIcaoNumber(String icaoNumber);
-    ScheduledFlight create(ScheduledFlight scheduledFlight);
 }
