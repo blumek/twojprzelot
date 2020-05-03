@@ -17,9 +17,16 @@ import static javax.persistence.EnumType.STRING;
 @Entity(name = "country")
 class CountryEntity extends BaseEntity {
     private String name;
+
+    @Column(unique = true)
     private String iso2Code;
+
+    @Column(unique = true)
     private String iso3Code;
+
+    @Column(unique = true)
     private int isoNumber;
+
     private int population;
 
     @ManyToOne
