@@ -1,6 +1,8 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.*;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.Currency;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "currency")
 class CurrencyEntity extends BaseEntity {
+    private static final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
     private String name;
 
     @Column(unique = true)
@@ -16,4 +20,8 @@ class CurrencyEntity extends BaseEntity {
 
     @Column(unique = true)
     private int isoNumber;
+
+    public Currency toCurrency() {
+        return mapper.mapToCurrency(this);
+    }
 }
