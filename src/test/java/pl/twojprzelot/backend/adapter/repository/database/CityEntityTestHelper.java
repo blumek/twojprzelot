@@ -79,9 +79,8 @@ class CityEntityTestHelper {
     
 
     void removeCurrencyEntity() {
-        CountryEntity countryEntity = cityEntity.getCountry();
-        countryEntity.setCurrency(null);
-        cityEntity.setCountry(countryEntity);
+        cityEntity.getCountry()
+                .setCurrency(null);
     }
 
     void removeCurrency() {
