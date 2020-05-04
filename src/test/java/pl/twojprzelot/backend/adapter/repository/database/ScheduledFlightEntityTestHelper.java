@@ -237,4 +237,290 @@ class ScheduledFlightEntityTestHelper {
         airlineEntity.setName(AIRLINE_NAME);
         return airlineEntity;
     }
+
+    void removeFlightIdentifierEmbeddable() {
+        scheduledFlightEntity.setFlightIdentifier(null);
+    }
+
+    void removeFlightIdentifier() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .flightIdentifier(null)
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirport(FlightEndpointDetailsEmbeddable flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.setAirport(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirport(FlightEndpointDetails flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .airport(null)
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirportCity(FlightEndpointDetailsEmbeddable flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.getAirport()
+                .setCity(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirportCity(FlightEndpointDetails flightEndpointDetails) {
+         return flightEndpointDetails.toBuilder()
+                .airport(flightEndpointDetails.getAirport().toBuilder()
+                        .city(null)
+                        .build())
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirportGeographicLocation(FlightEndpointDetailsEmbeddable
+                                                                                flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.getAirport()
+                .setGeographicLocation(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirportGeographicLocation(FlightEndpointDetails
+                                                                                           flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .airport(flightEndpointDetails.getAirport().toBuilder()
+                        .geographicLocation(null)
+                        .build())
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirportCityCountry(FlightEndpointDetailsEmbeddable
+                                                                                flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.getAirport()
+                .getCity()
+                .setCountry(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirportCityCountry(FlightEndpointDetails
+                                                                                       flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .airport(flightEndpointDetails.getAirport().toBuilder()
+                        .city(flightEndpointDetails.getAirport().getCity().toBuilder()
+                                .country(null)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirportCityGeographicLocation(FlightEndpointDetailsEmbeddable
+                                                                         flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.getAirport()
+                .getCity()
+                .setGeographicLocation(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirportCityGeographicLocation(FlightEndpointDetails
+                                                                                flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .airport(flightEndpointDetails.getAirport().toBuilder()
+                        .city(flightEndpointDetails.getAirport().getCity().toBuilder()
+                                .geographicLocation(null)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableAirportCityCountryCurrency(FlightEndpointDetailsEmbeddable
+                                                                         flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.getAirport()
+                .getCity()
+                .getCountry()
+                .setCurrency(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsAirportCityCountryCurrency(FlightEndpointDetails
+                                                                                flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .airport(flightEndpointDetails.getAirport().toBuilder()
+                        .city(flightEndpointDetails.getAirport().getCity().toBuilder()
+                                .country(flightEndpointDetails.getAirport().getCity().getCountry().toBuilder()
+                                        .currency(null)
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+    }
+
+    void removeFlightEndpointDetailsEmbeddableFlightAirportDetails(FlightEndpointDetailsEmbeddable
+                                                                           flightEndpointDetailsEmbeddable) {
+        flightEndpointDetailsEmbeddable.setFlightAirportDetails(null);
+    }
+
+    FlightEndpointDetails removeFlightEndpointDetailsFlightAirportDetails(FlightEndpointDetails flightEndpointDetails) {
+        return flightEndpointDetails.toBuilder()
+                .flightAirportDetails(null)
+                .build();
+    }
+
+    void removeDepartureEntity() {
+        scheduledFlightEntity.setDeparture(null);
+    }
+
+    void removeDeparture() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(null)
+                .build();
+    }
+
+    void removeDepartureEntityAirport() {
+        removeFlightEndpointDetailsEmbeddableAirport(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirport() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirport(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityAirportCity() {
+        removeFlightEndpointDetailsEmbeddableAirportCity(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirportCity() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirportCity(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityAirportGeographicLocation() {
+        removeFlightEndpointDetailsEmbeddableAirportGeographicLocation(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirportGeographicLocation() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirportGeographicLocation(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityAirportCityCountry() {
+        removeFlightEndpointDetailsEmbeddableAirportCityCountry(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirportCityCountry() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirportCityCountry(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityAirportCityGeographicLocation() {
+        removeFlightEndpointDetailsEmbeddableAirportCityGeographicLocation(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirportCityGeographicLocation() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirportCityGeographicLocation(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityAirportCityCountryCurrency() {
+        removeFlightEndpointDetailsEmbeddableAirportCityCountryCurrency(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureAirportCityCountryCurrency() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsAirportCityCountryCurrency(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeDepartureEntityFlightAirportDetails() {
+        removeFlightEndpointDetailsEmbeddableFlightAirportDetails(scheduledFlightEntity.getDeparture());
+    }
+
+    void removeDepartureFlightAirportDetails() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .departure(removeFlightEndpointDetailsFlightAirportDetails(scheduledFlight.getDeparture()))
+                .build();
+    }
+
+    void removeArrivalEntity() {
+        scheduledFlightEntity.setArrival(null);
+    }
+
+    void removeArrival() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(null)
+                .build();
+    }
+
+    void removeArrivalEntityAirport() {
+        removeFlightEndpointDetailsEmbeddableAirport(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirport() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirport(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityAirportCity() {
+        removeFlightEndpointDetailsEmbeddableAirportCity(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirportCity() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirportCity(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityAirportGeographicLocation() {
+        removeFlightEndpointDetailsEmbeddableAirportGeographicLocation(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirportGeographicLocation() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirportGeographicLocation(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityAirportCityCountry() {
+        removeFlightEndpointDetailsEmbeddableAirportCityCountry(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirportCityCountry() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirportCityCountry(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityAirportCityGeographicLocation() {
+        removeFlightEndpointDetailsEmbeddableAirportCityGeographicLocation(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirportCityGeographicLocation() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirportCityGeographicLocation(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityAirportCityCountryCurrency() {
+        removeFlightEndpointDetailsEmbeddableAirportCityCountryCurrency(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalAirportCityCountryCurrency() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsAirportCityCountryCurrency(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeArrivalEntityFlightAirportDetails() {
+        removeFlightEndpointDetailsEmbeddableFlightAirportDetails(scheduledFlightEntity.getArrival());
+    }
+
+    void removeArrivalFlightAirportDetails() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .arrival(removeFlightEndpointDetailsFlightAirportDetails(scheduledFlight.getArrival()))
+                .build();
+    }
+
+    void removeAirlineEntity() {
+        scheduledFlightEntity.setAirline(null);
+    }
+
+    void removeAirline() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .airline(null)
+                .build();
+    }
 }
