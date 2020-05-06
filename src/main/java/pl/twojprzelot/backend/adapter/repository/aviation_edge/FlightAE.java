@@ -36,7 +36,7 @@ class FlightAE {
     @Setter
     @Getter
     @ToString
-    static class System {
+    static class getArrival {
         private String squawk;
         private long updated;
     }
