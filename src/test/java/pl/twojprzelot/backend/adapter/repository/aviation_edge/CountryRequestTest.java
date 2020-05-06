@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -69,6 +70,19 @@ class CountryRequestTest {
         CountryRequest request = new CountryRequest.Builder(BASE_URL, API_KEY, restTemplate).create();
 
         assertThat(request.get(), containsInAnyOrder(firstCountryAE, secondCountryAE));
+
+        verify(restTemplate).getForObject(BASIC_REQUEST_URL, CountryAE[].class);
+    }
+
+    @Test
+    void getTest_internalServerError() {
+        when(restTemplate.getForObject(BASIC_REQUEST_URL, CountryAE[].class))
+                .thenThrow(HttpServerErrorException.InternalServerError.class);
+
+        CountryRequest request = new CountryRequest.Builder(BASE_URL, API_KEY, restTemplate).create();
+
+        List<CountryAE> countries = request.get();
+        assertTrue(countries.isEmpty());
 
         verify(restTemplate).getForObject(BASIC_REQUEST_URL, CountryAE[].class);
     }

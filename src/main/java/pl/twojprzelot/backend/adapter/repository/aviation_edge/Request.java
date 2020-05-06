@@ -3,6 +3,8 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 import com.google.common.collect.Lists;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 import static lombok.AccessLevel.PACKAGE;
 
+@Slf4j
 @RequiredArgsConstructor(access = PACKAGE)
 @EqualsAndHashCode(exclude = "restTemplate")
 abstract class Request<T> {
@@ -24,14 +27,6 @@ abstract class Request<T> {
     public List<T> get() {
         String requestUrl = createRequestUrl();
         return request(requestUrl);
-    }
-
-    private List<T> request(String requestUrl) {
-        T[] requestedResources = restTemplate.getForObject(requestUrl, resourceArrayType);
-        if (requestedResources == null)
-            return Lists.newArrayList();
-
-        return Arrays.asList(requestedResources);
     }
 
     private String createRequestUrl() {
@@ -55,5 +50,25 @@ abstract class Request<T> {
                     .append("=")
                     .append(param.getValue());
         }
+    }
+
+    private List<T> request(String requestUrl) {
+        T[] requestedResources = getRequestedResources(requestUrl);
+
+        if (requestedResources == null)
+            return Lists.newArrayList();
+
+        return Arrays.asList(requestedResources);
+    }
+
+    private T[] getRequestedResources(String requestUrl) {
+        T[] requestedResources;
+        try {
+            requestedResources = restTemplate.getForObject(requestUrl, resourceArrayType);
+        } catch (HttpServerErrorException exception) {
+            log.error(exception.getMessage());
+            requestedResources = null;
+        }
+        return requestedResources;
     }
 }
