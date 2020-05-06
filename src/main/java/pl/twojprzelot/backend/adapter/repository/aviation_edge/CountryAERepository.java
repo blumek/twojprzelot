@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.port.CountryRepository;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 class CountryAERepository implements CountryRepository {
@@ -19,5 +22,15 @@ class CountryAERepository implements CountryRepository {
         return countryRequest.get().stream()
                 .findFirst()
                 .map(CountryAE::toCountry);
+    }
+
+    @Override
+    public List<Country> findAll() {
+        CountryRequest countryRequest = client.createCountryRequest()
+                .create();
+
+        return countryRequest.get().stream()
+                .map(CountryAE::toCountry)
+                .collect(toList());
     }
 }
