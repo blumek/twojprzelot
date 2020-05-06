@@ -8,6 +8,7 @@ import pl.twojprzelot.backend.domain.entity.*;
 @Mapper(uses = DomainMapper.class)
 interface AviationEdgeMapper {
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "airline.id", ignore = true)
     @Mapping(source = "departure.iataCode", target = "departure.airport.iataCode")
     @Mapping(source = "departure.icaoCode", target = "departure.airport.icaoCode")
     @Mapping(source = "departure.terminal", target = "departure.flightAirportDetails.terminal")
@@ -36,5 +37,6 @@ interface AviationEdgeMapper {
     Airline mapToAirline(AirlineAE airlineAE);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "airline.id", ignore = true)
     Flight mapToFlight(FlightAE flightAE);
 }
