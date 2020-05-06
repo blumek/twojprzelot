@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.twojprzelot.backend.domain.entity.Country;
 
@@ -15,9 +16,12 @@ class CountryAETest {
     private static final String NAME = "NAME";
     private static final int ID = 1;
 
-    @Test
-    void toCountryTest() {
-        CountryAE countryAE = new CountryAE();
+    private CountryAE countryAE;
+    private Country country;
+
+    @BeforeEach
+    void setUp() {
+        countryAE = new CountryAE();
         countryAE.setId(ID);
         countryAE.setIso2Code(ISO_2_CODE);
         countryAE.setIso3Code(ISO_3_CODE);
@@ -25,7 +29,7 @@ class CountryAETest {
         countryAE.setPopulation(POPULATION_TEXT);
         countryAE.setName(NAME);
 
-        Country country = Country.builder()
+        country = Country.builder()
                 .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .iso3Code(ISO_3_CODE)
@@ -33,7 +37,29 @@ class CountryAETest {
                 .population(POPULATION)
                 .name(NAME)
                 .build();
+    }
+
+    @Test
+    void toCountryTest_fullObject() {
+        assertEquals(country, countryAE.toCountry());
+    }
+
+    @Test
+    void toCountryTest_withoutCurrency() {
+        removeCountryAECurrencyData();
+        removeCountryCurrency();
 
         assertEquals(country, countryAE.toCountry());
+    }
+
+    private void removeCountryAECurrencyData() {
+        countryAE.setCurrencyName(null);
+        countryAE.setCurrencyCode(null);
+    }
+
+    private void removeCountryCurrency() {
+        country = country.toBuilder()
+                .currency(null)
+                .build();
     }
 }

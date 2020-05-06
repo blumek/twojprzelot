@@ -31,4 +31,17 @@ class AviationEdgeClientTest {
 
         assertEquals(expectedCountryRequest, countryRequest);
     }
+
+    @Test
+    void createCityRequestTest() {
+        AviationEdgeClient aviationEdgeClient = new AviationEdgeClient(API_KEY);
+        CityRequest cityRequest = aviationEdgeClient.createCityRequest()
+                .create();
+
+        CityRequest expectedCityRequest = new CityRequest.
+                Builder("https://aviation-edge.com/v2/public", API_KEY, new RestTemplate())
+                .create();
+
+        assertEquals(expectedCityRequest, cityRequest);
+    }
 }

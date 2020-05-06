@@ -2,11 +2,21 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import pl.twojprzelot.backend.adapter.mapper.DomainMapper;
 import pl.twojprzelot.backend.domain.entity.*;
 
-@Mapper
+@Mapper(uses = DomainMapper.class)
 interface AviationEdgeMapper {
-    Airline mapToAirline(AirlineAE airlineAE);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "departure.iataCode", target = "departure.airport.iataCode")
+    @Mapping(source = "departure.icaoCode", target = "departure.airport.icaoCode")
+    @Mapping(source = "departure.terminal", target = "departure.flightAirportDetails.terminal")
+    @Mapping(source = "departure.gate", target = "departure.flightAirportDetails.gate")
+    @Mapping(source = "arrival.iataCode", target = "arrival.airport.iataCode")
+    @Mapping(source = "arrival.icaoCode", target = "arrival.airport.icaoCode")
+    @Mapping(source = "arrival.terminal", target = "arrival.flightAirportDetails.terminal")
+    @Mapping(source = "arrival.gate", target = "arrival.flightAirportDetails.gate")
+    ScheduledFlight mapToScheduledFlight(ScheduledFlightAE scheduledFlightAE);
 
     @Mapping(source = "latitude", target = "geographicLocation.latitude")
     @Mapping(source = "longitude", target = "geographicLocation.longitude")
@@ -23,17 +33,8 @@ interface AviationEdgeMapper {
     @Mapping(ignore = true, target = "currency")
     Country mapToCountry(CountryAE countryAE);
 
-    @Mapping(target = "id", ignore = true)
-    Flight mapToFlight(FlightAE flightAE);
+    Airline mapToAirline(AirlineAE airlineAE);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "departure.iataCode", target = "departure.airport.iataCode")
-    @Mapping(source = "departure.icaoCode", target = "departure.airport.icaoCode")
-    @Mapping(source = "departure.terminal", target = "departure.flightAirportDetails.terminal")
-    @Mapping(source = "departure.gate", target = "departure.flightAirportDetails.gate")
-    @Mapping(source = "arrival.iataCode", target = "arrival.airport.iataCode")
-    @Mapping(source = "arrival.icaoCode", target = "arrival.airport.icaoCode")
-    @Mapping(source = "arrival.terminal", target = "arrival.flightAirportDetails.terminal")
-    @Mapping(source = "arrival.gate", target = "arrival.flightAirportDetails.gate")
-    ScheduledFlight mapToScheduledFlight(ScheduledFlightAE scheduledFlightAE);
+    Flight mapToFlight(FlightAE flightAE);
 }
