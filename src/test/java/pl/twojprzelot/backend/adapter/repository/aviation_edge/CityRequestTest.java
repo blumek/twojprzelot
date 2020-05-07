@@ -37,9 +37,9 @@ class CityRequestTest {
 
         CityRequest request = new CityRequest.Builder(BASE_URL, API_KEY, restTemplate).create();
 
-        List<CityAE> countries = request.get();
+        List<CityAE> cities = request.get();
 
-        assertTrue(countries.isEmpty());
+        assertTrue(cities.isEmpty());
         verify(restTemplate).getForObject(BASIC_REQUEST_URL, CityAE[].class);
     }
 
@@ -50,9 +50,9 @@ class CityRequestTest {
 
         CityRequest request = new CityRequest.Builder(BASE_URL, API_KEY, restTemplate).create();
 
-        List<CityAE> countries = request.get();
+        List<CityAE> cities = request.get();
 
-        assertTrue(countries.isEmpty());
+        assertTrue(cities.isEmpty());
         verify(restTemplate).getForObject(BASIC_REQUEST_URL, CityAE[].class);
     }
 
@@ -81,8 +81,8 @@ class CityRequestTest {
 
         CityRequest request = new CityRequest.Builder(BASE_URL, API_KEY, restTemplate).create();
 
-        List<CityAE> countries = request.get();
-        assertTrue(countries.isEmpty());
+        List<CityAE> cities = request.get();
+        assertTrue(cities.isEmpty());
 
         verify(restTemplate).getForObject(BASIC_REQUEST_URL, CityAE[].class);
     }

@@ -23,4 +23,8 @@ class AviationEdgeClient {
     public CityRequest.Builder createCityRequest() {
         return new CityRequest.Builder(URL, apiKey, new RestTemplate());
     }
+
+    public AirportRequest.Builder createAirportRequest() {
+        return new AirportRequest.Builder(URL, apiKey, new RestTemplate());
+    }
 }

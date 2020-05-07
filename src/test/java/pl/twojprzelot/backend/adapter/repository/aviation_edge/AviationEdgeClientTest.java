@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AviationEdgeClientTest {
+    private static final String URL = "https://aviation-edge.com/v2/public";
     private static final String API_KEY = "API_KEY";
 
     @Test
@@ -25,8 +26,7 @@ class AviationEdgeClientTest {
         CountryRequest countryRequest = aviationEdgeClient.createCountryRequest()
                 .create();
 
-        CountryRequest expectedCountryRequest = new CountryRequest.
-                Builder("https://aviation-edge.com/v2/public", API_KEY, new RestTemplate())
+        CountryRequest expectedCountryRequest = new CountryRequest.Builder(URL, API_KEY, new RestTemplate())
                 .create();
 
         assertEquals(expectedCountryRequest, countryRequest);
@@ -38,10 +38,21 @@ class AviationEdgeClientTest {
         CityRequest cityRequest = aviationEdgeClient.createCityRequest()
                 .create();
 
-        CityRequest expectedCityRequest = new CityRequest.
-                Builder("https://aviation-edge.com/v2/public", API_KEY, new RestTemplate())
+        CityRequest expectedCityRequest = new CityRequest.Builder(URL, API_KEY, new RestTemplate())
                 .create();
 
         assertEquals(expectedCityRequest, cityRequest);
+    }
+
+    @Test
+    void createAirportRequestTest() {
+        AviationEdgeClient aviationEdgeClient = new AviationEdgeClient(API_KEY);
+        AirportRequest airportRequest = aviationEdgeClient.createAirportRequest()
+                .create();
+
+        AirportRequest expectedAirportRequest = new AirportRequest.Builder(URL, API_KEY, new RestTemplate())
+                .create();
+
+        assertEquals(expectedAirportRequest, airportRequest);
     }
 }
