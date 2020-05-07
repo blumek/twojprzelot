@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Airline;
 import pl.twojprzelot.backend.domain.port.AirlineRepository;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 class AirlineDatabaseRepository implements AirlineRepository {
@@ -20,5 +23,12 @@ class AirlineDatabaseRepository implements AirlineRepository {
     public Optional<Airline> findByIcaoCode(String icaoCode) {
         return repository.findByIcaoCode(icaoCode)
                 .map(AirlineEntity::toAirline);
+    }
+
+    @Override
+    public List<Airline> findAll() {
+        return repository.findAll().stream()
+                .map(AirlineEntity::toAirline)
+                .collect(toList());
     }
 }
