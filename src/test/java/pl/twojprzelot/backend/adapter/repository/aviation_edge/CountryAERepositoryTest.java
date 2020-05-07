@@ -55,7 +55,6 @@ class CountryAERepositoryTest {
         anotherExpectedCountry = Country.builder()
                 .id(ANOTHER_ID)
                 .build();
-
     }
 
     @Test
@@ -71,6 +70,7 @@ class CountryAERepositoryTest {
 
         assertEquals(Optional.empty(), countryAERepository.findByIso2Code(ISO_2_CODE));
 
+        verify(countryRequestBuilder).iso2Code(ISO_2_CODE);
         verify(countryRequest).get();
     }
 
@@ -87,6 +87,7 @@ class CountryAERepositoryTest {
 
         assertEquals(Optional.of(expectedCountry), countryAERepository.findByIso2Code(ISO_2_CODE));
 
+        verify(countryRequestBuilder).iso2Code(ISO_2_CODE);
         verify(countryRequest).get();
     }
 
