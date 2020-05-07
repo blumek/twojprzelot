@@ -9,9 +9,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.City;
 
+import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,6 +37,7 @@ class CityAERepositoryTest {
     private CityAE cityAE;
     private CityAE anotherCityAE;
     private City expectedCity;
+    private City anotherExpectedCity;
 
     @BeforeEach
     void setUp() {
@@ -47,6 +52,10 @@ class CityAERepositoryTest {
 
         expectedCity = City.builder()
                 .id(ID)
+                .build();
+
+        anotherExpectedCity = City.builder()
+                .id(ANOTHER_ID)
                 .build();
     }
 
@@ -63,6 +72,7 @@ class CityAERepositoryTest {
 
         assertEquals(Optional.empty(), cityAERepository.findByIataCode(IATA_CODE));
 
+        verify(cityRequestBuilder).iataCode(IATA_CODE);
         verify(cityRequest).get();
     }
 
@@ -78,6 +88,35 @@ class CityAERepositoryTest {
                 .thenReturn(Lists.newArrayList(cityAE, anotherCityAE));
 
         assertEquals(Optional.of(expectedCity), cityAERepository.findByIataCode(IATA_CODE));
+
+        verify(cityRequestBuilder).iataCode(IATA_CODE);
+        verify(cityRequest).get();
+    }
+
+    @Test
+    void findAllTest_noCitiesAvailable() {
+        when(cityRequestBuilder.create())
+                .thenReturn(cityRequest);
+
+        when(cityRequest.get())
+                .thenReturn(Lists.newArrayList());
+
+        List<City> foundCities = cityAERepository.findAll();
+        assertTrue(foundCities.isEmpty());
+
+        verify(cityRequest).get();
+    }
+
+    @Test
+    void findAllTest_twoCitiesAvailable() {
+        when(cityRequestBuilder.create())
+                .thenReturn(cityRequest);
+
+        when(cityRequest.get())
+                .thenReturn(Lists.newArrayList(cityAE, anotherCityAE));
+
+        List<City> foundCities = cityAERepository.findAll();
+        assertThat(foundCities, containsInAnyOrder(expectedCity, anotherExpectedCity));
 
         verify(cityRequest).get();
     }
