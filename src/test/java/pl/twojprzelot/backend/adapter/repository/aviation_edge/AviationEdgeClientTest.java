@@ -55,4 +55,16 @@ class AviationEdgeClientTest {
 
         assertEquals(expectedAirportRequest, airportRequest);
     }
+
+    @Test
+    void createAirlineRequestTest() {
+        AviationEdgeClient aviationEdgeClient = new AviationEdgeClient(API_KEY);
+        AirlineRequest airlineRequest = aviationEdgeClient.createAirlineRequest()
+                .create();
+
+        AirlineRequest expectedAirlineRequest = new AirlineRequest.Builder(URL, API_KEY, new RestTemplate())
+                .create();
+
+        assertEquals(expectedAirlineRequest, airlineRequest);
+    }
 }

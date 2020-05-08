@@ -27,4 +27,8 @@ class AviationEdgeClient {
     public AirportRequest.Builder createAirportRequest() {
         return new AirportRequest.Builder(URL, apiKey, new RestTemplate());
     }
+
+    public AirlineRequest.Builder createAirlineRequest() {
+        return new AirlineRequest.Builder(URL, apiKey, new RestTemplate());
+    }
 }
