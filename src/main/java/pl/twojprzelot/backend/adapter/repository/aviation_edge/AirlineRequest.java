@@ -7,7 +7,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @EqualsAndHashCode(callSuper = true)
 class AirlineRequest extends Request<AirlineAE> {
-    private static final String AIRPORT_RESOURCE_URL = "/airlineDatabase";
+    private static final String AIRLINE_RESOURCE_URL = "/airlineDatabase";
     private static final String IATA_CODE = "codeIataAirline";
 
     AirlineRequest(String url, String apiKey, RestTemplate restTemplate) {
@@ -34,7 +34,7 @@ class AirlineRequest extends Request<AirlineAE> {
         }
 
         private String getFullResourceUrl(String baseUrl) {
-            return baseUrl + AIRPORT_RESOURCE_URL;
+            return baseUrl + AIRLINE_RESOURCE_URL;
         }
     }
 }

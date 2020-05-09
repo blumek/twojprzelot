@@ -3,8 +3,8 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AviationEdgeClientTest {
     private static final String URL = "https://aviation-edge.com/v2/public";
@@ -66,5 +66,17 @@ class AviationEdgeClientTest {
                 .create();
 
         assertEquals(expectedAirlineRequest, airlineRequest);
+    }
+
+    @Test
+    void createScheduledFlightRequestTest() {
+        AviationEdgeClient aviationEdgeClient = new AviationEdgeClient(API_KEY);
+        ScheduledFlightRequest scheduledFlightRequest = aviationEdgeClient.createScheduledFlightRequest()
+                .create();
+
+        ScheduledFlightRequest expectedScheduledFlightRequest = new ScheduledFlightRequest.Builder(URL, API_KEY, new RestTemplate())
+                .create();
+
+        assertEquals(expectedScheduledFlightRequest, scheduledFlightRequest);
     }
 }

@@ -31,4 +31,8 @@ class AviationEdgeClient {
     public AirlineRequest.Builder createAirlineRequest() {
         return new AirlineRequest.Builder(URL, apiKey, new RestTemplate());
     }
+
+    public ScheduledFlightRequest.Builder createScheduledFlightRequest() {
+        return new ScheduledFlightRequest.Builder(URL, apiKey, new RestTemplate());
+    }
 }
