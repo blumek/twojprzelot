@@ -24,4 +24,8 @@ class AirlineEntity extends BaseEntity {
     public Airline toAirline() {
         return mapper.mapToAirline(this);
     }
+
+    public static AirlineEntity from(Airline airline) {
+        return mapper.mapToAirlineEntity(airline);
+    }
 }

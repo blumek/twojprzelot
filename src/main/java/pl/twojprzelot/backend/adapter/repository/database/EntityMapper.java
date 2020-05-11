@@ -36,5 +36,8 @@ public interface EntityMapper {
 
     Airline mapToAirline(AirlineEntity airlineEntity);
 
+    @InheritInverseConfiguration
+    AirlineEntity mapToAirlineEntity(Airline airline);
+
     Airport mapToAirport(AirportEntity airportEntity);
 }

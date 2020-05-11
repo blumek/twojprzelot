@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.twojprzelot.backend.domain.entity.Airline;
 
@@ -11,21 +12,32 @@ class AirlineEntityTest {
     private static final String ICAO_CODE = "ICAO_CODE";
     private static final String NAME = "NAME";
 
-    @Test
-    void toAirlineTest() {
-        AirlineEntity airlineEntity = new AirlineEntity();
+    private AirlineEntity airlineEntity;
+    private Airline airline;
+
+    @BeforeEach
+    void setUp() {
+        airlineEntity = new AirlineEntity();
         airlineEntity.setId(ID);
         airlineEntity.setIataCode(IATA_CODE);
         airlineEntity.setIcaoCode(ICAO_CODE);
         airlineEntity.setName(NAME);
 
-        Airline airline = Airline.builder()
+        airline = Airline.builder()
                 .id(ID)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .name(NAME)
                 .build();
+    }
 
+    @Test
+    void toAirlineTest() {
         assertEquals(airline, airlineEntity.toAirline());
+    }
+
+    @Test
+    void fromTest() {
+        assertEquals(airlineEntity, AirlineEntity.from(airline));
     }
 }
