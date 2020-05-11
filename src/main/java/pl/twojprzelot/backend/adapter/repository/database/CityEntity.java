@@ -37,4 +37,8 @@ class CityEntity extends BaseEntity {
     public City toCity() {
         return mapper.mapToCity(this);
     }
+
+    public static CityEntity from(City city) {
+        return mapper.mapToCityEntity(city);
+    }
 }

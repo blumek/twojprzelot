@@ -40,4 +40,33 @@ class CityEntityTest extends CityEntityTestHelper {
 
         assertEquals(city, cityEntity.toCity());
     }
+
+    @Test
+    void fromTest_fullObject() {
+        assertEquals(cityEntity, CityEntity.from(city));
+    }
+
+    @Test
+    void fromTest_withoutCurrency() {
+        removeCurrencyEntity();
+        removeCurrency();
+
+        assertEquals(cityEntity, CityEntity.from(city));
+    }
+
+    @Test
+    void fromTest_withoutCountry() {
+        removeCountryEntity();
+        removeCountry();
+
+        assertEquals(cityEntity, CityEntity.from(city));
+    }
+
+    @Test
+    void fromTest_withoutGeographicLocation() {
+        removeGeographicLocationEmbeddable();
+        removeGeographicLocation();
+
+        assertEquals(cityEntity, CityEntity.from(city));
+    }
 }
