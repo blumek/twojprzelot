@@ -10,18 +10,25 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 public class ScheduledFlightDatabaseRepository implements ScheduledFlightRepository {
-    private final ScheduledFlightSpringRepository scheduledFlightSpringRepository;
+    private final ScheduledFlightSpringRepository repository;
+
+    @Override
+    public List<ScheduledFlight> findAll() {
+        return repository.findAll().stream()
+                .map(ScheduledFlightEntity::toScheduledFlight)
+                .collect(toList());
+    }
 
     @Override
     public List<ScheduledFlight> findAllByIataNumber(String iataNumber) {
-        return scheduledFlightSpringRepository.findAllByFlightIdentifier_IataNumber(iataNumber).stream()
+        return repository.findAllByFlightIdentifier_IataNumber(iataNumber).stream()
                 .map(ScheduledFlightEntity::toScheduledFlight)
                 .collect(toList());
     }
 
     @Override
     public List<ScheduledFlight> findAllByIcaoNumber(String icaoNumber) {
-        return scheduledFlightSpringRepository.findAllByFlightIdentifier_IcaoNumber(icaoNumber).stream()
+        return repository.findAllByFlightIdentifier_IcaoNumber(icaoNumber).stream()
                 .map(ScheduledFlightEntity::toScheduledFlight)
                 .collect(toList());
     }

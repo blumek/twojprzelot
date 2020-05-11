@@ -21,6 +21,7 @@ class ScheduledFlightDatabaseRepositoryTest {
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
     private static final int ID = 1;
+    private static final int ANOTHER_ID = 2;
 
     @InjectMocks
     private ScheduledFlightDatabaseRepository scheduledFlightDatabaseRepository;
@@ -28,16 +29,47 @@ class ScheduledFlightDatabaseRepositoryTest {
     private ScheduledFlightSpringRepository scheduledFlightSpringRepository;
 
     private ScheduledFlightEntity scheduledFlightEntity;
-    private ScheduledFlight scheduledFlight;
+    private ScheduledFlightEntity anotherScheduledFlightEntity;
+    private ScheduledFlight expectedScheduledFlight;
+    private ScheduledFlight anotherExpectedScheduledFlight;
 
     @BeforeEach
     void setUp() {
         scheduledFlightEntity = new ScheduledFlightEntity();
         scheduledFlightEntity.setId(ID);
 
-        scheduledFlight = ScheduledFlight.builder()
+        anotherScheduledFlightEntity = new ScheduledFlightEntity();
+        anotherScheduledFlightEntity.setId(ANOTHER_ID);
+
+        expectedScheduledFlight = ScheduledFlight.builder()
                 .id(ID)
                 .build();
+
+        anotherExpectedScheduledFlight = ScheduledFlight.builder()
+                .id(ANOTHER_ID)
+                .build();
+    }
+
+    @Test
+    void findAllTest_noScheduledFlightsAvailable() {
+        when(scheduledFlightSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList());
+
+        List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAll();
+        assertTrue(foundFlights.isEmpty());
+
+        verify(scheduledFlightSpringRepository).findAll();
+    }
+
+    @Test
+    void findAllTest_twoScheduledFlightsAvailable() {
+        when(scheduledFlightSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList(scheduledFlightEntity, anotherScheduledFlightEntity));
+
+        List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAll();
+        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight, anotherExpectedScheduledFlight));
+
+        verify(scheduledFlightSpringRepository).findAll();
     }
 
     @Test
@@ -47,6 +79,8 @@ class ScheduledFlightDatabaseRepositoryTest {
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIataNumber(IATA_NUMBER);
         assertTrue(foundFlights.isEmpty());
+
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IataNumber(IATA_NUMBER);
     }
 
     @Test
@@ -55,7 +89,9 @@ class ScheduledFlightDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIataNumber(IATA_NUMBER);
-        assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
+        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight));
+
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IataNumber(IATA_NUMBER);
     }
 
     @Test
@@ -65,6 +101,8 @@ class ScheduledFlightDatabaseRepositoryTest {
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIcaoNumber(ICAO_NUMBER);
         assertTrue(foundFlights.isEmpty());
+
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
     }
 
     @Test
@@ -73,6 +111,8 @@ class ScheduledFlightDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIcaoNumber(ICAO_NUMBER);
-        assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
+        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight));
+
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
     }
 }

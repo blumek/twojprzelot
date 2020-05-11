@@ -12,11 +12,13 @@ import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import java.util.List;
 
+import static java.lang.Long.MAX_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
 
 @ExtendWith(MockitoExtension.class)
 class ScheduledFlightAERepositoryTest {
@@ -80,7 +82,51 @@ class ScheduledFlightAERepositoryTest {
     }
 
     @Test
-    void findByIataNumberTest_scheduledFlightWithGivenIataNumberNotExists() {
+    void findAllTest_noScheduledFlightsAvailable() {
+        when(scheduledFlightRequestBuilder.limit(MAX_VALUE))
+                .thenReturn(scheduledFlightRequestBuilder);
+
+        when(scheduledFlightRequestBuilder.type(DEPARTURE))
+                .thenReturn(scheduledFlightRequestBuilder);
+
+        when(scheduledFlightRequestBuilder.create())
+                .thenReturn(scheduledFlightRequest);
+
+        when(scheduledFlightRequest.get())
+                .thenReturn(Lists.newArrayList());
+
+        List<ScheduledFlight> foundScheduledFlights = scheduledFlightAERepository.findAll();
+        assertTrue(foundScheduledFlights.isEmpty());
+
+        verify(scheduledFlightRequestBuilder).limit(MAX_VALUE);
+        verify(scheduledFlightRequestBuilder).type(DEPARTURE);
+        verify(scheduledFlightRequest).get();
+    }
+
+    @Test
+    void findAllTest_twoScheduledFlightsAvailable() {
+        when(scheduledFlightRequestBuilder.limit(MAX_VALUE))
+                .thenReturn(scheduledFlightRequestBuilder);
+
+        when(scheduledFlightRequestBuilder.type(DEPARTURE))
+                .thenReturn(scheduledFlightRequestBuilder);
+
+        when(scheduledFlightRequestBuilder.create())
+                .thenReturn(scheduledFlightRequest);
+
+        when(scheduledFlightRequest.get())
+                .thenReturn(Lists.newArrayList(scheduledFlightAE, anotherScheduledFlightAE));
+
+        List<ScheduledFlight> foundScheduledFlights = scheduledFlightAERepository.findAll();
+        assertThat(foundScheduledFlights, containsInAnyOrder(expectedScheduledFlight, anotherExpectedScheduledFlight));
+
+        verify(scheduledFlightRequestBuilder).limit(MAX_VALUE);
+        verify(scheduledFlightRequestBuilder).type(DEPARTURE);
+        verify(scheduledFlightRequest).get();
+    }
+
+    @Test
+    void findAllByIataNumberTest_scheduledFlightWithGivenIataNumberNotExists() {
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -98,7 +144,7 @@ class ScheduledFlightAERepositoryTest {
     }
 
     @Test
-    void findByIataNumberTest_scheduledFlightWithGivenIataNumberExists() {
+    void findAllByIataNumberTest_scheduledFlightWithGivenIataNumberExists() {
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -116,7 +162,7 @@ class ScheduledFlightAERepositoryTest {
     }
 
     @Test
-    void findByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberNotExists() {
+    void findAllByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberNotExists() {
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -134,7 +180,7 @@ class ScheduledFlightAERepositoryTest {
     }
 
     @Test
-    void findByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberExists() {
+    void findAllByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberExists() {
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
