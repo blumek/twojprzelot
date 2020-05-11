@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.twojprzelot.backend.domain.entity.Currency;
 
@@ -11,21 +12,32 @@ class CurrencyEntityTest {
     private static final String CODE = "CODE";
     private static final String NAME = "NAME";
 
-    @Test
-    void toCurrencyTest() {
-        CurrencyEntity currencyEntity = new CurrencyEntity();
+    private CurrencyEntity currencyEntity;
+    private Currency currency;
+
+    @BeforeEach
+    void setUp() {
+        currencyEntity = new CurrencyEntity();
         currencyEntity.setId(ID);
         currencyEntity.setIsoNumber(ISO_NUMBER);
         currencyEntity.setCode(CODE);
         currencyEntity.setName(NAME);
 
-        Currency currency = Currency.builder()
+        currency = Currency.builder()
                 .id(ID)
                 .isoNumber(ISO_NUMBER)
                 .code(CODE)
                 .name(NAME)
                 .build();
+    }
 
+    @Test
+    void toCurrencyTest() {
         assertEquals(currency, currencyEntity.toCurrency());
+    }
+
+    @Test
+    void fromTest() {
+        assertEquals(currencyEntity, CurrencyEntity.from(currency));
     }
 }

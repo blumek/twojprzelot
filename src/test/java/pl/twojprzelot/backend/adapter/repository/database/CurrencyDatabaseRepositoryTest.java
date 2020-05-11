@@ -55,6 +55,28 @@ class CurrencyDatabaseRepositoryTest {
     }
 
     @Test
+    void findAllTest_noCurrenciesAvailable() {
+        when(currencySpringRepository.findAll())
+                .thenReturn(Lists.newArrayList());
+
+        List<Currency> foundCurrencies = currencyDatabaseRepository.findAll();
+        assertTrue(foundCurrencies.isEmpty());
+
+        verify(currencySpringRepository).findAll();
+    }
+
+    @Test
+    void findAllTest_twoCurrenciesAvailable() {
+        when(currencySpringRepository.findAll())
+                .thenReturn(Lists.newArrayList(currencyEntity, anotherCurrencyEntity));
+
+        List<Currency> foundCurrencies = currencyDatabaseRepository.findAll();
+        assertThat(foundCurrencies, containsInAnyOrder(currency, anotherCurrency));
+
+        verify(currencySpringRepository).findAll();
+    }
+
+    @Test
     void findByCodeTest_currencyWithGivenCodeNotExists() {
         when(currencySpringRepository.findByCode(CODE))
                 .thenReturn(Optional.empty());
@@ -75,24 +97,27 @@ class CurrencyDatabaseRepositoryTest {
     }
 
     @Test
-    void findAllTest_noCurrenciesAvailable() {
-        when(currencySpringRepository.findAll())
-                .thenReturn(Lists.newArrayList());
+    void findByCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.findByCode(null));
 
-        List<Currency> foundCurrencies = currencyDatabaseRepository.findAll();
-        assertTrue(foundCurrencies.isEmpty());
-
-        verify(currencySpringRepository).findAll();
+        verify(currencySpringRepository, never()).findByCode(null);
     }
 
     @Test
-    void findAllTest_twoCurrenciesAvailable() {
-        when(currencySpringRepository.findAll())
-                .thenReturn(Lists.newArrayList(currencyEntity, anotherCurrencyEntity));
+    void saveTest() {
+        when(currencySpringRepository.save(currencyEntity))
+                .thenReturn(currencyEntity);
 
-        List<Currency> foundCurrencies = currencyDatabaseRepository.findAll();
-        assertThat(foundCurrencies, containsInAnyOrder(currency, anotherCurrency));
+        Currency saveCurrency = currencyDatabaseRepository.save(currency);
+        assertEquals(currency, saveCurrency);
 
-        verify(currencySpringRepository).findAll();
+        verify(currencySpringRepository).save(currencyEntity);
+    }
+
+    @Test
+    void saveTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.save(null));
+
+        verify(currencySpringRepository, never()).save(null);
     }
 }

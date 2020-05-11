@@ -24,4 +24,8 @@ class CurrencyEntity extends BaseEntity {
     public Currency toCurrency() {
         return mapper.mapToCurrency(this);
     }
+
+    public static CurrencyEntity from(Currency currency) {
+        return mapper.mapToCurrencyEntity(currency);
+    }
 }

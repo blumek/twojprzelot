@@ -23,6 +23,9 @@ public interface EntityMapper {
 
     Currency mapToCurrency(CurrencyEntity currencyEntity);
 
+    @InheritInverseConfiguration
+    CurrencyEntity mapToCurrencyEntity(Currency currency);
+
     City mapToCity(CityEntity cityEntity);
 
     Airline mapToAirline(AirlineEntity airlineEntity);

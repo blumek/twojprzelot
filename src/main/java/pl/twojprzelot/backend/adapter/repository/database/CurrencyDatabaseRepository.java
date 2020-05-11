@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.port.CurrencyRepository;
@@ -14,15 +15,22 @@ class CurrencyDatabaseRepository implements CurrencyRepository {
     private final CurrencySpringRepository repository;
 
     @Override
-    public Optional<Currency> findByCode(String code) {
+    public List<Currency> findAll() {
+        return repository.findAll().stream()
+                .map(CurrencyEntity::toCurrency)
+                .collect(toList());
+    }
+
+    @Override
+    public Optional<Currency> findByCode(@NonNull String code) {
         return repository.findByCode(code)
                 .map(CurrencyEntity::toCurrency);
     }
 
     @Override
-    public List<Currency> findAll() {
-        return repository.findAll().stream()
-                .map(CurrencyEntity::toCurrency)
-                .collect(toList());
+    public Currency save(@NonNull Currency currency) {
+        CurrencyEntity currencyToSave = CurrencyEntity.from(currency);
+        CurrencyEntity savedCurrency = repository.save(currencyToSave);
+        return savedCurrency.toCurrency();
     }
 }
