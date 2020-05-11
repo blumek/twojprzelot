@@ -56,4 +56,49 @@ class AirportEntityTest extends AirportEntityTestHelper {
 
         assertEquals(airport, airportEntity.toAirport());
     }
+
+    @Test
+    void fromTest_fullObject() {
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
+
+    @Test
+    void fromTest_withoutCurrency() {
+        removeCurrencyEntity();
+        removeCurrency();
+
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
+
+    @Test
+    void fromTest_withoutCountry() {
+        removeCountryEntity();
+        removeCountry();
+
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
+
+    @Test
+    void fromTest_withoutCityGeographicLocation() {
+        removeCityGeographicLocationEmbeddable();
+        removeCityGeographicLocation();
+
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
+
+    @Test
+    void fromTest_withoutGeographicLocation() {
+        removeGeographicLocationEmbeddable();
+        removeGeographicLocation();
+
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
+
+    @Test
+    void fromTest_withoutCity() {
+        removeCityEntity();
+        removeCity();
+
+        assertEquals(airportEntity, AirportEntity.from(airport));
+    }
 }

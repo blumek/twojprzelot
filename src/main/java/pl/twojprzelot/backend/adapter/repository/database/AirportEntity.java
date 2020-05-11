@@ -40,4 +40,8 @@ class AirportEntity extends BaseEntity {
     public Airport toAirport() {
         return mapper.mapToAirport(this);
     }
+
+    public static AirportEntity from(Airport airport) {
+        return mapper.mapToAirportEntity(airport);
+    }
 }
