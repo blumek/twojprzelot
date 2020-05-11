@@ -3,7 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Currency;
-import pl.twojprzelot.backend.domain.port.CurrencyRepository;
+import pl.twojprzelot.backend.domain.port.CurrencyMutableRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CurrencyDatabaseRepository implements CurrencyRepository {
+class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     private final CurrencySpringRepository repository;
 
     @Override
@@ -28,9 +28,9 @@ class CurrencyDatabaseRepository implements CurrencyRepository {
     }
 
     @Override
-    public Currency save(@NonNull Currency currency) {
-        CurrencyEntity currencyToSave = CurrencyEntity.from(currency);
-        CurrencyEntity savedCurrency = repository.save(currencyToSave);
-        return savedCurrency.toCurrency();
+    public Currency create(@NonNull Currency currency) {
+        CurrencyEntity currencyToCreate = CurrencyEntity.from(currency);
+        CurrencyEntity createdCurrency = repository.save(currencyToCreate);
+        return createdCurrency.toCurrency();
     }
 }

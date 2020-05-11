@@ -104,19 +104,19 @@ class CurrencyDatabaseRepositoryTest {
     }
 
     @Test
-    void saveTest() {
+    void createTest() {
         when(currencySpringRepository.save(currencyEntity))
                 .thenReturn(currencyEntity);
 
-        Currency saveCurrency = currencyDatabaseRepository.save(currency);
-        assertEquals(currency, saveCurrency);
+        Currency createdCurrency = currencyDatabaseRepository.create(currency);
+        assertEquals(currency, createdCurrency);
 
         verify(currencySpringRepository).save(currencyEntity);
     }
 
     @Test
-    void saveTest_nullPassed() {
-        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.save(null));
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.create(null));
 
         verify(currencySpringRepository, never()).save(null);
     }

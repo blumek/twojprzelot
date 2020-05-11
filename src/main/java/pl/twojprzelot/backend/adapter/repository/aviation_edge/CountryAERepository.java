@@ -2,7 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Country;
-import pl.twojprzelot.backend.domain.port.ImmutableCountryRepository;
+import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CountryAERepository implements ImmutableCountryRepository {
+class CountryAERepository implements CountryImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override
