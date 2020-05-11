@@ -16,7 +16,7 @@ public interface EntityMapper {
     @Mapping(ignore = true, target = "arrival.airport.city.country.nameTranslations")
     ScheduledFlightEntity mapToScheduledFlightEntity(ScheduledFlight scheduledFlight);
 
-    @InheritInverseConfiguration(name = "mapToScheduledFlightEntity")
+    @InheritInverseConfiguration
     ScheduledFlight mapFromScheduledFlightEntity(ScheduledFlightEntity scheduledFlightEntity);
 
     Country mapToCountry(CountryEntity countryEntity);

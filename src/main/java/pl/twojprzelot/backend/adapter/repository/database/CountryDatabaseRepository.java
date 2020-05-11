@@ -3,7 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Country;
-import pl.twojprzelot.backend.domain.port.CountryRepository;
+import pl.twojprzelot.backend.domain.port.MutableCountryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CountryDatabaseRepository implements CountryRepository {
+class CountryDatabaseRepository implements MutableCountryRepository {
     private final CountrySpringRepository repository;
 
     @Override

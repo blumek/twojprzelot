@@ -2,7 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.Country;
-import pl.twojprzelot.backend.domain.port.CountryRepository;
+import pl.twojprzelot.backend.domain.port.ImmutableCountryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CountryAERepository implements CountryRepository {
+class CountryAERepository implements ImmutableCountryRepository {
     private final AviationEdgeClient client;
 
     @Override
@@ -32,10 +32,5 @@ class CountryAERepository implements CountryRepository {
         return countryRequest.get().stream()
                 .map(CountryAE::toCountry)
                 .collect(toList());
-    }
-
-    @Override
-    public Country create(Country country) {
-        throw new UnsupportedOperationException();
     }
 }
