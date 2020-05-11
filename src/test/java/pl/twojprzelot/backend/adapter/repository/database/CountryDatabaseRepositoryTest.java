@@ -14,10 +14,8 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CountryDatabaseRepositoryTest {
@@ -43,28 +41,6 @@ class CountryDatabaseRepositoryTest {
                 .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .build();
-    }
-
-    @Test
-    void findByIso2CodeTest_countryWithGivenIso2CodeExists() {
-        when(countrySpringRepository.findByIso2Code(ISO_2_CODE))
-                .thenReturn(Optional.empty());
-
-        Optional<Country> foundCountry = countryDatabaseRepository.findByIso2Code(ISO_2_CODE);
-        assertEquals(Optional.empty(), foundCountry);
-
-        verify(countrySpringRepository).findByIso2Code(ISO_2_CODE);
-    }
-
-    @Test
-    void findByIso2CodeTest_countryWithGivenIso2CodeNotExists() {
-        when(countrySpringRepository.findByIso2Code(ISO_2_CODE))
-                .thenReturn(Optional.of(countryEntity));
-
-        Optional<Country> foundCountry = countryDatabaseRepository.findByIso2Code(ISO_2_CODE);
-        assertEquals(Optional.of(expectedCountry), foundCountry);
-
-        verify(countrySpringRepository).findByIso2Code(ISO_2_CODE);
     }
 
     @Test
@@ -96,5 +72,52 @@ class CountryDatabaseRepositoryTest {
         assertThat(foundCountries, containsInAnyOrder(expectedCountry, anotherExpectedCountry));
 
         verify(countrySpringRepository).findAll();
+    }
+
+    @Test
+    void findByIso2CodeTest_countryWithGivenIso2CodeExists() {
+        when(countrySpringRepository.findByIso2Code(ISO_2_CODE))
+                .thenReturn(Optional.empty());
+
+        Optional<Country> foundCountry = countryDatabaseRepository.findByIso2Code(ISO_2_CODE);
+        assertEquals(Optional.empty(), foundCountry);
+
+        verify(countrySpringRepository).findByIso2Code(ISO_2_CODE);
+    }
+
+    @Test
+    void findByIso2CodeTest_countryWithGivenIso2CodeNotExists() {
+        when(countrySpringRepository.findByIso2Code(ISO_2_CODE))
+                .thenReturn(Optional.of(countryEntity));
+
+        Optional<Country> foundCountry = countryDatabaseRepository.findByIso2Code(ISO_2_CODE);
+        assertEquals(Optional.of(expectedCountry), foundCountry);
+
+        verify(countrySpringRepository).findByIso2Code(ISO_2_CODE);
+    }
+
+    @Test
+    void findByIso2CodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> countryDatabaseRepository.findByIso2Code(null));
+
+        verify(countrySpringRepository, never()).findByIso2Code(null);
+    }
+
+    @Test
+    void createTest() {
+        when(countrySpringRepository.save(countryEntity))
+                .thenReturn(countryEntity);
+
+        Country country = countryDatabaseRepository.create(expectedCountry);
+        assertEquals(expectedCountry, country);
+
+        verify(countrySpringRepository).save(countryEntity);
+    }
+
+    @Test
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> countryDatabaseRepository.create(null));
+
+        verify(countrySpringRepository, never()).save(null);
     }
 }

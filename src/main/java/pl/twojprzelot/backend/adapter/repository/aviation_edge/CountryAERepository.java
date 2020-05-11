@@ -33,4 +33,9 @@ class CountryAERepository implements CountryRepository {
                 .map(CountryAE::toCountry)
                 .collect(toList());
     }
+
+    @Override
+    public Country create(Country country) {
+        throw new UnsupportedOperationException();
+    }
 }

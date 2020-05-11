@@ -21,6 +21,9 @@ public interface EntityMapper {
 
     Country mapToCountry(CountryEntity countryEntity);
 
+    @InheritInverseConfiguration
+    CountryEntity mapToCountryEntity(Country country);
+
     Currency mapToCurrency(CurrencyEntity currencyEntity);
 
     @InheritInverseConfiguration

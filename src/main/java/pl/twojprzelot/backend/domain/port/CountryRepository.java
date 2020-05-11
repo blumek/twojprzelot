@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface CountryRepository {
     List<Country> findAll();
     Optional<Country> findByIso2Code(String iso2Code);
+    Country create(Country country);
 }

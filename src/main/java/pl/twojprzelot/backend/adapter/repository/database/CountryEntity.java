@@ -42,4 +42,8 @@ class CountryEntity extends BaseEntity {
     public Country toCountry() {
         return mapper.mapToCountry(this);
     }
+
+    public static CountryEntity from(Country country) {
+        return mapper.mapToCountryEntity(country);
+    }
 }
