@@ -29,7 +29,9 @@ class CountryDatabaseRepositoryTest {
     private CountrySpringRepository countrySpringRepository;
 
     private CountryEntity countryEntity;
+    private CountryEntity anotherCountryEntity;
     private Country expectedCountry;
+    private Country anotherExpectedCountry;
 
     @BeforeEach
     void setUp() {
@@ -37,8 +39,17 @@ class CountryDatabaseRepositoryTest {
         countryEntity.setId(ID);
         countryEntity.setIso2Code(ISO_2_CODE);
 
+        anotherCountryEntity = new CountryEntity();
+        anotherCountryEntity.setId(ANOTHER_ID);
+        anotherCountryEntity.setIso2Code(ISO_2_CODE);
+
         expectedCountry = Country.builder()
                 .id(ID)
+                .iso2Code(ISO_2_CODE)
+                .build();
+
+        anotherExpectedCountry = Country.builder()
+                .id(ANOTHER_ID)
                 .iso2Code(ISO_2_CODE)
                 .build();
     }
@@ -56,17 +67,8 @@ class CountryDatabaseRepositoryTest {
 
     @Test
     void findAllTest_twoCountriesAvailable() {
-        CountryEntity anotherCountryEntity = new CountryEntity();
-        anotherCountryEntity.setId(ANOTHER_ID);
-        anotherCountryEntity.setIso2Code(ISO_2_CODE);
-
         when(countrySpringRepository.findAll())
                 .thenReturn(Lists.newArrayList(countryEntity, anotherCountryEntity));
-
-        Country anotherExpectedCountry = Country.builder()
-                .id(ANOTHER_ID)
-                .iso2Code(ISO_2_CODE)
-                .build();
 
         List<Country> foundCountries = countryDatabaseRepository.findAll();
         assertThat(foundCountries, containsInAnyOrder(expectedCountry, anotherExpectedCountry));
@@ -106,10 +108,10 @@ class CountryDatabaseRepositoryTest {
     @Test
     void createTest() {
         when(countrySpringRepository.save(countryEntity))
-                .thenReturn(countryEntity);
+                .thenReturn(anotherCountryEntity);
 
         Country country = countryDatabaseRepository.create(expectedCountry);
-        assertEquals(expectedCountry, country);
+        assertEquals(anotherExpectedCountry, country);
 
         verify(countrySpringRepository).save(countryEntity);
     }
