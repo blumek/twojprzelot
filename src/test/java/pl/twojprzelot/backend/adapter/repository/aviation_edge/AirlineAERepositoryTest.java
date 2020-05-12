@@ -14,10 +14,8 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AirlineAERepositoryTest {
@@ -43,9 +41,6 @@ class AirlineAERepositoryTest {
 
     @BeforeEach
     void setUp() {
-        when(aviationEdgeClient.createAirlineRequest())
-                .thenReturn(airlineRequestBuilder);
-
         airlineAE = new AirlineAE();
         airlineAE.setId(ID);
         airlineAE.setIcaoCode(ICAO_CODE);
@@ -66,7 +61,44 @@ class AirlineAERepositoryTest {
     }
 
     @Test
+    void findAllTest_noAirlinesAvailable() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
+        when(airlineRequestBuilder.create())
+                .thenReturn(airlineRequest);
+
+        when(airlineRequest.get())
+                .thenReturn(Lists.newArrayList());
+
+        List<Airline> foundAirlines = airlineAERepository.findAll();
+        assertTrue(foundAirlines.isEmpty());
+
+        verify(airlineRequest).get();
+    }
+
+    @Test
+    void findAllTest_twoAirlinesAvailable() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
+        when(airlineRequestBuilder.create())
+                .thenReturn(airlineRequest);
+
+        when(airlineRequest.get())
+                .thenReturn(Lists.newArrayList(airlineAE, anotherAirlineAE));
+
+        List<Airline> foundAirlines = airlineAERepository.findAll();
+        assertThat(foundAirlines, containsInAnyOrder(expectedAirline, anotherExpectedAirline));
+
+        verify(airlineRequest).get();
+    }
+
+    @Test
     void findByIataCodeTest_airlineWithGivenIataCodeNotExists() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
         when(airlineRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airlineRequestBuilder);
 
@@ -84,6 +116,9 @@ class AirlineAERepositoryTest {
 
     @Test
     void findByIataCodeTest_airlineWithGivenIataCodeExists() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
         when(airlineRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airlineRequestBuilder);
 
@@ -100,7 +135,18 @@ class AirlineAERepositoryTest {
     }
 
     @Test
+    void findByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineAERepository.findByIataCode(null));
+
+        verify(aviationEdgeClient, never()).createAirlineRequest();
+        verify(airlineRequest, never()).get();
+    }
+
+    @Test
     void findByIcaoCodeTest_airlineWithGivenIcaoCodeNotExists() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
         when(airlineRequestBuilder.create())
                 .thenReturn(airlineRequest);
 
@@ -114,6 +160,9 @@ class AirlineAERepositoryTest {
 
     @Test
     void findByIcaoCodeTest_airlineWithGivenIcaoCodeExists() {
+        when(aviationEdgeClient.createAirlineRequest())
+                .thenReturn(airlineRequestBuilder);
+
         when(airlineRequestBuilder.create())
                 .thenReturn(airlineRequest);
 
@@ -126,30 +175,10 @@ class AirlineAERepositoryTest {
     }
 
     @Test
-    void findAllTest_noAirlinesAvailable() {
-        when(airlineRequestBuilder.create())
-                .thenReturn(airlineRequest);
+    void findByIcaoCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineAERepository.findByIcaoCode(null));
 
-        when(airlineRequest.get())
-                .thenReturn(Lists.newArrayList());
-
-        List<Airline> foundAirlines = airlineAERepository.findAll();
-        assertTrue(foundAirlines.isEmpty());
-
-        verify(airlineRequest).get();
-    }
-
-    @Test
-    void findAllTest_twoAirlinesAvailable() {
-        when(airlineRequestBuilder.create())
-                .thenReturn(airlineRequest);
-
-        when(airlineRequest.get())
-                .thenReturn(Lists.newArrayList(airlineAE, anotherAirlineAE));
-
-        List<Airline> foundAirlines = airlineAERepository.findAll();
-        assertThat(foundAirlines, containsInAnyOrder(expectedAirline, anotherExpectedAirline));
-
-        verify(airlineRequest).get();
+        verify(aviationEdgeClient, never()).createAirlineRequest();
+        verify(airlineRequest, never()).get();
     }
 }

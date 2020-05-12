@@ -60,6 +60,28 @@ class AirlineDatabaseRepositoryTest {
     }
 
     @Test
+    void findAllTest_noAirlineAvailable() {
+        when(airlineSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList());
+
+        List<Airline> foundAirline = airlineDatabaseRepository.findAll();
+        assertTrue(foundAirline.isEmpty());
+
+        verify(airlineSpringRepository).findAll();
+    }
+
+    @Test
+    void findAllTest_twoAirlineAvailable() {
+        when(airlineSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList(airlineEntity, anotherAirlineEntity));
+
+        List<Airline> foundAirline = airlineDatabaseRepository.findAll();
+        assertThat(foundAirline, containsInAnyOrder(expectedAirline, anotherExpectedAirline));
+
+        verify(airlineSpringRepository).findAll();
+    }
+
+    @Test
     void findByIataCodeTest_airlineWithGivenIataCodeNotExists() {
         when(airlineSpringRepository.findByIataCode(IATA_CODE))
                 .thenReturn(Optional.empty());
@@ -77,6 +99,13 @@ class AirlineDatabaseRepositoryTest {
         assertEquals(Optional.of(expectedAirline), airlineDatabaseRepository.findByIataCode(IATA_CODE));
 
         verify(airlineSpringRepository).findByIataCode(IATA_CODE);
+    }
+
+    @Test
+    void findByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.findByIataCode(null));
+
+        verify(airlineSpringRepository, never()).findByIataCode(null);
     }
 
     @Test
@@ -100,24 +129,27 @@ class AirlineDatabaseRepositoryTest {
     }
 
     @Test
-    void findAllTest_noAirlineAvailable() {
-        when(airlineSpringRepository.findAll())
-                .thenReturn(Lists.newArrayList());
+    void findByIcaoCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.findByIcaoCode(null));
 
-        List<Airline> foundAirline = airlineDatabaseRepository.findAll();
-        assertTrue(foundAirline.isEmpty());
-
-        verify(airlineSpringRepository).findAll();
+        verify(airlineSpringRepository, never()).findByIcaoCode(null);
     }
 
     @Test
-    void findAllTest_twoAirlineAvailable() {
-        when(airlineSpringRepository.findAll())
-                .thenReturn(Lists.newArrayList(airlineEntity, anotherAirlineEntity));
+    void createTest() {
+        when(airlineSpringRepository.save(airlineEntity))
+                .thenReturn(anotherAirlineEntity);
 
-        List<Airline> foundAirline = airlineDatabaseRepository.findAll();
-        assertThat(foundAirline, containsInAnyOrder(expectedAirline, anotherExpectedAirline));
+        Airline createdAirline = airlineDatabaseRepository.create(expectedAirline);
+        assertEquals(anotherExpectedAirline, createdAirline);
 
-        verify(airlineSpringRepository).findAll();
+        verify(airlineSpringRepository).save(airlineEntity);
+    }
+
+    @Test
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.create(null));
+
+        verify(airlineSpringRepository, never()).save(null);
     }
 }
