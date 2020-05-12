@@ -14,10 +14,8 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CityAERepositoryTest {
@@ -41,9 +39,6 @@ class CityAERepositoryTest {
 
     @BeforeEach
     void setUp() {
-        when(aviationEdgeClient.createCityRequest())
-                .thenReturn(cityRequestBuilder);
-
         cityAE = new CityAE();
         cityAE.setId(ID);
 
@@ -60,7 +55,44 @@ class CityAERepositoryTest {
     }
 
     @Test
+    void findAllTest_noCitiesAvailable() {
+        when(aviationEdgeClient.createCityRequest())
+                .thenReturn(cityRequestBuilder);
+
+        when(cityRequestBuilder.create())
+                .thenReturn(cityRequest);
+
+        when(cityRequest.get())
+                .thenReturn(Lists.newArrayList());
+
+        List<City> foundCities = cityAERepository.findAll();
+        assertTrue(foundCities.isEmpty());
+
+        verify(cityRequest).get();
+    }
+
+    @Test
+    void findAllTest_twoCitiesAvailable() {
+        when(aviationEdgeClient.createCityRequest())
+                .thenReturn(cityRequestBuilder);
+
+        when(cityRequestBuilder.create())
+                .thenReturn(cityRequest);
+
+        when(cityRequest.get())
+                .thenReturn(Lists.newArrayList(cityAE, anotherCityAE));
+
+        List<City> foundCities = cityAERepository.findAll();
+        assertThat(foundCities, containsInAnyOrder(expectedCity, anotherExpectedCity));
+
+        verify(cityRequest).get();
+    }
+
+    @Test
     void findByIataCodeTest_cityWithGivenIataCodeNotExists() {
+        when(aviationEdgeClient.createCityRequest())
+                .thenReturn(cityRequestBuilder);
+
         when(cityRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(cityRequestBuilder);
 
@@ -78,6 +110,9 @@ class CityAERepositoryTest {
 
     @Test
     void findByIataCodeTest_cityWithGivenIataCodeExists() {
+        when(aviationEdgeClient.createCityRequest())
+                .thenReturn(cityRequestBuilder);
+
         when(cityRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(cityRequestBuilder);
 
@@ -94,30 +129,10 @@ class CityAERepositoryTest {
     }
 
     @Test
-    void findAllTest_noCitiesAvailable() {
-        when(cityRequestBuilder.create())
-                .thenReturn(cityRequest);
+    void findByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> cityAERepository.findByIataCode(null));
 
-        when(cityRequest.get())
-                .thenReturn(Lists.newArrayList());
-
-        List<City> foundCities = cityAERepository.findAll();
-        assertTrue(foundCities.isEmpty());
-
-        verify(cityRequest).get();
-    }
-
-    @Test
-    void findAllTest_twoCitiesAvailable() {
-        when(cityRequestBuilder.create())
-                .thenReturn(cityRequest);
-
-        when(cityRequest.get())
-                .thenReturn(Lists.newArrayList(cityAE, anotherCityAE));
-
-        List<City> foundCities = cityAERepository.findAll();
-        assertThat(foundCities, containsInAnyOrder(expectedCity, anotherExpectedCity));
-
-        verify(cityRequest).get();
+        verify(aviationEdgeClient, never()).createCityRequest();
+        verify(cityRequest, never()).get();
     }
 }

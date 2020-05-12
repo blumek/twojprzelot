@@ -55,26 +55,6 @@ class CityDatabaseRepositoryTest {
     }
 
     @Test
-    void findByIataCodeTest_cityWithGivenIataCodeNotExists() {
-        when(citySpringRepository.findByIataCode(IATA_CODE))
-                .thenReturn(Optional.empty());
-
-        assertEquals(Optional.empty(), cityDatabaseRepository.findByIataCode(IATA_CODE));
-
-        verify(citySpringRepository).findByIataCode(IATA_CODE);
-    }
-
-    @Test
-    void findByIataCodeTest_cityWithGivenIataCodeExists() {
-        when(citySpringRepository.findByIataCode(IATA_CODE))
-                .thenReturn(Optional.of(cityEntity));
-
-        assertEquals(Optional.of(expectedCity), cityDatabaseRepository.findByIataCode(IATA_CODE));
-
-        verify(citySpringRepository).findByIataCode(IATA_CODE);
-    }
-
-    @Test
     void findAllTest_noCitiesAvailable() {
         when(citySpringRepository.findAll())
                 .thenReturn(Lists.newArrayList());
@@ -94,5 +74,50 @@ class CityDatabaseRepositoryTest {
         assertThat(foundCities, containsInAnyOrder(expectedCity, anotherExpectedCity));
 
         verify(citySpringRepository).findAll();
+    }
+
+    @Test
+    void findByIataCodeTest_cityWithGivenIataCodeNotExists() {
+        when(citySpringRepository.findByIataCode(IATA_CODE))
+                .thenReturn(Optional.empty());
+
+        assertEquals(Optional.empty(), cityDatabaseRepository.findByIataCode(IATA_CODE));
+
+        verify(citySpringRepository).findByIataCode(IATA_CODE);
+    }
+
+    @Test
+    void findByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> cityDatabaseRepository.findByIataCode(null));
+
+        verify(citySpringRepository, never()).findByIataCode(null);
+    }
+
+    @Test
+    void findByIataCodeTest_cityWithGivenIataCodeExists() {
+        when(citySpringRepository.findByIataCode(IATA_CODE))
+                .thenReturn(Optional.of(cityEntity));
+
+        assertEquals(Optional.of(expectedCity), cityDatabaseRepository.findByIataCode(IATA_CODE));
+
+        verify(citySpringRepository).findByIataCode(IATA_CODE);
+    }
+
+    @Test
+    void createTest() {
+        when(citySpringRepository.save(cityEntity))
+                .thenReturn(anotherCityEntity);
+
+        City city = cityDatabaseRepository.create(expectedCity);
+        assertEquals(anotherExpectedCity, city);
+
+        verify(citySpringRepository).save(cityEntity);
+    }
+
+    @Test
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> cityDatabaseRepository.create(null));
+
+        verify(citySpringRepository, never()).save(null);
     }
 }
