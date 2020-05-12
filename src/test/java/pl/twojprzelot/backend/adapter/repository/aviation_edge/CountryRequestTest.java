@@ -101,7 +101,7 @@ class CountryRequestTest {
 
     @Test
     void getTest_queryParams_iso2Code_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new CountryRequest.Builder(BASE_URL, API_KEY, restTemplate).iso2Code(null));
     }
 

@@ -122,7 +122,7 @@ class ScheduledFlightRequestTest {
 
     @Test
     void getTest_queryParams_iataNumber_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new ScheduledFlightRequest.Builder(BASE_URL, API_KEY, restTemplate).iataNumber(null));
     }
 
@@ -146,7 +146,7 @@ class ScheduledFlightRequestTest {
 
     @Test
     void getTest_queryParams_icaoNumber_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new ScheduledFlightRequest.Builder(BASE_URL, API_KEY, restTemplate).icaoNumber(null));
     }
 
@@ -194,7 +194,7 @@ class ScheduledFlightRequestTest {
 
     @Test
     void getTest_queryParams_type_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new ScheduledFlightRequest.Builder(BASE_URL, API_KEY, restTemplate).type(null));
     }
 
@@ -212,7 +212,7 @@ class ScheduledFlightRequestTest {
 
     @Test
     void getTest_queryParams_status_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new ScheduledFlightRequest.Builder(BASE_URL, API_KEY, restTemplate).status(null));
     }
 }

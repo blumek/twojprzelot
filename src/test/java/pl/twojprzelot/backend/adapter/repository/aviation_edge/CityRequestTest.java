@@ -101,7 +101,7 @@ class CityRequestTest {
 
     @Test
     void getTest_queryParams_iataCode_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new CityRequest.Builder(BASE_URL, API_KEY, restTemplate).iataCode(null));
     }
 

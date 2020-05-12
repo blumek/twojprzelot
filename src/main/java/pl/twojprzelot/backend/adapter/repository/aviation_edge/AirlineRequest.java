@@ -1,9 +1,9 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @EqualsAndHashCode(callSuper = true)
 class AirlineRequest extends Request<AirlineAE> {
@@ -21,8 +21,8 @@ class AirlineRequest extends Request<AirlineAE> {
             airlineRequest = new AirlineRequest(getFullResourceUrl(baseUrl), apiKey, restTemplate);
         }
 
-        public Builder iataCode(String iataCode) {
-            if (isBlank(iataCode))
+        public Builder iataCode(@NonNull String iataCode) {
+            if (iataCode.isBlank())
                 throw new IllegalArgumentException();
 
             airlineRequest.queryParams.put(IATA_CODE, iataCode);

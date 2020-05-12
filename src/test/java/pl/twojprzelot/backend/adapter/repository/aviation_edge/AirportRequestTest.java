@@ -101,7 +101,7 @@ class AirportRequestTest {
 
     @Test
     void getTest_queryParams_iataCode_null() {
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NullPointerException.class, () ->
                 new AirportRequest.Builder(BASE_URL, API_KEY, restTemplate).iataCode(null));
     }
 

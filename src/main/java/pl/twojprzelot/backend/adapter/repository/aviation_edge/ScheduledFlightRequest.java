@@ -1,10 +1,9 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @EqualsAndHashCode(callSuper = true)
 class ScheduledFlightRequest extends Request<ScheduledFlightAE> {
@@ -34,32 +33,26 @@ class ScheduledFlightRequest extends Request<ScheduledFlightAE> {
             return this;
         }
 
-        public Builder type(Type type) {
-            if (type == null)
-                throw new IllegalArgumentException();
-
+        public Builder type(@NonNull Type type) {
             scheduledFlightRequest.queryParams.put(TYPE, type.textRepresentation);
             return this;
         }
 
-        public Builder status(Status status) {
-            if (status == null)
-                throw new IllegalArgumentException();
-
+        public Builder status(@NonNull Status status) {
             scheduledFlightRequest.queryParams.put(STATUS, status.textRepresentation);
             return this;
         }
 
-        public Builder iataNumber(String iataNumber) {
-            if (isBlank(iataNumber))
+        public Builder iataNumber(@NonNull String iataNumber) {
+            if (iataNumber.isBlank())
                 throw new IllegalArgumentException();
 
             scheduledFlightRequest.queryParams.put(FLIGHT_IATA_NUMBER, iataNumber);
             return this;
         }
 
-        public Builder icaoNumber(String icaoNumber) {
-            if (isBlank(icaoNumber))
+        public Builder icaoNumber(@NonNull String icaoNumber) {
+            if (icaoNumber.isBlank())
                 throw new IllegalArgumentException();
 
             scheduledFlightRequest.queryParams.put(FLIGHT_ICAO_NUMBER, icaoNumber);

@@ -1,9 +1,8 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @EqualsAndHashCode(callSuper = true)
 class CountryRequest extends Request<CountryAE> {
@@ -21,8 +20,8 @@ class CountryRequest extends Request<CountryAE> {
             countryRequest = new CountryRequest(getFullResourceUrl(baseUrl), apiKey, restTemplate);
         }
 
-        public Builder iso2Code(String iso2Code) {
-            if (isBlank(iso2Code))
+        public Builder iso2Code(@NonNull String iso2Code) {
+            if (iso2Code.isBlank())
                 throw new IllegalArgumentException();
 
             countryRequest.queryParams.put(ISO_2_CODE, iso2Code);
