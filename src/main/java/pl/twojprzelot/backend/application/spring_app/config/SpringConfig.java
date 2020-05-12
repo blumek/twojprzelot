@@ -4,18 +4,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightDatabaseRepository;
 import pl.twojprzelot.backend.adapter.repository.database.ScheduledFlightSpringRepository;
-import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
+import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
+import pl.twojprzelot.backend.domain.port.ScheduledFlightMutableRepository;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
 @Configuration
 class SpringConfig {
     @Bean
-    FindScheduledFlight findScheduledFlight(ScheduledFlightRepository scheduledFlightRepository) {
-        return new FindScheduledFlight(scheduledFlightRepository);
+    FindScheduledFlight findScheduledFlight(ScheduledFlightImmutableRepository repository) {
+        return new FindScheduledFlight(repository);
     }
 
     @Bean
-    ScheduledFlightRepository springScheduledFlightRepository(ScheduledFlightSpringRepository
+    ScheduledFlightMutableRepository springScheduledFlightRepository(ScheduledFlightSpringRepository
                                                                               scheduledFlightSpringRepository) {
         return new ScheduledFlightDatabaseRepository(scheduledFlightSpringRepository);
     }

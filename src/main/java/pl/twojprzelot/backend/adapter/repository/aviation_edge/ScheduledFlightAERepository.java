@@ -1,8 +1,9 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
-import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
+import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
 
 @RequiredArgsConstructor
-class ScheduledFlightAERepository implements ScheduledFlightRepository {
+class ScheduledFlightAERepository implements ScheduledFlightImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override
@@ -27,7 +28,7 @@ class ScheduledFlightAERepository implements ScheduledFlightRepository {
     }
 
     @Override
-    public List<ScheduledFlight> findAllByIataNumber(String iataNumber) {
+    public List<ScheduledFlight> findAllByIataNumber(@NonNull String iataNumber) {
         ScheduledFlightRequest scheduledFlightRequest = client.createScheduledFlightRequest()
                 .iataNumber(iataNumber)
                 .create();
@@ -38,7 +39,7 @@ class ScheduledFlightAERepository implements ScheduledFlightRepository {
     }
 
     @Override
-    public List<ScheduledFlight> findAllByIcaoNumber(String icaoNumber) {
+    public List<ScheduledFlight> findAllByIcaoNumber(@NonNull String icaoNumber) {
         ScheduledFlightRequest scheduledFlightRequest = client.createScheduledFlightRequest()
                 .icaoNumber(icaoNumber)
                 .create();

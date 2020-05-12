@@ -15,9 +15,9 @@ import java.util.List;
 import static java.lang.Long.MAX_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,9 +45,6 @@ class ScheduledFlightAERepositoryTest {
 
     @BeforeEach
     void setUp() {
-        when(aviationEdgeClient.createScheduledFlightRequest())
-                .thenReturn(scheduledFlightRequestBuilder);
-
         FlightIdentifierAE firstFlightIdentifierAE = new FlightIdentifierAE();
         firstFlightIdentifierAE.setIataNumber(IATA_NUMBER);
         firstFlightIdentifierAE.setIcaoNumber(ICAO_NUMBER);
@@ -83,6 +80,9 @@ class ScheduledFlightAERepositoryTest {
 
     @Test
     void findAllTest_noScheduledFlightsAvailable() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.limit(MAX_VALUE))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -105,6 +105,9 @@ class ScheduledFlightAERepositoryTest {
 
     @Test
     void findAllTest_twoScheduledFlightsAvailable() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.limit(MAX_VALUE))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -127,6 +130,9 @@ class ScheduledFlightAERepositoryTest {
 
     @Test
     void findAllByIataNumberTest_scheduledFlightWithGivenIataNumberNotExists() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -145,6 +151,9 @@ class ScheduledFlightAERepositoryTest {
 
     @Test
     void findAllByIataNumberTest_scheduledFlightWithGivenIataNumberExists() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -162,7 +171,18 @@ class ScheduledFlightAERepositoryTest {
     }
 
     @Test
+    void findAllByIataNumberTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightAERepository.findAllByIataNumber(null));
+
+        verify(aviationEdgeClient, never()).createScheduledFlightRequest();
+        verify(scheduledFlightRequest, never()).get();
+    }
+
+    @Test
     void findAllByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberNotExists() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -181,6 +201,9 @@ class ScheduledFlightAERepositoryTest {
 
     @Test
     void findAllByIcaoNumberTest_scheduledFlightWithGivenIcaoNumberExists() {
+        when(aviationEdgeClient.createScheduledFlightRequest())
+                .thenReturn(scheduledFlightRequestBuilder);
+
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
@@ -195,5 +218,13 @@ class ScheduledFlightAERepositoryTest {
 
         verify(scheduledFlightRequestBuilder).icaoNumber(ICAO_NUMBER);
         verify(scheduledFlightRequest).get();
+    }
+
+    @Test
+    void findAllByIcaoNumberTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightAERepository.findAllByIcaoNumber(null));
+
+        verify(aviationEdgeClient, never()).createScheduledFlightRequest();
+        verify(scheduledFlightRequest, never()).get();
     }
 }

@@ -95,6 +95,13 @@ class ScheduledFlightDatabaseRepositoryTest {
     }
 
     @Test
+    void findAllByIataNumberTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.findAllByIataNumber(null));
+
+        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifier_IataNumber(null);
+    }
+
+    @Test
     void findAllByIcaoNumber_flightsWithGivenIcaoNumberNotExist() {
         when(scheduledFlightSpringRepository.findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER))
                 .thenReturn(Lists.newArrayList());
@@ -114,5 +121,30 @@ class ScheduledFlightDatabaseRepositoryTest {
         assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight));
 
         verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
+    }
+
+    @Test
+    void findAllByIcaoNumberTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.findAllByIcaoNumber(null));
+
+        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifier_IcaoNumber(null);
+    }
+
+    @Test
+    void createTest() {
+        when(scheduledFlightSpringRepository.save(scheduledFlightEntity))
+                .thenReturn(anotherScheduledFlightEntity);
+
+        ScheduledFlight createdScheduledFlight = scheduledFlightDatabaseRepository.create(expectedScheduledFlight);
+        assertEquals(anotherExpectedScheduledFlight, createdScheduledFlight);
+
+        verify(scheduledFlightSpringRepository).save(scheduledFlightEntity);
+    }
+
+    @Test
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.create(null));
+
+        verify(scheduledFlightSpringRepository, never()).save(null);
     }
 }

@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
-import pl.twojprzelot.backend.domain.port.ScheduledFlightRepository;
+import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ class FindScheduledFlightTest {
     @InjectMocks
     private FindScheduledFlight findScheduledFlight;
     @Mock
-    private ScheduledFlightRepository scheduledFlightRepository;
+    private ScheduledFlightImmutableRepository scheduledFlightImmutableRepository;
 
     private ScheduledFlight firstScheduledFlight;
     private ScheduledFlight secondScheduledFlight;
@@ -45,10 +45,10 @@ class FindScheduledFlightTest {
 
     @Test
     void findAllByFlightIdentifier_scheduledFlightsWithGivenIdentifierNotExist() {
-        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
                 .thenReturn(Lists.newArrayList());
 
-        when(scheduledFlightRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+        when(scheduledFlightImmutableRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
                 .thenReturn(Lists.newArrayList());
 
         List<ScheduledFlight> foundScheduledFlights =
@@ -56,13 +56,13 @@ class FindScheduledFlightTest {
 
         assertTrue(foundScheduledFlights.isEmpty());
 
-        verify(scheduledFlightRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
-        verify(scheduledFlightRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightImmutableRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightImmutableRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
     }
 
     @Test
     void findAllByFlightIdentifier_scheduledFlightsWithGivenIataNumberExist() {
-        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
                 .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
 
         List<ScheduledFlight> foundScheduledFlights =
@@ -70,15 +70,15 @@ class FindScheduledFlightTest {
 
         assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlight, secondScheduledFlight));
 
-        verify(scheduledFlightRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightImmutableRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
     }
 
     @Test
     void findAllByFlightIdentifier_scheduledFlightWithGivenIcaoNumberExists() {
-        when(scheduledFlightRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
                 .thenReturn(Lists.newArrayList());
 
-        when(scheduledFlightRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+        when(scheduledFlightImmutableRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
                 .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
 
         List<ScheduledFlight> foundScheduledFlights =
@@ -86,6 +86,6 @@ class FindScheduledFlightTest {
 
         assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlight, secondScheduledFlight));
 
-        verify(scheduledFlightRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightImmutableRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
     }
 }
