@@ -60,6 +60,28 @@ class AirportDatabaseRepositoryTest {
     }
 
     @Test
+    void findAllTest_noAirportsAvailable() {
+        when(airportSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList());
+
+        List<Airport> foundAirports = airportDatabaseRepository.findAll();
+        assertTrue(foundAirports.isEmpty());
+
+        verify(airportSpringRepository).findAll();
+    }
+
+    @Test
+    void findAllTest_twoAirportsAvailable() {
+        when(airportSpringRepository.findAll())
+                .thenReturn(Lists.newArrayList(airportEntity, anotherAirportEntity));
+
+        List<Airport> foundAirports = airportDatabaseRepository.findAll();
+        assertThat(foundAirports, containsInAnyOrder(expectedAirport, anotherExpectedAirport));
+
+        verify(airportSpringRepository).findAll();
+    }
+
+    @Test
     void findByIataCodeTest_airportWithGivenIataCodeNotExists() {
         when(airportSpringRepository.findByIataCode(IATA_CODE))
                 .thenReturn(Optional.empty());
@@ -77,6 +99,13 @@ class AirportDatabaseRepositoryTest {
         assertEquals(Optional.of(expectedAirport), airportDatabaseRepository.findByIataCode(IATA_CODE));
 
         verify(airportSpringRepository).findByIataCode(IATA_CODE);
+    }
+
+    @Test
+    void findByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airportDatabaseRepository.findByIataCode(null));
+
+        verify(airportSpringRepository, never()).findByIataCode(null);
     }
 
     @Test
@@ -100,24 +129,27 @@ class AirportDatabaseRepositoryTest {
     }
 
     @Test
-    void findAllTest_noAirportsAvailable() {
-        when(airportSpringRepository.findAll())
-                .thenReturn(Lists.newArrayList());
+    void findByIcaoCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airportDatabaseRepository.findByIcaoCode(null));
 
-        List<Airport> foundAirports = airportDatabaseRepository.findAll();
-        assertTrue(foundAirports.isEmpty());
-
-        verify(airportSpringRepository).findAll();
+        verify(airportSpringRepository, never()).findByIcaoCode(null);
     }
 
     @Test
-    void findAllTest_twoAirportsAvailable() {
-        when(airportSpringRepository.findAll())
-                .thenReturn(Lists.newArrayList(airportEntity, anotherAirportEntity));
+    void createTest() {
+        when(airportSpringRepository.save(airportEntity))
+                .thenReturn(anotherAirportEntity);
 
-        List<Airport> foundAirports = airportDatabaseRepository.findAll();
-        assertThat(foundAirports, containsInAnyOrder(expectedAirport, anotherExpectedAirport));
+        Airport createdAirport = airportDatabaseRepository.create(expectedAirport);
+        assertEquals(anotherExpectedAirport, createdAirport);
 
-        verify(airportSpringRepository).findAll();
+        verify(airportSpringRepository).save(airportEntity);
+    }
+
+    @Test
+    void createTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airportDatabaseRepository.create(null));
+
+        verify(airportSpringRepository, never()).save(null);
     }
 }

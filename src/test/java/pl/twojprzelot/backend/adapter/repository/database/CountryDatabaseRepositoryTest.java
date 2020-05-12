@@ -110,8 +110,8 @@ class CountryDatabaseRepositoryTest {
         when(countrySpringRepository.save(countryEntity))
                 .thenReturn(anotherCountryEntity);
 
-        Country country = countryDatabaseRepository.create(expectedCountry);
-        assertEquals(anotherExpectedCountry, country);
+        Country createdCountry = countryDatabaseRepository.create(expectedCountry);
+        assertEquals(anotherExpectedCountry, createdCountry);
 
         verify(countrySpringRepository).save(countryEntity);
     }

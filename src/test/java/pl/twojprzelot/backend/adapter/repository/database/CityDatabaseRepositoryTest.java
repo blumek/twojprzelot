@@ -108,8 +108,8 @@ class CityDatabaseRepositoryTest {
         when(citySpringRepository.save(cityEntity))
                 .thenReturn(anotherCityEntity);
 
-        City city = cityDatabaseRepository.create(expectedCity);
-        assertEquals(anotherExpectedCity, city);
+        City createdCity = cityDatabaseRepository.create(expectedCity);
+        assertEquals(anotherExpectedCity, createdCity);
 
         verify(citySpringRepository).save(cityEntity);
     }
