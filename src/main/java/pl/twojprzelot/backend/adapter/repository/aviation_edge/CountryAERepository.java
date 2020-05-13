@@ -10,7 +10,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CountryAERepository implements CountryImmutableRepository {
+final class CountryAERepository implements CountryImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override

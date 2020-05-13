@@ -12,7 +12,7 @@ class AviationEdgeClientTest {
 
     @Test
     void constructorTest_nullKey() {
-        assertThrows(IllegalArgumentException.class, () -> new AviationEdgeClient(null));
+        assertThrows(NullPointerException.class, () -> new AviationEdgeClient(null));
     }
 
     @Test

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 
 @EqualsAndHashCode(callSuper = true)
-class ScheduledFlightRequest extends Request<ScheduledFlightAE> {
+final class ScheduledFlightRequest extends Request<ScheduledFlightAE> {
     private static final String SCHEDULED_FLIGHT_RESOURCE_URL = "/timetable";
     private static final String LIMIT = "limit";
     private static final String TYPE = "type";

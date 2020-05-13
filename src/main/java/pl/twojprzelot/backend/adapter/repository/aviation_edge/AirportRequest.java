@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
 @EqualsAndHashCode(callSuper = true)
-class AirportRequest extends Request<AirportAE> {
+final class AirportRequest extends Request<AirportAE> {
     private static final String AIRPORT_RESOURCE_URL = "/airportDatabase";
     private static final String IATA_CODE = "codeIataAirport";
 

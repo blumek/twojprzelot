@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @EqualsAndHashCode(callSuper = true)
-class AirlineRequest extends Request<AirlineAE> {
+final class AirlineRequest extends Request<AirlineAE> {
     private static final String AIRLINE_RESOURCE_URL = "/airlineDatabase";
     private static final String IATA_CODE = "codeIataAirline";
 

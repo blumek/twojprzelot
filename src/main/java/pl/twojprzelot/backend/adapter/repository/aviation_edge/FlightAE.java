@@ -1,18 +1,13 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Flight;
 
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
-class FlightAE {
+final class FlightAE {
     private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
 
     @JsonProperty("flight")

@@ -1,20 +1,15 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Airport;
 
 import java.util.Map;
 
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
-class AirportAE {
+final class AirportAE {
     private static final AviationEdgeMapper mapper = Mappers.getMapper(AviationEdgeMapper.class);
 
     @JsonProperty("airportId")

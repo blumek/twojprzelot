@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
 
 @RequiredArgsConstructor
-class ScheduledFlightAERepository implements ScheduledFlightImmutableRepository {
+final class ScheduledFlightAERepository implements ScheduledFlightImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override

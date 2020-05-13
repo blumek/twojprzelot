@@ -1,16 +1,15 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
+import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
-class AviationEdgeClient {
+final class AviationEdgeClient {
     private static final String URL = "https://aviation-edge.com/v2/public";
 
     private final String apiKey;
 
-    public AviationEdgeClient(String apiKey) {
-        if (isBlank(apiKey))
+    public AviationEdgeClient(@NonNull String apiKey) {
+        if (apiKey.isBlank())
             throw new IllegalArgumentException();
 
         this.apiKey = apiKey;

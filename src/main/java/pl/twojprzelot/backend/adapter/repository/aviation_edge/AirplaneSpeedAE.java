@@ -1,16 +1,11 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
-class AirplaneSpeedAE {
+final class AirplaneSpeedAE {
     private double horizontal;
     private double isGround;
 

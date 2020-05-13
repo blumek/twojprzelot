@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CityAERepository implements CityImmutableRepository {
+final class CityAERepository implements CityImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override

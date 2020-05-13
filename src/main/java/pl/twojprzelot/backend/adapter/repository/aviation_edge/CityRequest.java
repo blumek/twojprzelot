@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
 @EqualsAndHashCode(callSuper = true)
-class CityRequest extends Request<CityAE> {
+final class CityRequest extends Request<CityAE> {
     private static final String CITY_RESOURCE_URL = "/cityDatabase";
     private static final String IATA_CODE = "codeIataCity";
 

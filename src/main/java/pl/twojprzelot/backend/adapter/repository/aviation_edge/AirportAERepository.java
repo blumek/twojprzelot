@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-class AirportAERepository implements AirportImmutableRepository {
+final class AirportAERepository implements AirportImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override

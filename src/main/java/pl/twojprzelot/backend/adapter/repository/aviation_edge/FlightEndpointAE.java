@@ -1,18 +1,13 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
-class FlightEndpointAE {
+final class FlightEndpointAE {
     private String iataCode;
     private String icaoCode;
     private String terminal;

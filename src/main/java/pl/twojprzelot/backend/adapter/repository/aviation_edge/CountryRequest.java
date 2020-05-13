@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
 @EqualsAndHashCode(callSuper = true)
-class CountryRequest extends Request<CountryAE> {
+final class CountryRequest extends Request<CountryAE> {
     private static final String COUNTRY_RESOURCE_URL = "/countryDatabase";
     private static final String ISO_2_CODE = "codeIso2Country";
 
