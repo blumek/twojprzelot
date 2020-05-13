@@ -33,4 +33,11 @@ final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
         CurrencyEntity createdCurrency = repository.save(currencyToCreate);
         return createdCurrency.toCurrency();
     }
+
+    @Override
+    public Currency update(@NonNull Currency currency) {
+        CurrencyEntity currencyToUpdate = CurrencyEntity.from(currency);
+        CurrencyEntity updatedCurrency = repository.save(currencyToUpdate);
+        return updatedCurrency.toCurrency();
+    }
 }

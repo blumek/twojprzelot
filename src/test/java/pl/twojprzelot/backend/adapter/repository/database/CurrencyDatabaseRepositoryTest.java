@@ -106,10 +106,10 @@ class CurrencyDatabaseRepositoryTest {
     @Test
     void createTest() {
         when(currencySpringRepository.save(currencyEntity))
-                .thenReturn(currencyEntity);
+                .thenReturn(anotherCurrencyEntity);
 
         Currency createdCurrency = currencyDatabaseRepository.create(currency);
-        assertEquals(currency, createdCurrency);
+        assertEquals(anotherCurrency, createdCurrency);
 
         verify(currencySpringRepository).save(currencyEntity);
     }
@@ -117,6 +117,24 @@ class CurrencyDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.create(null));
+
+        verify(currencySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest() {
+        when(currencySpringRepository.save(currencyEntity))
+                .thenReturn(anotherCurrencyEntity);
+
+        Currency updatedCurrency = currencyDatabaseRepository.update(currency);
+        assertEquals(anotherCurrency, updatedCurrency);
+
+        verify(currencySpringRepository).save(currencyEntity);
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.update(null));
 
         verify(currencySpringRepository, never()).save(null);
     }

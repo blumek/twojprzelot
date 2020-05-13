@@ -10,7 +10,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-final public class ScheduledFlightDatabaseRepository implements ScheduledFlightMutableRepository {
+public final class ScheduledFlightDatabaseRepository implements ScheduledFlightMutableRepository {
     private final ScheduledFlightSpringRepository repository;
 
     @Override
