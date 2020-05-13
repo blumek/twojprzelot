@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CurrencyDatabaseRepository implements CurrencyMutableRepository {
+final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     private final CurrencySpringRepository repository;
 
     @Override

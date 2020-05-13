@@ -6,14 +6,16 @@ import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(callSuper = true)
 @Entity(name = "scheduled_flight")
-class ScheduledFlightEntity extends BaseEntity {
+final class ScheduledFlightEntity {
     private static final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
+    @Id @GeneratedValue(strategy = IDENTITY)
+    private int id;
 
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;

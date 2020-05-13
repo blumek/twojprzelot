@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class AirportDatabaseRepository implements AirportMutableRepository {
+final class AirportDatabaseRepository implements AirportMutableRepository {
     private final AirportSpringRepository repository;
 
     @Override

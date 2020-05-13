@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 @ToString
 @EqualsAndHashCode
 @Embeddable
-class FlightIdentifierEmbeddable {
+final class FlightIdentifierEmbeddable {
     private int number;
     private String iataNumber;
     private String icaoNumber;

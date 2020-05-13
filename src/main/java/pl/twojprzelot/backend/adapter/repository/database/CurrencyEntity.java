@@ -6,12 +6,20 @@ import pl.twojprzelot.backend.domain.entity.Currency;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Entity(name = "currency")
-class CurrencyEntity extends BaseEntity {
+final class CurrencyEntity {
     private static final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    private int id;
 
     private String name;
 

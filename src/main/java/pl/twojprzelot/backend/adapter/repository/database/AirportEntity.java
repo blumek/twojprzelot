@@ -10,12 +10,16 @@ import javax.persistence.*;
 import java.util.Map;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Entity(name = "airport")
-class AirportEntity extends BaseEntity {
+final class AirportEntity{
     private static final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
+    @Id @GeneratedValue(strategy = IDENTITY)
+    private int id;
 
     private String name;
 

@@ -4,13 +4,10 @@ import lombok.*;
 
 import javax.persistence.Embeddable;
 
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Embeddable
-class GeographicLocationEmbeddable {
+final class GeographicLocationEmbeddable {
     private double latitude;
     private double longitude;
 }

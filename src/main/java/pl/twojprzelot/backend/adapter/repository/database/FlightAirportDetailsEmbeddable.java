@@ -4,13 +4,10 @@ import lombok.*;
 
 import javax.persistence.Embeddable;
 
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Embeddable
-class FlightAirportDetailsEmbeddable {
+final class FlightAirportDetailsEmbeddable {
     private String gate;
     private String terminal;
 }

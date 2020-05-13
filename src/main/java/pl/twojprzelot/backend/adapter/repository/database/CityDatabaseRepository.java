@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CityDatabaseRepository implements CityMutableRepository {
+final class CityDatabaseRepository implements CityMutableRepository {
     private final CitySpringRepository repository;
 
     @Override

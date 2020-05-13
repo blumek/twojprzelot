@@ -4,13 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(callSuper = true)
 @Entity(name = "flight")
-class FlightEntity extends BaseEntity {
+final class FlightEntity {
+    @Id @GeneratedValue(strategy = IDENTITY)
+    private int id;
+
     @Embedded
     private FlightIdentifierEmbeddable flightIdentifier;
 

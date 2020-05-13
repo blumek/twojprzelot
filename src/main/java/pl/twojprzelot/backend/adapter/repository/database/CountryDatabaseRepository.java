@@ -11,7 +11,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-class CountryDatabaseRepository implements CountryMutableRepository {
+final class CountryDatabaseRepository implements CountryMutableRepository {
     private final CountrySpringRepository repository;
 
     @Override

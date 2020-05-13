@@ -7,40 +7,43 @@ import pl.twojprzelot.backend.domain.entity.*;
 
 @Mapper
 public interface EntityMapper {
-    @Mapping(ignore = true, target = "from")
-    @Mapping(ignore = true, target = "departure.airport.nameTranslations")
-    @Mapping(ignore = true, target = "departure.airport.city.nameTranslations")
-    @Mapping(ignore = true, target = "departure.airport.city.country.nameTranslations")
-    @Mapping(ignore = true, target = "arrival.airport.nameTranslations")
-    @Mapping(ignore = true, target = "arrival.airport.city.nameTranslations")
-    @Mapping(ignore = true, target = "arrival.airport.city.country.nameTranslations")
-    ScheduledFlightEntity mapToScheduledFlightEntity(ScheduledFlight scheduledFlight);
+
+    ScheduledFlight mapFromScheduledFlightEntity(ScheduledFlightEntity scheduledFlightEntity);
 
     @InheritInverseConfiguration
-    ScheduledFlight mapFromScheduledFlightEntity(ScheduledFlightEntity scheduledFlightEntity);
+    @Mapping(ignore = true, target = "from")
+    ScheduledFlightEntity mapToScheduledFlightEntity(ScheduledFlight scheduledFlight);
 
     Country mapToCountry(CountryEntity countryEntity);
 
     @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
+    @Mapping(ignore = true, target = "nameTranslations")
     CountryEntity mapToCountryEntity(Country country);
 
     Currency mapToCurrency(CurrencyEntity currencyEntity);
 
     @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
     CurrencyEntity mapToCurrencyEntity(Currency currency);
 
     City mapToCity(CityEntity cityEntity);
 
     @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
+    @Mapping(ignore = true, target = "nameTranslations")
     CityEntity mapToCityEntity(City city);
 
     Airline mapToAirline(AirlineEntity airlineEntity);
 
     @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
     AirlineEntity mapToAirlineEntity(Airline airline);
 
     Airport mapToAirport(AirportEntity airportEntity);
 
     @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
+    @Mapping(ignore = true, target = "nameTranslations")
     AirportEntity mapToAirportEntity(Airport airport);
 }

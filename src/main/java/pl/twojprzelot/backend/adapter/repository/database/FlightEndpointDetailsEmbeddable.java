@@ -7,13 +7,10 @@ import javax.persistence.Embedded;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Embeddable
-class FlightEndpointDetailsEmbeddable {
+final class FlightEndpointDetailsEmbeddable {
     @ManyToOne
     private AirportEntity airport;
 
