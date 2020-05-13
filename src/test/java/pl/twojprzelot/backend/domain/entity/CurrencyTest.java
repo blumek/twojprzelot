@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -98,22 +99,7 @@ class CurrencyTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        assertEquals(firstCurrency, sameCurrencyAsFirstCurrency);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        assertNotEquals(firstCurrency, anotherCurrency);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        assertEquals(firstCurrency.hashCode(), sameCurrencyAsFirstCurrency.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        assertNotEquals(firstCurrency.hashCode(), anotherCurrency.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(Currency.class).verify();
     }
 }

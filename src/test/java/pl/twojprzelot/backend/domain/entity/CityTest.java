@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -127,22 +128,7 @@ class CityTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        assertEquals(firstCity, sameCityAsFirstCity);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        assertNotEquals(firstCity, anotherCity);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        assertEquals(firstCity.hashCode(), sameCityAsFirstCity.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        assertNotEquals(firstCity.hashCode(), anotherCity.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(City.class).verify();
     }
 }

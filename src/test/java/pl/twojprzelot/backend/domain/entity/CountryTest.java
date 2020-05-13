@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -145,22 +146,7 @@ class CountryTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        assertEquals(firstCountry, sameCountryAsFirstCountry);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        assertNotEquals(firstCountry, anotherCountry);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        assertEquals(firstCountry.hashCode(), sameCountryAsFirstCountry.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        assertNotEquals(firstCountry.hashCode(), anotherCountry.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(Country.class).verify();
     }
 }

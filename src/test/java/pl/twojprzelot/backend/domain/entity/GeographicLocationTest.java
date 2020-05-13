@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,62 +48,7 @@ class GeographicLocationTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        GeographicLocation geographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        GeographicLocation anotherGeographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        assertEquals(geographicLocation, anotherGeographicLocation);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        GeographicLocation geographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        GeographicLocation anotherGeographicLocation = GeographicLocation.builder()
-                .latitude(ANOTHER_LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        assertNotEquals(geographicLocation, anotherGeographicLocation);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        GeographicLocation geographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        GeographicLocation anotherGeographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        assertEquals(geographicLocation.hashCode(), anotherGeographicLocation.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        GeographicLocation geographicLocation = GeographicLocation.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        GeographicLocation anotherGeographicLocation = GeographicLocation.builder()
-                .latitude(ANOTHER_LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
-
-        assertNotEquals(geographicLocation.hashCode(), anotherGeographicLocation.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(GeographicLocation.class).verify();
     }
 }

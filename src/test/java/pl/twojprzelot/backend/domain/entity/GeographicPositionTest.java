@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -100,22 +101,7 @@ class GeographicPositionTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        assertEquals(firstGeographicPosition, sameGeographicPositionAsFirstGeographicPosition);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        assertNotEquals(firstGeographicPosition, anotherGeographicPosition);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        assertEquals(firstGeographicPosition.hashCode(), sameGeographicPositionAsFirstGeographicPosition.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        assertNotEquals(firstGeographicPosition.hashCode(), anotherGeographicPosition.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(GeographicPosition.class).verify();
     }
 }

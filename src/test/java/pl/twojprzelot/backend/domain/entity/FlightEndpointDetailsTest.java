@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.domain.entity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -170,23 +171,7 @@ class FlightEndpointDetailsTest {
     }
 
     @Test
-    void equalsTest_equalObjects() {
-        assertEquals(firstFlightEndpointDetails, sameFlightEndpointDetailsAsFirstFlightEndpointDetails);
-    }
-
-    @Test
-    void equalsTest_notEqualObjects() {
-        assertNotEquals(firstFlightEndpointDetails, anotherFlightEndpointDetails);
-    }
-
-    @Test
-    void hashCodeTest_equalObjects() {
-        assertEquals(firstFlightEndpointDetails.hashCode(),
-                sameFlightEndpointDetailsAsFirstFlightEndpointDetails.hashCode());
-    }
-
-    @Test
-    void hashCodeTest_notEqualObjects() {
-        assertNotEquals(firstFlightEndpointDetails.hashCode(), anotherFlightEndpointDetails.hashCode());
+    void equalsContractTest() {
+        EqualsVerifier.forClass(FlightEndpointDetails.class).verify();
     }
 }
