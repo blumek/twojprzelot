@@ -12,7 +12,7 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-class ScheduledFlightWeb {
+final class ScheduledFlightWeb {
     private static final WebMapper mapper = Mappers.getMapper(WebMapper.class);
 
     private int id;

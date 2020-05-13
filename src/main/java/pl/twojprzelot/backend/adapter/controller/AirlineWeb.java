@@ -10,7 +10,7 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-class AirlineWeb {
+final class AirlineWeb {
     private int id;
     private String name;
     private String iataCode;

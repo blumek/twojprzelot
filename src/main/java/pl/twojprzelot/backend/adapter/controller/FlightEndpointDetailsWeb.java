@@ -12,7 +12,7 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-class FlightEndpointDetailsWeb {
+final class FlightEndpointDetailsWeb {
     private AirportWeb airport;
     private String gate;
     private String terminal;

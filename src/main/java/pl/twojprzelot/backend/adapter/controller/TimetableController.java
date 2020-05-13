@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
-class TimetableController {
+final class TimetableController {
     private final FindScheduledFlight findScheduledFlight;
 
     public List<ScheduledFlightWeb> findAllByFlightIdentifier(String identifier) {

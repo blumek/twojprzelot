@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-class SpringTimetableController {
+final class SpringTimetableController {
     private final TimetableController timetableController;
 
     @GetMapping("/timetable/{identifier}")
