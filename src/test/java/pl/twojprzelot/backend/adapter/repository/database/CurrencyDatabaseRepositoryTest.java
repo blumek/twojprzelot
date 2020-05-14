@@ -122,7 +122,7 @@ class CurrencyDatabaseRepositoryTest {
     }
 
     @Test
-    void updateTest() {
+    void updateTest_entityWithId() {
         when(currencySpringRepository.save(currencyEntity))
                 .thenReturn(anotherCurrencyEntity);
 
@@ -130,6 +130,20 @@ class CurrencyDatabaseRepositoryTest {
         assertEquals(anotherCurrency, updatedCurrency);
 
         verify(currencySpringRepository).save(currencyEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+        assertThrows(IllegalArgumentException.class, () -> currencyDatabaseRepository.update(currency));
+
+        verify(currencySpringRepository, never()).save(currencyEntity);
+    }
+
+    private void removeId() {
+        currency = currency.toBuilder()
+                .id(0)
+                .build();
     }
 
     @Test

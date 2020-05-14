@@ -30,8 +30,8 @@ class CountryDatabaseRepositoryTest {
 
     private CountryEntity countryEntity;
     private CountryEntity anotherCountryEntity;
-    private Country expectedCountry;
-    private Country anotherExpectedCountry;
+    private Country country;
+    private Country anotherCountry;
 
     @BeforeEach
     void setUp() {
@@ -43,12 +43,12 @@ class CountryDatabaseRepositoryTest {
         anotherCountryEntity.setId(ANOTHER_ID);
         anotherCountryEntity.setIso2Code(ISO_2_CODE);
 
-        expectedCountry = Country.builder()
+        country = Country.builder()
                 .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .build();
 
-        anotherExpectedCountry = Country.builder()
+        anotherCountry = Country.builder()
                 .id(ANOTHER_ID)
                 .iso2Code(ISO_2_CODE)
                 .build();
@@ -71,7 +71,7 @@ class CountryDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(countryEntity, anotherCountryEntity));
 
         List<Country> foundCountries = countryDatabaseRepository.findAll();
-        assertThat(foundCountries, containsInAnyOrder(expectedCountry, anotherExpectedCountry));
+        assertThat(foundCountries, containsInAnyOrder(country, anotherCountry));
 
         verify(countrySpringRepository).findAll();
     }
@@ -93,7 +93,7 @@ class CountryDatabaseRepositoryTest {
                 .thenReturn(Optional.of(countryEntity));
 
         Optional<Country> foundCountry = countryDatabaseRepository.findByIso2Code(ISO_2_CODE);
-        assertEquals(Optional.of(expectedCountry), foundCountry);
+        assertEquals(Optional.of(country), foundCountry);
 
         verify(countrySpringRepository).findByIso2Code(ISO_2_CODE);
     }
@@ -110,8 +110,8 @@ class CountryDatabaseRepositoryTest {
         when(countrySpringRepository.save(countryEntity))
                 .thenReturn(anotherCountryEntity);
 
-        Country createdCountry = countryDatabaseRepository.create(expectedCountry);
-        assertEquals(anotherExpectedCountry, createdCountry);
+        Country createdCountry = countryDatabaseRepository.create(country);
+        assertEquals(anotherCountry, createdCountry);
 
         verify(countrySpringRepository).save(countryEntity);
     }
@@ -119,6 +119,39 @@ class CountryDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> countryDatabaseRepository.create(null));
+
+        verify(countrySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest_entityWithId() {
+        when(countrySpringRepository.save(countryEntity))
+                .thenReturn(anotherCountryEntity);
+
+        Country updatedCountry = countryDatabaseRepository.update(country);
+        assertEquals(anotherCountry, updatedCountry);
+
+        verify(countrySpringRepository).save(countryEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+
+        assertThrows(IllegalArgumentException.class, () -> countryDatabaseRepository.update(country));
+
+        verify(countrySpringRepository,never()).save(countryEntity);
+    }
+
+    private void removeId() {
+        country = country.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> countryDatabaseRepository.update(null));
 
         verify(countrySpringRepository, never()).save(null);
     }

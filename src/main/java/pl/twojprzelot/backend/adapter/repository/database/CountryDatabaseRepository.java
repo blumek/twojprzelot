@@ -33,4 +33,18 @@ final class CountryDatabaseRepository implements CountryMutableRepository {
         CountryEntity createdCountry = repository.save(countryToCreate);
         return createdCountry.toCountry();
     }
+
+    @Override
+    public Country update(@NonNull Country country) {
+        if (!hasIdentifier(country))
+            throw new IllegalArgumentException("Identifier not valid");
+
+        CountryEntity countryToUpdate = CountryEntity.from(country);
+        CountryEntity updatedCountry = repository.save(countryToUpdate);
+        return updatedCountry.toCountry();
+    }
+
+    private boolean hasIdentifier(Country country) {
+        return country.getId() > 0;
+    }
 }
