@@ -33,4 +33,18 @@ final class CityDatabaseRepository implements CityMutableRepository {
         CityEntity createdCity = repository.save(cityToCreate);
         return createdCity.toCity();
     }
+
+    @Override
+    public City update(@NonNull City city) {
+        if (!hasIdentifier(city))
+            throw new IllegalArgumentException("Identifier not valid");
+
+        CityEntity cityToUpdate = CityEntity.from(city);
+        CityEntity updatedCity = repository.save(cityToUpdate);
+        return updatedCity.toCity();
+    }
+
+    private boolean hasIdentifier(City city) {
+        return city.getId() > 0;
+    }
 }

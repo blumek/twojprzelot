@@ -140,7 +140,7 @@ class CountryDatabaseRepositoryTest {
 
         assertThrows(IllegalArgumentException.class, () -> countryDatabaseRepository.update(country));
 
-        verify(countrySpringRepository,never()).save(countryEntity);
+        verify(countrySpringRepository, never()).save(countryEntity);
     }
 
     private void removeId() {

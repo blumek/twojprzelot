@@ -37,7 +37,7 @@ final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     @Override
     public Currency update(@NonNull Currency currency) {
         if (!hasIdentifier(currency))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Identifier not valid");
 
         CurrencyEntity currencyToUpdate = CurrencyEntity.from(currency);
         CurrencyEntity updatedCurrency = repository.save(currencyToUpdate);

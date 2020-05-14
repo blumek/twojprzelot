@@ -30,8 +30,8 @@ class CityDatabaseRepositoryTest {
 
     private CityEntity cityEntity;
     private CityEntity anotherCityEntity;
-    private City expectedCity;
-    private City anotherExpectedCity;
+    private City city;
+    private City anotherCity;
 
     @BeforeEach
     void setUp() {
@@ -43,12 +43,12 @@ class CityDatabaseRepositoryTest {
         anotherCityEntity.setId(ANOTHER_ID);
         anotherCityEntity.setIataCode(IATA_CODE);
 
-        expectedCity = City.builder()
+        city = City.builder()
                 .id(ID)
                 .iataCode(IATA_CODE)
                 .build();
 
-        anotherExpectedCity = City.builder()
+        anotherCity = City.builder()
                 .id(ANOTHER_ID)
                 .iataCode(IATA_CODE)
                 .build();
@@ -71,7 +71,7 @@ class CityDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(cityEntity, anotherCityEntity));
 
         List<City> foundCities = cityDatabaseRepository.findAll();
-        assertThat(foundCities, containsInAnyOrder(expectedCity, anotherExpectedCity));
+        assertThat(foundCities, containsInAnyOrder(city, anotherCity));
 
         verify(citySpringRepository).findAll();
     }
@@ -98,7 +98,7 @@ class CityDatabaseRepositoryTest {
         when(citySpringRepository.findByIataCode(IATA_CODE))
                 .thenReturn(Optional.of(cityEntity));
 
-        assertEquals(Optional.of(expectedCity), cityDatabaseRepository.findByIataCode(IATA_CODE));
+        assertEquals(Optional.of(city), cityDatabaseRepository.findByIataCode(IATA_CODE));
 
         verify(citySpringRepository).findByIataCode(IATA_CODE);
     }
@@ -108,8 +108,8 @@ class CityDatabaseRepositoryTest {
         when(citySpringRepository.save(cityEntity))
                 .thenReturn(anotherCityEntity);
 
-        City createdCity = cityDatabaseRepository.create(expectedCity);
-        assertEquals(anotherExpectedCity, createdCity);
+        City createdCity = cityDatabaseRepository.create(city);
+        assertEquals(anotherCity, createdCity);
 
         verify(citySpringRepository).save(cityEntity);
     }
@@ -117,6 +117,39 @@ class CityDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> cityDatabaseRepository.create(null));
+
+        verify(citySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest_entityWithId() {
+        when(citySpringRepository.save(cityEntity))
+                .thenReturn(anotherCityEntity);
+
+        City updatedCity = cityDatabaseRepository.update(city);
+        assertEquals(anotherCity, updatedCity);
+
+        verify(citySpringRepository).save(cityEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+
+        assertThrows(IllegalArgumentException.class, () -> cityDatabaseRepository.update(city));
+
+        verify(citySpringRepository, never()).save(cityEntity);
+    }
+
+    private void removeId() {
+        city = city.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> cityDatabaseRepository.update(null));
 
         verify(citySpringRepository, never()).save(null);
     }
