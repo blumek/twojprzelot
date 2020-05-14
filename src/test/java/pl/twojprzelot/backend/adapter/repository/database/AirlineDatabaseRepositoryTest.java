@@ -12,8 +12,8 @@ import pl.twojprzelot.backend.domain.entity.Airline;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -31,8 +31,8 @@ class AirlineDatabaseRepositoryTest {
 
     private AirlineEntity airlineEntity;
     private AirlineEntity anotherAirlineEntity;
-    private Airline expectedAirline;
-    private Airline anotherExpectedAirline;
+    private Airline airline;
+    private Airline anotherAirline;
 
     @BeforeEach
     void setUp() {
@@ -46,13 +46,13 @@ class AirlineDatabaseRepositoryTest {
         anotherAirlineEntity.setIataCode(IATA_CODE);
         anotherAirlineEntity.setIcaoCode(ICAO_CODE);
 
-        expectedAirline = Airline.builder()
+        airline = Airline.builder()
                 .id(ID)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .build();
 
-        anotherExpectedAirline = Airline.builder()
+        anotherAirline = Airline.builder()
                 .id(ANOTHER_ID)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -76,7 +76,7 @@ class AirlineDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(airlineEntity, anotherAirlineEntity));
 
         List<Airline> foundAirline = airlineDatabaseRepository.findAll();
-        assertThat(foundAirline, containsInAnyOrder(expectedAirline, anotherExpectedAirline));
+        assertThat(foundAirline, containsInAnyOrder(airline, anotherAirline));
 
         verify(airlineSpringRepository).findAll();
     }
@@ -96,7 +96,7 @@ class AirlineDatabaseRepositoryTest {
         when(airlineSpringRepository.findByIataCode(IATA_CODE))
                 .thenReturn(Optional.of(airlineEntity));
 
-        assertEquals(Optional.of(expectedAirline), airlineDatabaseRepository.findByIataCode(IATA_CODE));
+        assertEquals(Optional.of(airline), airlineDatabaseRepository.findByIataCode(IATA_CODE));
 
         verify(airlineSpringRepository).findByIataCode(IATA_CODE);
     }
@@ -123,7 +123,7 @@ class AirlineDatabaseRepositoryTest {
         when(airlineSpringRepository.findByIcaoCode(ICAO_CODE))
                 .thenReturn(Optional.of(airlineEntity));
 
-        assertEquals(Optional.of(expectedAirline), airlineDatabaseRepository.findByIcaoCode(ICAO_CODE));
+        assertEquals(Optional.of(airline), airlineDatabaseRepository.findByIcaoCode(ICAO_CODE));
 
         verify(airlineSpringRepository).findByIcaoCode(ICAO_CODE);
     }
@@ -140,8 +140,8 @@ class AirlineDatabaseRepositoryTest {
         when(airlineSpringRepository.save(airlineEntity))
                 .thenReturn(anotherAirlineEntity);
 
-        Airline createdAirline = airlineDatabaseRepository.create(expectedAirline);
-        assertEquals(anotherExpectedAirline, createdAirline);
+        Airline createdAirline = airlineDatabaseRepository.create(airline);
+        assertEquals(anotherAirline, createdAirline);
 
         verify(airlineSpringRepository).save(airlineEntity);
     }
@@ -149,6 +149,38 @@ class AirlineDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.create(null));
+
+        verify(airlineSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest_entityWithId() {
+        when(airlineSpringRepository.save(airlineEntity))
+                .thenReturn(anotherAirlineEntity);
+
+        Airline updatedAirline = airlineDatabaseRepository.update(airline);
+        assertEquals(anotherAirline, updatedAirline);
+
+        verify(airlineSpringRepository).save(airlineEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+        assertThrows(IllegalArgumentException.class, () -> airlineDatabaseRepository.update(airline));
+
+        verify(airlineSpringRepository, never()).save(airlineEntity);
+    }
+
+    private void removeId() {
+        airline = airline.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.update(null));
 
         verify(airlineSpringRepository, never()).save(null);
     }

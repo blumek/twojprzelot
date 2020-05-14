@@ -39,4 +39,18 @@ final class AirlineDatabaseRepository implements AirlineMutableRepository {
         AirlineEntity createdAirline = repository.save(airlineToCreate);
         return createdAirline.toAirline();
     }
+
+    @Override
+    public Airline update(@NonNull Airline airline) {
+        if (!hasIdentifier(airline))
+            throw new IllegalArgumentException("Identifier not valid");
+
+        AirlineEntity airlineToUpdate = AirlineEntity.from(airline);
+        AirlineEntity updatedAirline = repository.save(airlineToUpdate);
+        return updatedAirline.toAirline();
+    }
+
+    private boolean hasIdentifier(Airline airline) {
+        return airline.getId() > 0;
+    }
 }
