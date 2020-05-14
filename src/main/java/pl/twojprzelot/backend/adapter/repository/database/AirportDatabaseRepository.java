@@ -39,4 +39,18 @@ final class AirportDatabaseRepository implements AirportMutableRepository {
         AirportEntity createdAirport = repository.save(airportToCreate);
         return createdAirport.toAirport();
     }
+
+    @Override
+    public Airport update(@NonNull Airport airport) {
+        if (!hasIdentifier(airport))
+            throw new IllegalArgumentException("Identifier not valid");
+
+        AirportEntity airportToUpdate = AirportEntity.from(airport);
+        AirportEntity updatedAirport = repository.save(airportToUpdate);
+        return updatedAirport.toAirport();
+    }
+
+    private boolean hasIdentifier(Airport airport) {
+        return airport.getId() > 0;
+    }
 }

@@ -31,8 +31,8 @@ class AirportDatabaseRepositoryTest {
 
     private AirportEntity airportEntity;
     private AirportEntity anotherAirportEntity;
-    private Airport expectedAirport;
-    private Airport anotherExpectedAirport;
+    private Airport airport;
+    private Airport anotherAirport;
 
     @BeforeEach
     void setUp() {
@@ -46,13 +46,13 @@ class AirportDatabaseRepositoryTest {
         anotherAirportEntity.setIataCode(IATA_CODE);
         anotherAirportEntity.setIcaoCode(ICAO_CODE);
 
-        expectedAirport = Airport.builder()
+        airport = Airport.builder()
                 .id(ID)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
                 .build();
 
-        anotherExpectedAirport = Airport.builder()
+        anotherAirport = Airport.builder()
                 .id(ANOTHER_ID)
                 .iataCode(IATA_CODE)
                 .icaoCode(ICAO_CODE)
@@ -76,7 +76,7 @@ class AirportDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(airportEntity, anotherAirportEntity));
 
         List<Airport> foundAirports = airportDatabaseRepository.findAll();
-        assertThat(foundAirports, containsInAnyOrder(expectedAirport, anotherExpectedAirport));
+        assertThat(foundAirports, containsInAnyOrder(airport, anotherAirport));
 
         verify(airportSpringRepository).findAll();
     }
@@ -96,7 +96,7 @@ class AirportDatabaseRepositoryTest {
         when(airportSpringRepository.findByIataCode(IATA_CODE))
                 .thenReturn(Optional.of(airportEntity));
 
-        assertEquals(Optional.of(expectedAirport), airportDatabaseRepository.findByIataCode(IATA_CODE));
+        assertEquals(Optional.of(airport), airportDatabaseRepository.findByIataCode(IATA_CODE));
 
         verify(airportSpringRepository).findByIataCode(IATA_CODE);
     }
@@ -123,7 +123,7 @@ class AirportDatabaseRepositoryTest {
         when(airportSpringRepository.findByIcaoCode(ICAO_CODE))
                 .thenReturn(Optional.of(airportEntity));
 
-        assertEquals(Optional.of(expectedAirport), airportDatabaseRepository.findByIcaoCode(ICAO_CODE));
+        assertEquals(Optional.of(airport), airportDatabaseRepository.findByIcaoCode(ICAO_CODE));
 
         verify(airportSpringRepository).findByIcaoCode(ICAO_CODE);
     }
@@ -140,8 +140,8 @@ class AirportDatabaseRepositoryTest {
         when(airportSpringRepository.save(airportEntity))
                 .thenReturn(anotherAirportEntity);
 
-        Airport createdAirport = airportDatabaseRepository.create(expectedAirport);
-        assertEquals(anotherExpectedAirport, createdAirport);
+        Airport createdAirport = airportDatabaseRepository.create(airport);
+        assertEquals(anotherAirport, createdAirport);
 
         verify(airportSpringRepository).save(airportEntity);
     }
@@ -149,6 +149,39 @@ class AirportDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> airportDatabaseRepository.create(null));
+
+        verify(airportSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest_entityWithId() {
+        when(airportSpringRepository.save(airportEntity))
+                .thenReturn(anotherAirportEntity);
+
+        Airport updatedAirport = airportDatabaseRepository.update(airport);
+        assertEquals(anotherAirport, updatedAirport);
+
+        verify(airportSpringRepository).save(airportEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+
+        assertThrows(IllegalArgumentException.class, () -> airportDatabaseRepository.update(airport));
+
+        verify(airportSpringRepository, never()).save(airportEntity);
+    }
+
+    private void removeId() {
+        airport = airport.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airportDatabaseRepository.update(null));
 
         verify(airportSpringRepository, never()).save(null);
     }
