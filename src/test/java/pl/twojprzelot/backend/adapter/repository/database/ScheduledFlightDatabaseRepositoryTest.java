@@ -11,10 +11,10 @@ import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ScheduledFlightDatabaseRepositoryTest {
@@ -30,8 +30,8 @@ class ScheduledFlightDatabaseRepositoryTest {
 
     private ScheduledFlightEntity scheduledFlightEntity;
     private ScheduledFlightEntity anotherScheduledFlightEntity;
-    private ScheduledFlight expectedScheduledFlight;
-    private ScheduledFlight anotherExpectedScheduledFlight;
+    private ScheduledFlight scheduledFlight;
+    private ScheduledFlight anotherScheduledFlight;
 
     @BeforeEach
     void setUp() {
@@ -41,11 +41,11 @@ class ScheduledFlightDatabaseRepositoryTest {
         anotherScheduledFlightEntity = new ScheduledFlightEntity();
         anotherScheduledFlightEntity.setId(ANOTHER_ID);
 
-        expectedScheduledFlight = ScheduledFlight.builder()
+        scheduledFlight = ScheduledFlight.builder()
                 .id(ID)
                 .build();
 
-        anotherExpectedScheduledFlight = ScheduledFlight.builder()
+        anotherScheduledFlight = ScheduledFlight.builder()
                 .id(ANOTHER_ID)
                 .build();
     }
@@ -67,7 +67,7 @@ class ScheduledFlightDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity, anotherScheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAll();
-        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight, anotherExpectedScheduledFlight));
+        assertThat(foundFlights, containsInAnyOrder(scheduledFlight, anotherScheduledFlight));
 
         verify(scheduledFlightSpringRepository).findAll();
     }
@@ -89,7 +89,7 @@ class ScheduledFlightDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIataNumber(IATA_NUMBER);
-        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight));
+        assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
 
         verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IataNumber(IATA_NUMBER);
     }
@@ -118,7 +118,7 @@ class ScheduledFlightDatabaseRepositoryTest {
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIcaoNumber(ICAO_NUMBER);
-        assertThat(foundFlights, containsInAnyOrder(expectedScheduledFlight));
+        assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
 
         verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
     }
@@ -135,8 +135,8 @@ class ScheduledFlightDatabaseRepositoryTest {
         when(scheduledFlightSpringRepository.save(scheduledFlightEntity))
                 .thenReturn(anotherScheduledFlightEntity);
 
-        ScheduledFlight createdScheduledFlight = scheduledFlightDatabaseRepository.create(expectedScheduledFlight);
-        assertEquals(anotherExpectedScheduledFlight, createdScheduledFlight);
+        ScheduledFlight createdScheduledFlight = scheduledFlightDatabaseRepository.create(scheduledFlight);
+        assertEquals(anotherScheduledFlight, createdScheduledFlight);
 
         verify(scheduledFlightSpringRepository).save(scheduledFlightEntity);
     }
@@ -144,6 +144,38 @@ class ScheduledFlightDatabaseRepositoryTest {
     @Test
     void createTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.create(null));
+
+        verify(scheduledFlightSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void updateTest_entityWithId() {
+        when(scheduledFlightSpringRepository.save(scheduledFlightEntity))
+                .thenReturn(anotherScheduledFlightEntity);
+
+        ScheduledFlight updatedScheduledFlight = scheduledFlightDatabaseRepository.update(scheduledFlight);
+        assertEquals(anotherScheduledFlight, updatedScheduledFlight);
+
+        verify(scheduledFlightSpringRepository).save(scheduledFlightEntity);
+    }
+
+    @Test
+    void updateTest_entityWithoutId() {
+        removeId();
+        assertThrows(IllegalArgumentException.class, () -> scheduledFlightDatabaseRepository.update(scheduledFlight));
+
+        verify(scheduledFlightSpringRepository, never()).save(scheduledFlightEntity);
+    }
+
+    private void removeId() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    @Test
+    void updateTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.update(null));
 
         verify(scheduledFlightSpringRepository, never()).save(null);
     }

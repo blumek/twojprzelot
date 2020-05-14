@@ -40,4 +40,18 @@ public final class ScheduledFlightDatabaseRepository implements ScheduledFlightM
         ScheduledFlightEntity createdScheduledFlight = repository.save(scheduledFlightToCreate);
         return createdScheduledFlight.toScheduledFlight();
     }
+
+    @Override
+    public ScheduledFlight update(@NonNull ScheduledFlight scheduledFlight) {
+        if (!hasIdentifier(scheduledFlight))
+            throw new IllegalArgumentException("Identifier not valid");
+
+        ScheduledFlightEntity scheduledFlightToUpdate = ScheduledFlightEntity.from(scheduledFlight);
+        ScheduledFlightEntity updatedScheduledFlight = repository.save(scheduledFlightToUpdate);
+        return updatedScheduledFlight.toScheduledFlight();
+    }
+
+    private boolean hasIdentifier(ScheduledFlight scheduledFlight) {
+        return scheduledFlight.getId() > 0;
+    }
 }
