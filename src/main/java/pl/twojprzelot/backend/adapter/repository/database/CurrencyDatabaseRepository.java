@@ -28,6 +28,19 @@ final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     }
 
     @Override
+    public Optional<Currency> findByIsoNumber(int isoNumber) {
+        if (!isValidIdentifier(isoNumber))
+            throw new IllegalArgumentException("Invalid identifier");
+
+        return repository.findByIsoNumber(isoNumber)
+                .map(CurrencyEntity::toCurrency);
+    }
+
+    private boolean isValidIdentifier(int isoNumber) {
+        return isoNumber > 0;
+    }
+
+    @Override
     public Currency create(@NonNull Currency currency) {
         CurrencyEntity currencyToCreate = CurrencyEntity.from(currency);
         CurrencyEntity createdCurrency = repository.save(currencyToCreate);

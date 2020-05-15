@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface CurrencyImmutableRepository {
     List<Currency> findAll();
     Optional<Currency> findByCode(String code);
+    Optional<Currency> findByIsoNumber(int isoNumber);
 }

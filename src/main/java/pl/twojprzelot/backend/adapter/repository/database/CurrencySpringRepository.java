@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface CurrencySpringRepository extends JpaRepository<CurrencyEntity, Integer> {
     Optional<CurrencyEntity> findByCode(String code);
+    Optional<CurrencyEntity> findByIsoNumber(int isoNumber);
 }

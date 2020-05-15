@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CurrencyDatabaseRepositoryTest {
     private static final String CODE = "CODE";
+    private static final int ISO_NUMBER = 10;
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
 
@@ -101,6 +102,33 @@ class CurrencyDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.findByCode(null));
 
         verify(currencySpringRepository, never()).findByCode(null);
+    }
+
+    @Test
+    void findByIsoNumberTest_currencyWithGivenIsoNumberNotExists() {
+        when(currencySpringRepository.findByIsoNumber(ISO_NUMBER))
+                .thenReturn(Optional.empty());
+
+        assertEquals(Optional.empty(), currencyDatabaseRepository.findByIsoNumber(ISO_NUMBER));
+
+        verify(currencySpringRepository).findByIsoNumber(ISO_NUMBER);
+    }
+
+    @Test
+    void findByIsoNumberTest_currencyWithGivenIsoNumberExists() {
+        when(currencySpringRepository.findByIsoNumber(ISO_NUMBER))
+                .thenReturn(Optional.of(currencyEntity));
+
+        assertEquals(Optional.of(currency), currencyDatabaseRepository.findByIsoNumber(ISO_NUMBER));
+
+        verify(currencySpringRepository).findByIsoNumber(ISO_NUMBER);
+    }
+
+    @Test
+    void findByIsoNumberTest_invalidIdentifier() {
+        assertThrows(IllegalArgumentException.class, () -> currencyDatabaseRepository.findByIsoNumber(0));
+
+        verify(currencySpringRepository, never()).findByIsoNumber(0);
     }
 
     @Test
