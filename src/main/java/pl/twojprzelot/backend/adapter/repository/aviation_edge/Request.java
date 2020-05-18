@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -65,7 +65,7 @@ abstract class Request<T> {
         T[] requestedResources;
         try {
             requestedResources = restTemplate.getForObject(requestUrl, resourceArrayType);
-        } catch (HttpServerErrorException exception) {
+        } catch (RestClientException exception) {
             log.error(exception.getMessage());
             requestedResources = null;
         }

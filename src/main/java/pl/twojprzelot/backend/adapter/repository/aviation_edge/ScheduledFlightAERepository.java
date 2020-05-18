@@ -2,6 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 
@@ -11,6 +12,7 @@ import static java.lang.Long.MAX_VALUE;
 import static java.util.stream.Collectors.toList;
 import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
 
+@Component
 @RequiredArgsConstructor
 final class ScheduledFlightAERepository implements ScheduledFlightImmutableRepository {
     private final AviationEdgeClient client;
