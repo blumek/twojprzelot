@@ -11,12 +11,12 @@ import static lombok.AccessLevel.PRIVATE;
 @Getter
 @ToString
 @EqualsAndHashCode
-final class ResponseWeb<T> {
+public final class ResponseWeb<T> {
     private Status status;
     private T data;
     private String message;
 
-    enum Status {
+    public enum Status {
         @JsonProperty("success")
         SUCCESS,
         @JsonProperty("error")
