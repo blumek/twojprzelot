@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.SUCCESS;
+
 @RequiredArgsConstructor
 @RestController
 final class SpringTimetableController {
     private final TimetableController timetableController;
 
     @GetMapping("/timetable/{identifier}")
-    public List<ScheduledFlightWeb> findAllByFlightIdentifier(@PathVariable String identifier) {
-        return timetableController.findAllByFlightIdentifier(identifier);
+    public ResponseWeb<List<ScheduledFlightWeb>> findAllByFlightIdentifier(@PathVariable String identifier) {
+        return ResponseWeb.<List<ScheduledFlightWeb>>builder()
+                .status(SUCCESS)
+                .data(timetableController.findAllByFlightIdentifier(identifier))
+                .build();
     }
 }
