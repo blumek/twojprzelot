@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "application.key.header",
+      "type": "java.lang.String",
+      "description": "Application key header name."
+    }
+  ]
+}
