@@ -10,12 +10,12 @@ import org.springframework.core.ParameterizedTypeReference;
 
 import java.util.List;
 
-import static io.restassured.http.ContentType.JSON;
+import static io.restassured.http.ContentType.*;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.OK;
-import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.SUCCESS;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
+import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.*;
 
 @ExtendWith(MockitoExtension.class)
 class SpringTimetableControllerTest {
@@ -34,8 +34,9 @@ class SpringTimetableControllerTest {
                 .thenReturn(Lists.newArrayList());
 
         ResponseWeb<List<ScheduledFlightWeb>> expectedResponse = ResponseWeb.<List<ScheduledFlightWeb>>builder()
-                .status(SUCCESS)
+                .status(ERROR)
                 .data(Lists.newArrayList())
+                .message("Flight with given ID not found")
                 .build();
 
         ResponseWeb<List<ScheduledFlightWeb>> foundScheduledFlights = given()
@@ -44,7 +45,7 @@ class SpringTimetableControllerTest {
                 .get("/timetable/" + FLIGHT_IDENTIFIER)
         .then()
                 .contentType(JSON)
-                .status(OK)
+                .status(NOT_FOUND)
                 .extract()
                 .as(new ParameterizedTypeReference<ResponseWeb<List<ScheduledFlightWeb>>>() {}.getType());
 
