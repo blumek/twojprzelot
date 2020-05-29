@@ -22,6 +22,9 @@ final class AirlineAE {
     @JsonProperty("codeIcaoAirline")
     private String icaoCode;
 
+    @JsonProperty("nameCountry")
+    private String countryName;
+
     @JsonProperty("codeIso2Country")
     private String countryIso2Code;
 

@@ -3,10 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -19,14 +16,14 @@ import java.util.Map;
 import static java.lang.String.format;
 import static lombok.AccessLevel.NONE;
 import static lombok.AccessLevel.PACKAGE;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AviationEdgeRequest.QueryParameter.*;
 
 @Slf4j
 @Getter
 @EqualsAndHashCode(exclude = {"restTemplate", "objectMapper"})
+@ToString
 @RequiredArgsConstructor(access = PACKAGE)
 class AviationEdgeRequest<T> {
-    private static final String API_KEY = "key";
-
     @Getter(NONE)
     private final Class<T[]> resourceArrayType;
     private final String url;
@@ -52,7 +49,7 @@ class AviationEdgeRequest<T> {
     }
 
     private void appendApiKey(StringBuilder urlBuilder) {
-        urlBuilder.append(API_KEY)
+        urlBuilder.append(API_KEY.getKey())
                 .append("=")
                 .append(apiKey);
     }
@@ -126,5 +123,13 @@ class AviationEdgeRequest<T> {
     AviationEdgeRequest<T> removeQueryParameter(@NonNull String key) {
         queryParams.remove(key);
         return this;
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    enum QueryParameter {
+        API_KEY("key");
+
+        private final String key;
     }
 }
