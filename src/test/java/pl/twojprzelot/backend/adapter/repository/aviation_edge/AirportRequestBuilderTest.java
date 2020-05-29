@@ -36,7 +36,7 @@ class AirportRequestBuilderTest {
     }
 
     @Test
-    void iataTest() {
+    void iataCodeTest() {
         expectedRequest.addQueryParameter(IATA_CODE.getKey(), IATA_CODE_VALUE);
 
         AviationEdgeRequest<AirportAE> request = airportRequestBuilder
@@ -47,12 +47,12 @@ class AirportRequestBuilderTest {
     }
 
     @Test
-    void iataTest_nullPassed() {
+    void iataCodeTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> airportRequestBuilder.iataCode(null));
     }
 
     @Test
-    void iataTest_blankTextPassed() {
+    void iataCodeTest_blankTextPassed() {
         assertThrows(IllegalArgumentException.class, () -> airportRequestBuilder.iataCode("  "));
     }
 }
