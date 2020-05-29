@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.lang.Long.MAX_VALUE;
 import static java.util.stream.Collectors.toList;
-import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequestBuilder.Type.DEPARTURE;
 
 @Component
 @RequiredArgsConstructor
@@ -19,34 +19,37 @@ final class ScheduledFlightAERepository implements ScheduledFlightImmutableRepos
 
     @Override
     public List<ScheduledFlight> findAll() {
-        ScheduledFlightRequest scheduledFlightRequest = client.createScheduledFlightRequest()
+        AviationEdgeRequest<ScheduledFlightAE> scheduledFlightRequest = client.createScheduledFlightRequest()
                 .limit(MAX_VALUE)
                 .type(DEPARTURE)
-                .create();
+                .build();
 
-        return scheduledFlightRequest.get().stream()
+        return scheduledFlightRequest.get()
+                .stream()
                 .map(ScheduledFlightAE::toScheduledFlight)
                 .collect(toList());
     }
 
     @Override
     public List<ScheduledFlight> findAllByIataNumber(@NonNull String iataNumber) {
-        ScheduledFlightRequest scheduledFlightRequest = client.createScheduledFlightRequest()
+        AviationEdgeRequest<ScheduledFlightAE> scheduledFlightRequest = client.createScheduledFlightRequest()
                 .iataNumber(iataNumber)
-                .create();
+                .build();
 
-        return scheduledFlightRequest.get().stream()
+        return scheduledFlightRequest.get()
+                .stream()
                 .map(ScheduledFlightAE::toScheduledFlight)
                 .collect(toList());
     }
 
     @Override
     public List<ScheduledFlight> findAllByIcaoNumber(@NonNull String icaoNumber) {
-        ScheduledFlightRequest scheduledFlightRequest = client.createScheduledFlightRequest()
+        AviationEdgeRequest<ScheduledFlightAE> scheduledFlightRequest = client.createScheduledFlightRequest()
                 .icaoNumber(icaoNumber)
-                .create();
+                .build();
 
-        return scheduledFlightRequest.get().stream()
+        return scheduledFlightRequest.get()
+                .stream()
                 .map(ScheduledFlightAE::toScheduledFlight)
                 .collect(toList());
     }

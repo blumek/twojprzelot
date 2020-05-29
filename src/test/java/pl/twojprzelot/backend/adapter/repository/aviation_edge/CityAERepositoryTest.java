@@ -28,9 +28,9 @@ class CityAERepositoryTest {
     @Mock
     private AviationEdgeClient aviationEdgeClient;
     @Mock
-    private CityRequest.Builder cityRequestBuilder;
+    private CityRequestBuilder cityRequestBuilder;
     @Mock
-    private CityRequest cityRequest;
+    private AviationEdgeRequest<CityAE> cityRequest;
 
     private CityAE cityAE;
     private CityAE anotherCityAE;
@@ -59,7 +59,7 @@ class CityAERepositoryTest {
         when(aviationEdgeClient.createCityRequest())
                 .thenReturn(cityRequestBuilder);
 
-        when(cityRequestBuilder.create())
+        when(cityRequestBuilder.build())
                 .thenReturn(cityRequest);
 
         when(cityRequest.get())
@@ -76,7 +76,7 @@ class CityAERepositoryTest {
         when(aviationEdgeClient.createCityRequest())
                 .thenReturn(cityRequestBuilder);
 
-        when(cityRequestBuilder.create())
+        when(cityRequestBuilder.build())
                 .thenReturn(cityRequest);
 
         when(cityRequest.get())
@@ -96,7 +96,7 @@ class CityAERepositoryTest {
         when(cityRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(cityRequestBuilder);
 
-        when(cityRequestBuilder.create())
+        when(cityRequestBuilder.build())
                 .thenReturn(cityRequest);
 
         when(cityRequest.get())
@@ -116,7 +116,7 @@ class CityAERepositoryTest {
         when(cityRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(cityRequestBuilder);
 
-        when(cityRequestBuilder.create())
+        when(cityRequestBuilder.build())
                 .thenReturn(cityRequest);
 
         when(cityRequest.get())

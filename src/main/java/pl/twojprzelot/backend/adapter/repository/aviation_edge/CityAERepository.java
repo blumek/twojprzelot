@@ -16,21 +16,23 @@ final class CityAERepository implements CityImmutableRepository {
 
     @Override
     public List<City> findAll() {
-        CityRequest cityRequest = client.createCityRequest()
-                .create();
+        AviationEdgeRequest<CityAE> cityRequest = client.createCityRequest()
+                .build();
 
-        return cityRequest.get().stream()
+        return cityRequest.get()
+                .stream()
                 .map(CityAE::toCity)
                 .collect(toList());
     }
 
     @Override
     public Optional<City> findByIataCode(@NonNull String iataCode) {
-        CityRequest cityRequest = client.createCityRequest()
+        AviationEdgeRequest<CityAE> cityRequest = client.createCityRequest()
                 .iataCode(iataCode)
-                .create();
+                .build();
 
-        return cityRequest.get().stream()
+        return cityRequest.get()
+                .stream()
                 .findFirst()
                 .map(CityAE::toCity);
     }

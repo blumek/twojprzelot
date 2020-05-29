@@ -30,9 +30,9 @@ class AirlineAERepositoryTest {
     @Mock
     private AviationEdgeClient aviationEdgeClient;
     @Mock
-    private AirlineRequest.Builder airlineRequestBuilder;
+    private AirlineRequestBuilder airlineRequestBuilder;
     @Mock
-    private AirlineRequest airlineRequest;
+    private AviationEdgeRequest<AirlineAE> airlineRequest;
 
     private AirlineAE airlineAE;
     private AirlineAE anotherAirlineAE;
@@ -65,7 +65,7 @@ class AirlineAERepositoryTest {
         when(aviationEdgeClient.createAirlineRequest())
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())
@@ -82,7 +82,7 @@ class AirlineAERepositoryTest {
         when(aviationEdgeClient.createAirlineRequest())
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())
@@ -102,7 +102,7 @@ class AirlineAERepositoryTest {
         when(airlineRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())
@@ -122,7 +122,7 @@ class AirlineAERepositoryTest {
         when(airlineRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())
@@ -147,7 +147,7 @@ class AirlineAERepositoryTest {
         when(aviationEdgeClient.createAirlineRequest())
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())
@@ -163,7 +163,7 @@ class AirlineAERepositoryTest {
         when(aviationEdgeClient.createAirlineRequest())
                 .thenReturn(airlineRequestBuilder);
 
-        when(airlineRequestBuilder.create())
+        when(airlineRequestBuilder.build())
                 .thenReturn(airlineRequest);
 
         when(airlineRequest.get())

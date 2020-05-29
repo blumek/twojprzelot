@@ -14,23 +14,24 @@ final class CountryAERepository implements CountryImmutableRepository {
     private final AviationEdgeClient client;
 
     @Override
-    public Optional<Country> findByIso2Code(String iso2Code) {
-        CountryRequest countryRequest = client.createCountryRequest()
-                .iso2Code(iso2Code)
-                .create();
-
-        return countryRequest.get().stream()
-                .findFirst()
-                .map(CountryAE::toCountry);
-    }
-
-    @Override
     public List<Country> findAll() {
-        CountryRequest countryRequest = client.createCountryRequest()
-                .create();
+        AviationEdgeRequest<CountryAE> countryRequest = client.createCountryRequest()
+                .build();
 
         return countryRequest.get().stream()
                 .map(CountryAE::toCountry)
                 .collect(toList());
+    }
+
+    @Override
+    public Optional<Country> findByIso2Code(String iso2Code) {
+        AviationEdgeRequest<CountryAE> countryRequest = client.createCountryRequest()
+                .iso2Code(iso2Code)
+                .build();
+
+        return countryRequest.get()
+                .stream()
+                .findFirst()
+                .map(CountryAE::toCountry);
     }
 }

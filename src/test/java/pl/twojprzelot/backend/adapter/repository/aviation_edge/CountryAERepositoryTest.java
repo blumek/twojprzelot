@@ -28,9 +28,9 @@ class CountryAERepositoryTest {
     @Mock
     private AviationEdgeClient aviationEdgeClient;
     @Mock
-    private CountryRequest.Builder countryRequestBuilder;
+    private CountryRequestBuilder countryRequestBuilder;
     @Mock
-    private CountryRequest countryRequest;
+    private AviationEdgeRequest<CountryAE> countryRequest;
 
     private CountryAE countryAE;
     private CountryAE anotherCountryAE;
@@ -62,7 +62,7 @@ class CountryAERepositoryTest {
         when(countryRequestBuilder.iso2Code(ISO_2_CODE))
                 .thenReturn(countryRequestBuilder);
 
-        when(countryRequestBuilder.create())
+        when(countryRequestBuilder.build())
                 .thenReturn(countryRequest);
 
         when(countryRequest.get())
@@ -79,7 +79,7 @@ class CountryAERepositoryTest {
         when(countryRequestBuilder.iso2Code(ISO_2_CODE))
                 .thenReturn(countryRequestBuilder);
 
-        when(countryRequestBuilder.create())
+        when(countryRequestBuilder.build())
                 .thenReturn(countryRequest);
 
         when(countryRequest.get())
@@ -93,7 +93,7 @@ class CountryAERepositoryTest {
 
     @Test
     void findAllTest_noCountriesAvailable() {
-        when(countryRequestBuilder.create())
+        when(countryRequestBuilder.build())
                 .thenReturn(countryRequest);
 
         when(countryRequest.get())
@@ -108,7 +108,7 @@ class CountryAERepositoryTest {
 
     @Test
     void findAllTest_twoCountriesAvailable() {
-        when(countryRequestBuilder.create())
+        when(countryRequestBuilder.build())
                 .thenReturn(countryRequest);
 
         when(countryRequest.get())

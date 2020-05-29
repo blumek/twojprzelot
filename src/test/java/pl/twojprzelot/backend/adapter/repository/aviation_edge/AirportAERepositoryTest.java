@@ -30,9 +30,9 @@ class AirportAERepositoryTest {
     @Mock
     private AviationEdgeClient aviationEdgeClient;
     @Mock
-    private AirportRequest.Builder airportRequestBuilder;
+    private AirportRequestBuilder airportRequestBuilder;
     @Mock
-    private AirportRequest airportRequest;
+    private AviationEdgeRequest<AirportAE> airportRequest;
 
     private AirportAE airportAE;
     private AirportAE anotherAirportAE;
@@ -65,7 +65,7 @@ class AirportAERepositoryTest {
         when(aviationEdgeClient.createAirportRequest())
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())
@@ -82,7 +82,7 @@ class AirportAERepositoryTest {
         when(aviationEdgeClient.createAirportRequest())
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())
@@ -102,7 +102,7 @@ class AirportAERepositoryTest {
         when(airportRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())
@@ -122,7 +122,7 @@ class AirportAERepositoryTest {
         when(airportRequestBuilder.iataCode(IATA_CODE))
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())
@@ -147,7 +147,7 @@ class AirportAERepositoryTest {
         when(aviationEdgeClient.createAirportRequest())
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())
@@ -163,7 +163,7 @@ class AirportAERepositoryTest {
         when(aviationEdgeClient.createAirportRequest())
                 .thenReturn(airportRequestBuilder);
 
-        when(airportRequestBuilder.create())
+        when(airportRequestBuilder.build())
                 .thenReturn(airportRequest);
 
         when(airportRequest.get())

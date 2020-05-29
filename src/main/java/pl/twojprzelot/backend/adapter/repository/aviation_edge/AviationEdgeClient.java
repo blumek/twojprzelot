@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import org.springframework.web.client.RestTemplate;
 
@@ -7,31 +8,35 @@ final class AviationEdgeClient {
     private static final String URL = "https://aviation-edge.com/v2/public";
 
     private final String apiKey;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
-    public AviationEdgeClient(@NonNull String apiKey) {
+    public AviationEdgeClient(@NonNull String apiKey, RestTemplate restTemplate, ObjectMapper objectMapper) {
         if (apiKey.isBlank())
             throw new IllegalArgumentException();
 
         this.apiKey = apiKey;
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
     }
 
-    public CountryRequest.Builder createCountryRequest() {
-        return new CountryRequest.Builder(URL, apiKey, new RestTemplate());
+    public CountryRequestBuilder createCountryRequest() {
+        return new CountryRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
 
-    public CityRequest.Builder createCityRequest() {
-        return new CityRequest.Builder(URL, apiKey, new RestTemplate());
+    public CityRequestBuilder createCityRequest() {
+        return new CityRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
 
-    public AirportRequest.Builder createAirportRequest() {
-        return new AirportRequest.Builder(URL, apiKey, new RestTemplate());
+    public AirportRequestBuilder createAirportRequest() {
+        return new AirportRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
 
-    public AirlineRequest.Builder createAirlineRequest() {
-        return new AirlineRequest.Builder(URL, apiKey, new RestTemplate());
+    public AirlineRequestBuilder createAirlineRequest() {
+        return new AirlineRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
 
-    public ScheduledFlightRequest.Builder createScheduledFlightRequest() {
-        return new ScheduledFlightRequest.Builder(URL, apiKey, new RestTemplate());
+    public ScheduledFlightRequestBuilder createScheduledFlightRequest() {
+        return new ScheduledFlightRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
 }

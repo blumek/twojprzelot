@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequest.Type.DEPARTURE;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.ScheduledFlightRequestBuilder.Type.DEPARTURE;
 
 @ExtendWith(MockitoExtension.class)
 class ScheduledFlightAERepositoryTest {
@@ -34,9 +34,9 @@ class ScheduledFlightAERepositoryTest {
     @Mock
     private AviationEdgeClient aviationEdgeClient;
     @Mock
-    private ScheduledFlightRequest.Builder scheduledFlightRequestBuilder;
+    private ScheduledFlightRequestBuilder scheduledFlightRequestBuilder;
     @Mock
-    private ScheduledFlightRequest scheduledFlightRequest;
+    private AviationEdgeRequest<ScheduledFlightAE> scheduledFlightRequest;
 
     private ScheduledFlightAE scheduledFlightAE;
     private ScheduledFlightAE anotherScheduledFlightAE;
@@ -89,7 +89,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.type(DEPARTURE))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())
@@ -114,7 +114,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.type(DEPARTURE))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())
@@ -136,7 +136,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())
@@ -157,7 +157,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.iataNumber(IATA_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())
@@ -186,7 +186,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())
@@ -207,7 +207,7 @@ class ScheduledFlightAERepositoryTest {
         when(scheduledFlightRequestBuilder.icaoNumber(ICAO_NUMBER))
                 .thenReturn(scheduledFlightRequestBuilder);
 
-        when(scheduledFlightRequestBuilder.create())
+        when(scheduledFlightRequestBuilder.build())
                 .thenReturn(scheduledFlightRequest);
 
         when(scheduledFlightRequest.get())

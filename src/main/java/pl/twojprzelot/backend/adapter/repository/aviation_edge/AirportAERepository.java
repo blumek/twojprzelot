@@ -15,31 +15,34 @@ final class AirportAERepository implements AirportImmutableRepository {
 
     @Override
     public List<Airport> findAll() {
-        AirportRequest airportRequest = client.createAirportRequest()
-                .create();
+        AviationEdgeRequest<AirportAE> airportRequest = client.createAirportRequest()
+                .build();
 
-        return airportRequest.get().stream()
+        return airportRequest.get()
+                .stream()
                 .map(AirportAE::toAirport)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Airport> findByIataCode(@NonNull String iataCode) {
-        AirportRequest airportRequest = client.createAirportRequest()
+        AviationEdgeRequest<AirportAE> airportRequest = client.createAirportRequest()
                 .iataCode(iataCode)
-                .create();
+                .build();
 
-        return airportRequest.get().stream()
+        return airportRequest.get()
+                .stream()
                 .findFirst()
                 .map(AirportAE::toAirport);
     }
 
     @Override
     public Optional<Airport> findByIcaoCode(@NonNull String icaoCode) {
-        AirportRequest airportRequest = client.createAirportRequest()
-                .create();
+        AviationEdgeRequest<AirportAE> airportRequest = client.createAirportRequest()
+                .build();
 
-        return airportRequest.get().stream()
+        return airportRequest.get()
+                .stream()
                 .filter(airportAE -> airportAE.getIcaoCode().equalsIgnoreCase(icaoCode))
                 .findFirst()
                 .map(AirportAE::toAirport);
