@@ -6,31 +6,31 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirlineRequestBuilder.AIRLINE_RESOURCE_URI;
-import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirlineRequestBuilder.QueryParameter.IATA_CODE;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirportRequestBuilder.AIRPORT_RESOURCE_URI;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirportRequestBuilder.QueryParameter.IATA_CODE;
 
-class AirlineRequestBuilderTest {
+class AirportRequestBuilderTest {
     private static final String BASE_URL = "BASE_URL";
     private static final String API_KEY = "API_KEY";
     private static final RestTemplate REST_TEMPLATE = new RestTemplate();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final Class<AirlineAE[]> AIRLINE_ARRAY_TYPE = AirlineAE[].class;
+    private static final Class<AirportAE[]> AIRPORT_ARRAY_TYPE = AirportAE[].class;
     private static final String IATA_CODE_VALUE = "IATA_CODE_VALUE";
 
-    private AirlineRequestBuilder airlineRequestBuilder;
-    private AviationEdgeRequest<AirlineAE> expectedRequest;
+    private AirportRequestBuilder airportRequestBuilder;
+    private AviationEdgeRequest<AirportAE> expectedRequest;
 
     @BeforeEach
     void setUp() {
-        airlineRequestBuilder = new AirlineRequestBuilder(BASE_URL, API_KEY, REST_TEMPLATE, OBJECT_MAPPER);
+        airportRequestBuilder = new AirportRequestBuilder(BASE_URL, API_KEY, REST_TEMPLATE, OBJECT_MAPPER);
 
-        expectedRequest = new AviationEdgeRequest<>(AIRLINE_ARRAY_TYPE, BASE_URL + AIRLINE_RESOURCE_URI,
+        expectedRequest = new AviationEdgeRequest<>(AIRPORT_ARRAY_TYPE, BASE_URL + AIRPORT_RESOURCE_URI,
                 API_KEY, REST_TEMPLATE, OBJECT_MAPPER);
     }
 
     @Test
     void buildTest() {
-        AviationEdgeRequest<AirlineAE> request = airlineRequestBuilder.build();
+        AviationEdgeRequest<AirportAE> request = airportRequestBuilder.build();
 
         assertEquals(expectedRequest, request);
     }
@@ -39,7 +39,7 @@ class AirlineRequestBuilderTest {
     void iataTest() {
         expectedRequest.addQueryParameter(IATA_CODE.getKey(), IATA_CODE_VALUE);
 
-        AviationEdgeRequest<AirlineAE> request = airlineRequestBuilder
+        AviationEdgeRequest<AirportAE> request = airportRequestBuilder
                 .iataCode(IATA_CODE_VALUE)
                 .build();
 
@@ -48,11 +48,11 @@ class AirlineRequestBuilderTest {
 
     @Test
     void iataTest_nullPassed() {
-        assertThrows(NullPointerException.class, () -> airlineRequestBuilder.iataCode(null));
+        assertThrows(NullPointerException.class, () -> airportRequestBuilder.iataCode(null));
     }
 
     @Test
     void iataTest_blankTextPassed() {
-        assertThrows(IllegalArgumentException.class, () -> airlineRequestBuilder.iataCode("  "));
+        assertThrows(IllegalArgumentException.class, () -> airportRequestBuilder.iataCode("  "));
     }
 }

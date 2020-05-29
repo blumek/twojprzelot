@@ -6,22 +6,22 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 
-import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirlineRequestBuilder.QueryParameter.IATA_CODE;
+import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AirportRequestBuilder.QueryParameter.IATA_CODE;
 
 
-final class AirlineRequestBuilder extends AviationEdgeRequestBuilder<AirlineAE> {
-    static final String AIRLINE_RESOURCE_URI = "/airlineDatabase";
+final class AirportRequestBuilder extends AviationEdgeRequestBuilder<AirportAE> {
+    static final String AIRPORT_RESOURCE_URI = "/airportDatabase";
 
-    AirlineRequestBuilder(String baseUrl, String apiKey, RestTemplate restTemplate, ObjectMapper objectMapper) {
-        super(AirlineAE[].class, baseUrl, apiKey, restTemplate, objectMapper);
+    AirportRequestBuilder(String baseUrl, String apiKey, RestTemplate restTemplate, ObjectMapper objectMapper) {
+        super(AirportAE[].class, baseUrl, apiKey, restTemplate, objectMapper);
     }
 
     @Override
     String getResourceUrl(String baseUrl) {
-        return baseUrl + AIRLINE_RESOURCE_URI;
+        return baseUrl + AIRPORT_RESOURCE_URI;
     }
 
-    public AirlineRequestBuilder iataCode(@NonNull String iataCode) {
+    public AirportRequestBuilder iataCode(@NonNull String iataCode) {
         if (iataCode.isBlank())
             throw new IllegalArgumentException("Iata Code cannot be empty");
 
@@ -30,14 +30,14 @@ final class AirlineRequestBuilder extends AviationEdgeRequestBuilder<AirlineAE> 
     }
 
     @Override
-    public AviationEdgeRequest<AirlineAE> build() {
+    public AviationEdgeRequest<AirportAE> build() {
         return request;
     }
 
     @RequiredArgsConstructor
     @Getter
     enum QueryParameter {
-        IATA_CODE("codeIataAirline");
+        IATA_CODE("codeIataAirport");
 
         private final String key;
     }
