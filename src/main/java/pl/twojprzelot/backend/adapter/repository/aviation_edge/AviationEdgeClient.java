@@ -39,4 +39,8 @@ final class AviationEdgeClient {
     public ScheduledFlightRequestBuilder createScheduledFlightRequest() {
         return new ScheduledFlightRequestBuilder(URL, apiKey, restTemplate, objectMapper);
     }
+
+    public FlightRequestBuilder createFlightRequest() {
+        return new FlightRequestBuilder(URL, apiKey, restTemplate, objectMapper);
+    }
 }

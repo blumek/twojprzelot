@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AviationEdgeClientTest {
     private static final String URL = "https://aviation-edge.com/v2/public";
@@ -88,5 +87,18 @@ class AviationEdgeClientTest {
                 .build();
 
         assertEquals(expectedScheduledFlightRequest, scheduledFlightRequest);
+    }
+
+    @Test
+    void createFlightRequestTest() {
+        AviationEdgeClient aviationEdgeClient = new AviationEdgeClient(API_KEY, REST_TEMPLATE, OBJECT_MAPPER);
+        AviationEdgeRequest<FlightAE> scheduledFlightRequest = aviationEdgeClient.createFlightRequest()
+                .build();
+
+        AviationEdgeRequest<FlightAE> expectedFlightRequest =
+                new FlightRequestBuilder(URL, API_KEY, REST_TEMPLATE, OBJECT_MAPPER)
+                        .build();
+
+        assertEquals(expectedFlightRequest, scheduledFlightRequest);
     }
 }

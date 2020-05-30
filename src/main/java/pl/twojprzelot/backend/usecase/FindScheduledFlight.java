@@ -7,7 +7,7 @@ import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class FindScheduledFlight {
+public final class FindScheduledFlight {
     private final ScheduledFlightImmutableRepository repository;
 
     public List<ScheduledFlight> findAllByFlightIdentifier(String flightIdentifier) {
