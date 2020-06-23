@@ -1,11 +1,9 @@
 package pl.twojprzelot.backend.domain.entity;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CountryTest {
     private static final int ID = 5;
@@ -17,40 +15,6 @@ class CountryTest {
     private static final int POPULATION = 10;
     private static final int ANOTHER_POPULATION = 20;
     private static final String CURRENCY_NAME = "CURRENCY_NAME";
-
-    private Country firstCountry;
-    private Country sameCountryAsFirstCountry;
-    private Country anotherCountry;
-
-    @BeforeEach
-    void setUp() {
-        firstCountry = Country.builder()
-                .id(ID)
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        sameCountryAsFirstCountry = Country.builder()
-                .id(ID)
-                .name(NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(POPULATION)
-                .build();
-
-        anotherCountry = Country.builder()
-                .id(ID)
-                .name(ANOTHER_NAME)
-                .iso2Code(ISO_2_CODE)
-                .iso3Code(ISO_3_CODE)
-                .isoNumber(ISO_NUMBER)
-                .population(ANOTHER_POPULATION)
-                .build();
-    }
 
     @Test
     void builderTest_id() {

@@ -12,11 +12,6 @@ class ScheduledFlightTest {
     private static final int FIRST_DELAY_MINUTES = 10;
     private static final int SECOND_DELAY_MINUTES = 20;
     private static final String AIRLINE_NAME = "AIRLINE_NAME";
-    private static final String ANOTHER_AIRLINE_NAME = "ANOTHER_AIRLINE_NAME";
-
-    private ScheduledFlight firstScheduledFlight;
-    private ScheduledFlight sameScheduledFlightFirstScheduledFlight;
-    private ScheduledFlight anotherScheduledFlight;
 
     private FlightIdentifier flightIdentifier;
     private FlightEndpointDetails departure;
@@ -39,34 +34,6 @@ class ScheduledFlightTest {
 
         airline = Airline.builder()
                 .name(AIRLINE_NAME)
-                .build();
-
-        Airline anotherAirline = Airline.builder()
-                .name(ANOTHER_AIRLINE_NAME)
-                .build();
-
-        firstScheduledFlight = ScheduledFlight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(airline)
-                .build();
-
-        sameScheduledFlightFirstScheduledFlight = ScheduledFlight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(airline)
-                .build();
-
-        anotherScheduledFlight = ScheduledFlight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(anotherAirline)
                 .build();
     }
 

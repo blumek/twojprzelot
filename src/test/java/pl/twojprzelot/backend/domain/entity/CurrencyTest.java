@@ -1,46 +1,15 @@
 package pl.twojprzelot.backend.domain.entity;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CurrencyTest {
     private static final int ID = 2;
     private static final String NAME = "NAME";
     private static final String CODE = "CODE";
     private static final int ISO_NUMBER = 1;
-    private static final String ANOTHER_CODE = "ANOTHER_CODE";
-    private static final int ANOTHER_ISO_NUMBER = 2;
-
-    private Currency firstCurrency;
-    private Currency sameCurrencyAsFirstCurrency;
-    private Currency anotherCurrency;
-
-    @BeforeEach
-    void setUp() {
-        firstCurrency = Currency.builder()
-                .id(ID)
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        sameCurrencyAsFirstCurrency = Currency.builder()
-                .id(ID)
-                .name(NAME)
-                .code(CODE)
-                .isoNumber(ISO_NUMBER)
-                .build();
-
-        anotherCurrency = Currency.builder()
-                .id(ID)
-                .name(NAME)
-                .code(ANOTHER_CODE)
-                .isoNumber(ANOTHER_ISO_NUMBER)
-                .build();
-    }
 
     @Test
     void builderTest_id() {

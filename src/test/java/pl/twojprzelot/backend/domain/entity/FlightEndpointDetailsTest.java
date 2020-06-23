@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class FlightEndpointDetailsTest {
     private static final int DELAY_MINUTES = 5;
     private static final String AIRPORT_NAME = "AIRPORT_NAME";
-    private static final String ANOTHER_AIRPORT_NAME = "ANOTHER_AIRPORT_NAME";
     private static final String TERMINAL = "TERMINAL";
     private static final int YEAR = 2000;
     private static final int MONTH = 10;
@@ -19,10 +18,6 @@ class FlightEndpointDetailsTest {
     private static final int HOUR = 10;
     private static final int MINUTE = 10;
     private static final int SECOND = 0;
-
-    private FlightEndpointDetails firstFlightEndpointDetails;
-    private FlightEndpointDetails sameFlightEndpointDetailsAsFirstFlightEndpointDetails;
-    private FlightEndpointDetails anotherFlightEndpointDetails;
 
     private Airport airport;
     private FlightAirportDetails flightAirportDetails;
@@ -34,48 +29,11 @@ class FlightEndpointDetailsTest {
                 .name(AIRPORT_NAME)
                 .build();
 
-        Airport anotherAirport = Airport.builder()
-                .name(ANOTHER_AIRPORT_NAME)
-                .build();
-
         flightAirportDetails = FlightAirportDetails.builder()
                 .terminal(TERMINAL)
                 .build();
 
         time = LocalDateTime.of(YEAR, MONTH, DAY_OF_MONTH, HOUR, MINUTE, SECOND);
-
-        firstFlightEndpointDetails = FlightEndpointDetails.builder()
-                .airport(airport)
-                .flightAirportDetails(flightAirportDetails)
-                .delayMinutes(DELAY_MINUTES)
-                .scheduledTime(time)
-                .estimatedTime(time)
-                .actualTime(time)
-                .estimatedRunwayTime(time)
-                .actualRunwayTime(time)
-                .build();
-
-        sameFlightEndpointDetailsAsFirstFlightEndpointDetails = FlightEndpointDetails.builder()
-                .airport(airport)
-                .flightAirportDetails(flightAirportDetails)
-                .delayMinutes(DELAY_MINUTES)
-                .scheduledTime(time)
-                .estimatedTime(time)
-                .actualTime(time)
-                .estimatedRunwayTime(time)
-                .actualRunwayTime(time)
-                .build();
-
-        anotherFlightEndpointDetails = FlightEndpointDetails.builder()
-                .airport(anotherAirport)
-                .flightAirportDetails(flightAirportDetails)
-                .delayMinutes(DELAY_MINUTES)
-                .scheduledTime(time)
-                .estimatedTime(time)
-                .actualTime(time)
-                .estimatedRunwayTime(time)
-                .actualRunwayTime(time)
-                .build();
     }
 
     @Test

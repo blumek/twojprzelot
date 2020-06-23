@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CityTest {
     private static final int ID = 5;
@@ -16,10 +15,6 @@ class CityTest {
     private static final double LONGITUDE = 2.0;
     private static final String COUNTRY_NAME = "COUNTRY_NAME";
     private static final int POPULATION = 10;
-
-    private City firstCity;
-    private City sameCityAsFirstCity;
-    private City anotherCity;
 
     private GeographicLocation geographicLocation;
     private Country country;
@@ -34,30 +29,6 @@ class CityTest {
         country = Country.builder()
                 .name(COUNTRY_NAME)
                 .population(POPULATION)
-                .build();
-
-        firstCity = City.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .geographicLocation(geographicLocation)
-                .country(country)
-                .build();
-
-        sameCityAsFirstCity = City.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .geographicLocation(geographicLocation)
-                .country(country)
-                .build();
-
-        anotherCity = City.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(ANOTHER_IATA_CODE)
-                .geographicLocation(geographicLocation)
-                .country(country)
                 .build();
     }
 

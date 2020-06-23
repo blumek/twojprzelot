@@ -55,20 +55,13 @@ public interface DomainMapper {
         if (flight.getFlightIdentifier() == null || flight.getFlightIdentifier().equals(emptyFlightIdentifier))
             flightBuilder.flightIdentifier(null);
 
-        Airline emptyAirline = Airline.builder().build();
-        if (flight.getAirline() == null || flight.getAirline().equals(emptyAirline))
-            flightBuilder.airline(null);
-
-        Airport emptyAirport = Airport.builder().build();
-        if (flight.getDeparture() == null || flight.getDeparture().equals(emptyAirport))
-            flightBuilder.departure(null);
-
-        if (flight.getArrival() == null || flight.getArrival().equals(emptyAirport))
-            flightBuilder.arrival(null);
-
         GeographicPosition emptyGeographicPosition = GeographicPosition.builder().build();
         if (flight.getGeographicPosition() == null || flight.getGeographicPosition().equals(emptyGeographicPosition))
             flightBuilder.geographicPosition(null);
+
+        AirplaneSpeed emptyAirplaneSpeed = AirplaneSpeed.builder().build();
+        if (flight.getAirplaneSpeed() == null || flight.getAirplaneSpeed().equals(emptyAirplaneSpeed))
+            flightBuilder.airplaneSpeed(null);
     }
 
     @AfterMapping

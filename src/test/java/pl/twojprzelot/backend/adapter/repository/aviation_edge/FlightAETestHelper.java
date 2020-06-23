@@ -60,35 +60,12 @@ class FlightAETestHelper {
                         .iataNumber(FLIGHT_ID_IATA_NUMBER)
                         .icaoNumber(FLIGHT_ID_ICAO_NUMBER)
                         .build())
-                .airline(Airline.builder()
-                        .name(AIRLINE_NAME)
-                        .iataCode(AIRLINE_IATA_NAME)
-                        .icaoCode(AIRLINE_ICAO_NAME)
-                        .build())
                 .geographicPosition(GeographicPosition.builder()
                         .latitude(LATITUDE)
                         .longitude(LONGITUDE)
                         .altitude(ALTITUDE)
                         .direction(DIRECTION)
                         .build())
-                .departure(Airport.builder()
-                        .iataCode(DEPARTURE_AIRPORT_IATA_CODE)
-                        .icaoCode(DEPARTURE_AIRPORT_ICAO_CODE)
-                        .build())
-                .arrival(Airport.builder()
-                        .iataCode(ARRIVAL_AIRPORT_IATA_CODE)
-                        .icaoCode(ARRIVAL_AIRPORT_ICAO_CODE)
-                        .build())
-                .build();
-    }
-
-    void removeAirlineAE() {
-        flightAE.setAirline(null);
-    }
-
-    void removeAirline() {
-        flight = flight.toBuilder()
-                .airline(null)
                 .build();
     }
 
@@ -102,33 +79,23 @@ class FlightAETestHelper {
                 .build();
     }
 
-    void removeDepartureAE() {
-        flightAE.setDeparture(null);
+    void removeGeographicPositionAE() {
+        flightAE.setGeographicPosition(null);
     }
 
-    void removeDeparture() {
+    void removeGeographicPosition() {
         flight = flight.toBuilder()
-                .departure(null)
+                .geographicPosition(null)
                 .build();
     }
 
-    void removeDepartureAEData() {
-        flightAE.getDeparture().setIataCode(null);
-        flightAE.getDeparture().setIcaoCode(null);
+    void removeAirplaneSpeedAE() {
+        flightAE.setAirplaneSpeed(null);
     }
 
-    void removeArrivalAE() {
-        flightAE.setArrival(null);
-    }
-
-    void removeArrival() {
+    void removeAirplaneSpeed() {
         flight = flight.toBuilder()
-                .arrival(null)
+                .airplaneSpeed(null)
                 .build();
-    }
-
-    void removeArrivalAEData() {
-        flightAE.getArrival().setIataCode(null);
-        flightAE.getArrival().setIcaoCode(null);
     }
 }

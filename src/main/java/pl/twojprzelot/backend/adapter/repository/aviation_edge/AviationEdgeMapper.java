@@ -37,6 +37,7 @@ interface AviationEdgeMapper {
     Airline mapToAirline(AirlineAE airlineAE);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "airline.id", ignore = true)
+    @Mapping(source = "airplaneSpeed.horizontal", target = "airplaneSpeed.horizontalSpeed")
+    @Mapping(source = "airplaneSpeed.vertical", target = "airplaneSpeed.verticalSpeed")
     Flight mapToFlight(FlightAE flightAE);
 }

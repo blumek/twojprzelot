@@ -18,6 +18,14 @@ class ScheduledFlightWebTest extends ScheduledFlightWebTestHelper {
     }
 
     @Test
+    void fromTest_idNotAvailable() {
+        removeIdWeb();
+        removeId();
+
+        assertEquals(scheduledFlightWeb, ScheduledFlightWeb.from(scheduledFlight));
+    }
+
+    @Test
     void fromTest_countryNotAvailable() {
         removeCountryFromScheduledFlight();
         removeCountryNameFromScheduledFlightWeb();

@@ -1,10 +1,9 @@
 package pl.twojprzelot.backend.domain.entity;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GeographicPositionTest {
     private static final double LATITUDE = 1.0;
@@ -12,34 +11,6 @@ class GeographicPositionTest {
     private static final double LONGITUDE = 2.0;
     private static final double ALTITUDE = 3.0;
     private static final double DIRECTION = 4.0;
-
-    private GeographicPosition firstGeographicPosition;
-    private GeographicPosition sameGeographicPositionAsFirstGeographicPosition;
-    private GeographicPosition anotherGeographicPosition;
-
-    @BeforeEach
-    void setUp() {
-        firstGeographicPosition = GeographicPosition.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .altitude(ALTITUDE)
-                .direction(DIRECTION)
-                .build();
-
-        sameGeographicPositionAsFirstGeographicPosition = GeographicPosition.builder()
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .altitude(ALTITUDE)
-                .direction(DIRECTION)
-                .build();
-
-        anotherGeographicPosition = GeographicPosition.builder()
-                .latitude(ANOTHER_LATITUDE)
-                .longitude(LONGITUDE)
-                .altitude(ALTITUDE)
-                .direction(DIRECTION)
-                .build();
-    }
 
     @Test
     void builderTest_latitude() {

@@ -166,6 +166,18 @@ class ScheduledFlightWebTestHelper {
                 .build();
     }
 
+    void removeIdWeb() {
+        scheduledFlightWeb = scheduledFlightWeb.toBuilder()
+                .id(0)
+                .build();
+    }
+
+    void removeId() {
+        scheduledFlight = scheduledFlight.toBuilder()
+                .id(0)
+                .build();
+    }
+
     void removeCountryFromScheduledFlight() {
         city = city.toBuilder()
                 .country(null)

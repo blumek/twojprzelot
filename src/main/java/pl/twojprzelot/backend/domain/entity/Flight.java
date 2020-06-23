@@ -13,7 +13,5 @@ public class Flight {
     int id;
     FlightIdentifier flightIdentifier;
     GeographicPosition geographicPosition;
-    Airport departure;
-    Airport arrival;
-    Airline airline;
+    AirplaneSpeed airplaneSpeed;
 }

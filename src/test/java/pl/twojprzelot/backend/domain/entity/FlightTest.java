@@ -12,19 +12,12 @@ class FlightTest {
     private static final double LATITUDE = 2.0;
     private static final double LONGITUDE = 3.0;
     private static final double ALTITUDE = 4.0;
-    private static final String AIRPORT_NAME = "AIRPORT_NAME";
-    private static final String ANOTHER_AIRPORT_NAME = "ANOTHER_AIRPORT_NAME";
-    private static final String AIRLINE_NAME = "AIRLINE_NAME";
-
-    private Flight firstFlight;
-    private Flight sameFlightAsFirstFlight;
-    private Flight anotherFlight;
+    private static final int HORIZONTAL_SPEED = 100;
+    private static final int VERTICAL_SPEED = 200;
 
     private FlightIdentifier flightIdentifier;
     private GeographicPosition geographicPosition;
-    private Airport departure;
-    private Airport arrival;
-    private Airline airline;
+    private AirplaneSpeed airplaneSpeed;
 
     @BeforeEach
     void setUp() {
@@ -38,43 +31,9 @@ class FlightTest {
                 .altitude(ALTITUDE)
                 .build();
 
-        departure = Airport.builder()
-                .name(AIRPORT_NAME)
-                .build();
-
-        arrival = Airport.builder()
-                .name(ANOTHER_AIRPORT_NAME)
-                .build();
-
-        airline = Airline.builder()
-                .name(AIRLINE_NAME)
-                .build();
-
-        firstFlight = Flight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .geographicPosition(geographicPosition)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(airline)
-                .build();
-
-        sameFlightAsFirstFlight = Flight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .geographicPosition(geographicPosition)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(airline)
-                .build();
-
-        anotherFlight = Flight.builder()
-                .id(ID)
-                .flightIdentifier(flightIdentifier)
-                .geographicPosition(geographicPosition)
-                .departure(arrival)
-                .arrival(arrival)
-                .airline(airline)
+        airplaneSpeed = AirplaneSpeed.builder()
+                .horizontalSpeed(HORIZONTAL_SPEED)
+                .verticalSpeed(VERTICAL_SPEED)
                 .build();
     }
 
@@ -106,30 +65,12 @@ class FlightTest {
     }
 
     @Test
-    void builderTest_departure() {
+    void builderTest_airplaneSpeed() {
         Flight flight = Flight.builder()
-                .departure(departure)
+                .airplaneSpeed(airplaneSpeed)
                 .build();
 
-        assertEquals(departure, flight.getDeparture());
-    }
-
-    @Test
-    void builderTest_arrival() {
-        Flight flight = Flight.builder()
-                .arrival(arrival)
-                .build();
-
-        assertEquals(arrival, flight.getArrival());
-    }
-
-    @Test
-    void builderTest_airline() {
-        Flight flight = Flight.builder()
-                .airline(airline)
-                .build();
-
-        assertEquals(airline, flight.getAirline());
+        assertEquals(airplaneSpeed, flight.getAirplaneSpeed());
     }
 
     @Test
@@ -137,20 +78,16 @@ class FlightTest {
         Flight flight = Flight.builder()
                 .id(ID)
                 .flightIdentifier(flightIdentifier)
-                .airline(airline)
                 .build();
 
         Flight modifiedFlight = flight.toBuilder()
-                .departure(departure)
-                .arrival(arrival)
+                .airplaneSpeed(airplaneSpeed)
                 .build();
 
         Flight expectedFlight = Flight.builder()
                 .id(ID)
                 .flightIdentifier(flightIdentifier)
-                .departure(departure)
-                .arrival(arrival)
-                .airline(airline)
+                .airplaneSpeed(airplaneSpeed)
                 .build();
 
         assertEquals(expectedFlight, modifiedFlight);

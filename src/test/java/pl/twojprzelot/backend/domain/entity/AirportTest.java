@@ -5,21 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AirportTest {
     private static final int ID = 5;
     private static final String NAME = "NAME";
-    private static final String ANOTHER_AIRPORT_NAME = "ANOTHER_AIRPORT_NAME";
     private static final String IATA_CODE = "IATA_CODE";
     private static final String ICAO_CODE = "ICAO_CODE";
     private static final double LATITUDE = 1.0;
     private static final double LONGITUDE = 2.0;
     private static final String CITY_NAME = "CITY_NAME";
-
-    private Airport firsAirport;
-    private Airport sameAirportAsFirsAirport;
-    private Airport anotherAirport;
 
     private GeographicLocation geographicLocation;
     private City city;
@@ -33,33 +27,6 @@ class AirportTest {
 
         city = City.builder()
                 .name(CITY_NAME)
-                .build();
-
-        firsAirport = Airport.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .city(city)
-                .geographicLocation(geographicLocation)
-                .build();
-
-        sameAirportAsFirsAirport = Airport.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .city(city)
-                .geographicLocation(geographicLocation)
-                .build();
-
-        anotherAirport = Airport.builder()
-                .id(ID)
-                .name(ANOTHER_AIRPORT_NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .city(city)
-                .geographicLocation(geographicLocation)
                 .build();
     }
 

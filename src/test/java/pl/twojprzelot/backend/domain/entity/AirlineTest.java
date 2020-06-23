@@ -1,10 +1,9 @@
 package pl.twojprzelot.backend.domain.entity;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AirlineTest {
     private static final int ID = 1;
@@ -12,34 +11,6 @@ class AirlineTest {
     private static final String ANOTHER_NAME = "ANOTHER_NAME";
     private static final String IATA_CODE = "IATA_CODE";
     private static final String ICAO_CODE = "ICAO_CODE";
-
-    private Airline firstAirline;
-    private Airline sameAirlineAsFirstArline;
-    private Airline anotherAirline;
-
-    @BeforeEach
-    void setUp() {
-        firstAirline = Airline.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .build();
-
-        sameAirlineAsFirstArline = Airline.builder()
-                .id(ID)
-                .name(NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .build();
-
-        anotherAirline = Airline.builder()
-                .id(ID)
-                .name(ANOTHER_NAME)
-                .iataCode(IATA_CODE)
-                .icaoCode(ICAO_CODE)
-                .build();
-    }
 
     @Test
     void builderTest_id() {

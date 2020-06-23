@@ -18,14 +18,6 @@ class FlightAETest extends FlightAETestHelper {
     }
 
     @Test
-    void toFlightTest_withoutAirline() {
-        removeAirlineAE();
-        removeAirline();
-
-        assertEquals(flight, flightAE.toFlight());
-    }
-
-    @Test
     void toFlightTest_withoutFlightIdentifier() {
         removeFlightIdentifierAE();
         removeFlightIdentifier();
@@ -34,33 +26,17 @@ class FlightAETest extends FlightAETestHelper {
     }
 
     @Test
-    void toFlightTest_withoutDeparture() {
-        removeDepartureAE();
-        removeDeparture();
+    void toFlightTest_withoutGeographicPosition() {
+        removeGeographicPositionAE();
+        removeGeographicPosition();
 
         assertEquals(flight, flightAE.toFlight());
     }
 
     @Test
-    void toFlightTest_withoutDepartureData() {
-        removeDepartureAEData();
-        removeDeparture();
-
-        assertEquals(flight, flightAE.toFlight());
-    }
-
-    @Test
-    void toFlightTest_withoutArrival() {
-        removeArrivalAE();
-        removeArrival();
-
-        assertEquals(flight, flightAE.toFlight());
-    }
-
-    @Test
-    void toFlightTest_withoutArrivalData() {
-        removeArrivalAEData();
-        removeArrival();
+    void toFlightTest_withoutAirplaneSpeed() {
+        removeAirplaneSpeedAE();
+        removeAirplaneSpeed();
 
         assertEquals(flight, flightAE.toFlight());
     }
