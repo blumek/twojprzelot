@@ -7,7 +7,7 @@ import pl.twojprzelot.backend.domain.port.FlightImmutableRepository;
 import java.util.List;
 
 @RequiredArgsConstructor
-final class FindFlight {
+public final class FindFlight {
     private final FlightImmutableRepository repository;
 
     public List<Flight> findAll() {

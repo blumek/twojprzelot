@@ -14,7 +14,8 @@ final class TimetableController {
     private final FindScheduledFlight findScheduledFlight;
 
     public List<ScheduledFlightWeb> findAllByFlightIdentifier(String identifier) {
-        return findScheduledFlight.findAllByFlightIdentifier(identifier).stream()
+        return findScheduledFlight.findAllByFlightIdentifier(identifier)
+                .stream()
                 .map(ScheduledFlightWeb::from)
                 .collect(toList());
     }

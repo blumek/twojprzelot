@@ -11,8 +11,8 @@ import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -34,8 +34,9 @@ class TimetableControllerTest {
 
         List<ScheduledFlightWeb> foundScheduledFlights =
                 timetableController.findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
-
         assertTrue(foundScheduledFlights.isEmpty());
+
+        verify(findScheduledFlight).findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
     }
 
     @Test
@@ -61,7 +62,8 @@ class TimetableControllerTest {
 
         List<ScheduledFlightWeb> foundScheduledFlights =
                 timetableController.findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
-
         assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlightWeb, secondScheduledFlightWeb));
+
+        verify(findScheduledFlight).findAllByFlightIdentifier(FLIGHT_IDENTIFIER);
     }
 }
