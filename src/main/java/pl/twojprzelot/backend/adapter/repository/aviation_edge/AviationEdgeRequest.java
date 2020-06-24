@@ -23,7 +23,7 @@ import static pl.twojprzelot.backend.adapter.repository.aviation_edge.AviationEd
 @EqualsAndHashCode(exclude = {"restTemplate", "objectMapper"})
 @ToString
 @RequiredArgsConstructor(access = PACKAGE)
-class AviationEdgeRequest<T> {
+final class AviationEdgeRequest<T> {
     @Getter(NONE)
     private final Class<T[]> resourceArrayType;
     private final String url;

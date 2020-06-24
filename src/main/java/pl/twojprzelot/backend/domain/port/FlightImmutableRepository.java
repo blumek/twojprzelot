@@ -4,6 +4,6 @@ import pl.twojprzelot.backend.domain.entity.Flight;
 
 import java.util.List;
 
-interface FlightImmutableRepository {
+public interface FlightImmutableRepository {
     List<Flight> findAll();
 }
