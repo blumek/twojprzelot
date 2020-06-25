@@ -11,7 +11,7 @@ import static lombok.AccessLevel.*;
 @ToString
 @EqualsAndHashCode
 final class FlightIdentifierWeb {
-    private int number;
+    private String number;
     private String iataNumber;
     private String icaoNumber;
 }

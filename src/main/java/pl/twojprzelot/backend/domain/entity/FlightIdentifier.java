@@ -10,7 +10,7 @@ import static lombok.AccessLevel.*;
 @Builder(toBuilder = true)
 @Value
 public class FlightIdentifier {
-    int number;
+    String number;
     String iataNumber;
     String icaoNumber;
 }

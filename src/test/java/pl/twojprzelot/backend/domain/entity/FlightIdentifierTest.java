@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FlightIdentifierTest {
-    private static final int NUMBER = 1;
-    private static final int ANOTHER_NUMBER = 2;
+    private static final String NUMBER = "1";
+    private static final String ANOTHER_NUMBER = "2";
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
 

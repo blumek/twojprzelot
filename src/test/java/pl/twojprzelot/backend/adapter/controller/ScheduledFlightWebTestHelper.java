@@ -5,7 +5,7 @@ import pl.twojprzelot.backend.domain.entity.*;
 import java.time.LocalDateTime;
 
 class ScheduledFlightWebTestHelper {
-    static final int FLIGHT_ID_NUMBER = 500;
+    static final String FLIGHT_ID_NUMBER = "500";
     static final String FLIGHT_ID_IATA_NUMBER = "FLIGHT_ID_IATA_NUMBER";
     static final String FLIGHT_ID_ICAO_NUMBER = "FLIGHT_ID_ICAO_NUMBER";
     static final String COUNTRY_NAME = "COUNTRY_NAME";

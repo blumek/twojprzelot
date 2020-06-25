@@ -21,10 +21,8 @@ import static org.mockito.Mockito.*;
 class FlightAERepositoryTest {
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
-    private static final String FIRST_NUMBER_TEXT = "10";
-    private static final String SECOND_NUMBER_TEXT = "20";
-    private static final int FIRST_NUMBER = 10;
-    private static final int SECOND_NUMBER = 20;
+    private static final String FIRST_NUMBER = "10";
+    private static final String SECOND_NUMBER = "20";
 
     @InjectMocks
     private FlightAERepository FlightAERepository;
@@ -45,12 +43,12 @@ class FlightAERepositoryTest {
         FlightIdentifierAE firstFlightIdentifierAE = new FlightIdentifierAE();
         firstFlightIdentifierAE.setIataNumber(IATA_NUMBER);
         firstFlightIdentifierAE.setIcaoNumber(ICAO_NUMBER);
-        firstFlightIdentifierAE.setNumber(FIRST_NUMBER_TEXT);
+        firstFlightIdentifierAE.setNumber(FIRST_NUMBER);
 
         FlightIdentifierAE secondFlightIdentifierAE = new FlightIdentifierAE();
         secondFlightIdentifierAE.setIataNumber(IATA_NUMBER);
         secondFlightIdentifierAE.setIcaoNumber(ICAO_NUMBER);
-        secondFlightIdentifierAE.setNumber(SECOND_NUMBER_TEXT);
+        secondFlightIdentifierAE.setNumber(SECOND_NUMBER);
 
         FlightAE = new FlightAE();
         FlightAE.setFlightIdentifier(firstFlightIdentifierAE);

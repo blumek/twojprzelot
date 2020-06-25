@@ -9,7 +9,7 @@ class FlightWebTestHelper {
     private static final int ID = 10;
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
-    private static final int NUMBER = 123;
+    private static final String NUMBER = "123";
     private static final int LATITUDE = 1;
     private static final int ALTITUDE = 2;
     private static final int LONGITUDE = 3;

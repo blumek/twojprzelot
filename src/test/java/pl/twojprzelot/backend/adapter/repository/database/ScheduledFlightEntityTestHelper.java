@@ -8,7 +8,7 @@ class ScheduledFlightEntityTestHelper {
     static final String DEPARTURE = "DEPARTURE";
     static final String ARRIVAL = "ARRIVAL";
     static final int SCHEDULED_FLIGHT_ID = 6;
-    static final int FLIGHT_ID_NUMBER = 500;
+    static final String FLIGHT_ID_NUMBER = "500";
     static final String FLIGHT_ID_IATA_NUMBER = "FLIGHT_ID_IATA_NUMBER";
     static final String FLIGHT_ID_ICAO_NUMBER = "FLIGHT_ID_ICAO_NUMBER";
     static final int DELAY_MINUTES = 5;

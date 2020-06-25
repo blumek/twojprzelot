@@ -3,8 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 import pl.twojprzelot.backend.domain.entity.*;
 
 class FlightAETestHelper {
-    static final String FLIGHT_ID_NUMBER_TEXT = "100";
-    static final int FLIGHT_ID_NUMBER = 100;
+    static final String FLIGHT_ID_NUMBER = "100";
     static final String FLIGHT_ID_IATA_NUMBER = "FLIGHT_ID_IATA_NUMBER";
     static final String FLIGHT_ID_ICAO_NUMBER = "FLIGHT_ID_ICAO_NUMBER";
     static final String AIRLINE_NAME = "AIRLINE_NAME";
@@ -24,7 +23,7 @@ class FlightAETestHelper {
 
     void init() {
         FlightIdentifierAE flightIdentifierAE = new FlightIdentifierAE();
-        flightIdentifierAE.setNumber(FLIGHT_ID_NUMBER_TEXT);
+        flightIdentifierAE.setNumber(FLIGHT_ID_NUMBER);
         flightIdentifierAE.setIataNumber(FLIGHT_ID_IATA_NUMBER);
         flightIdentifierAE.setIcaoNumber(FLIGHT_ID_ICAO_NUMBER);
 
