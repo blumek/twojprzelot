@@ -10,7 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Flight;
 import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -37,6 +39,11 @@ class FlightAERepositoryTest {
     private FlightAE anotherFlightAE;
     private Flight expectedFlight;
     private Flight anotherExpectedFlight;
+
+    @Test
+    void name() {
+        Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();
+    }
 
     @BeforeEach
     void setUp() {

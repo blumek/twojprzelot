@@ -31,7 +31,7 @@ interface AviationEdgeMapper {
     @Mapping(source = "longitude", target = "geographicLocation.longitude")
     City mapToCity(CityAE cityAE);
 
-    @Mapping(ignore = true, target = "currency")
+    @Mapping(source = "currencyCode", target = "currency.code")
     Country mapToCountry(CountryAE countryAE);
 
     Airline mapToAirline(AirlineAE airlineAE);

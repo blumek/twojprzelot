@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Currency;
@@ -18,7 +17,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ImportCurrencyTest {
     private static final int ID = 1;
-    private static final int ANOTHER_ID = 2;
     private static final String CODE = "CODE";
     private static final String ANOTHER_CODE = "ANOTHER_CODE";
     protected static final int OLD_ID = 3;

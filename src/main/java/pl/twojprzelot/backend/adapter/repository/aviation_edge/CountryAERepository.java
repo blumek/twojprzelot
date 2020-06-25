@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Component
 @RequiredArgsConstructor
 final class CountryAERepository implements CountryImmutableRepository {
     private final AviationEdgeClient client;
