@@ -185,4 +185,11 @@ class AirportDatabaseRepositoryTest {
 
         verify(airportSpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        airportDatabaseRepository.removeAll();
+
+        verify(airportSpringRepository).deleteAll();
+    }
 }

@@ -53,4 +53,9 @@ final class AirportDatabaseRepository implements AirportMutableRepository {
     private boolean hasIdentifier(Airport airport) {
         return airport.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }

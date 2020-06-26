@@ -5,4 +5,5 @@ import pl.twojprzelot.backend.domain.entity.Airport;
 public interface AirportMutableRepository extends AirportImmutableRepository {
     Airport create(Airport airport);
     Airport update(Airport airport);
+    void removeAll();
 }
