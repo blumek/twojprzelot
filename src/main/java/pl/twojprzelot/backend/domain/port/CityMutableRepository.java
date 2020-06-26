@@ -5,4 +5,5 @@ import pl.twojprzelot.backend.domain.entity.City;
 public interface CityMutableRepository extends CityImmutableRepository {
     City create(City city);
     City update(City city);
+    void removeAll();
 }

@@ -47,4 +47,9 @@ final class CityDatabaseRepository implements CityMutableRepository {
     private boolean hasIdentifier(City city) {
         return city.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }

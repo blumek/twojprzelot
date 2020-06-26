@@ -153,4 +153,11 @@ class CityDatabaseRepositoryTest {
 
         verify(citySpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        cityDatabaseRepository.removeAll();
+
+        verify(citySpringRepository).deleteAll();
+    }
 }
