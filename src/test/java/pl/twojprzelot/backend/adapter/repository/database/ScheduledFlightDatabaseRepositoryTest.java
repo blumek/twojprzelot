@@ -179,4 +179,11 @@ class ScheduledFlightDatabaseRepositoryTest {
 
         verify(scheduledFlightSpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        scheduledFlightDatabaseRepository.removeAll();
+
+        verify(scheduledFlightSpringRepository).deleteAll();
+    }
 }

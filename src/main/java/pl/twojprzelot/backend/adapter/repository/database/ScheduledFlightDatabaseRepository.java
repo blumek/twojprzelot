@@ -54,4 +54,9 @@ public final class ScheduledFlightDatabaseRepository implements ScheduledFlightM
     private boolean hasIdentifier(ScheduledFlight scheduledFlight) {
         return scheduledFlight.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }
