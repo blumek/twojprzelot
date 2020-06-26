@@ -180,4 +180,11 @@ class CurrencyDatabaseRepositoryTest {
 
         verify(currencySpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        currencyDatabaseRepository.removeAll();
+
+        verify(currencySpringRepository).deleteAll();
+    }
 }

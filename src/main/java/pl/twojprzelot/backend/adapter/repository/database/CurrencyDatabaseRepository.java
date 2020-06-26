@@ -60,4 +60,9 @@ final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     private boolean hasIdentifier(Currency currency) {
         return currency.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }
