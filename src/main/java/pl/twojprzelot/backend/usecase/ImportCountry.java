@@ -8,7 +8,6 @@ import pl.twojprzelot.backend.domain.port.CountryMutableRepository;
 import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 public final class ImportCountry {
@@ -35,21 +34,21 @@ public final class ImportCountry {
         return country.getIso2Code() != null && !country.getIso2Code().isBlank();
     }
 
-    private void updateCountry(Country importedCountry, Country alreadyCreatedCountry) {
-        Country countryToUpdate = getCountryWithAssociation(importedCountry);
+    private void updateCountry(Country country, Country alreadyCreatedCountry) {
+        Country countryToUpdate = getCountryWithAssociation(country);
         countryToUpdate = getCountryWithId(countryToUpdate, alreadyCreatedCountry.getId());
         targetRepository.update(countryToUpdate);
     }
 
     private Country getCountryWithAssociation(Country country) {
         Currency currency = country.getCurrency();
-        if (hasCode(country)) {
+        if (hasCode(currency)) {
             Optional<Currency> foundCurrency = currencyImmutableRepository.findByCode(currency.getCode());
             if (foundCurrency.isPresent())
                 return getCountryWithCurrency(country, foundCurrency.get());
         }
 
-        if (hasIsoNumber(country)) {
+        if (hasIsoNumber(currency)) {
             Optional<Currency> foundCurrency = currencyImmutableRepository.findByIsoNumber(currency.getIsoNumber());
             if (foundCurrency.isPresent())
                 return getCountryWithCurrency(country, foundCurrency.get());
@@ -58,8 +57,8 @@ public final class ImportCountry {
         return getCountryWithoutCurrency(country);
     }
 
-    private boolean hasCode(Country country) {
-        return country.getCurrency() != null && country.getCurrency().getCode() != null;
+    private boolean hasCode(Currency currency) {
+        return currency != null && currency.getCode() != null;
     }
 
     private Country getCountryWithCurrency(Country country, Currency currency) {
@@ -68,8 +67,8 @@ public final class ImportCountry {
                 .build();
     }
 
-    private boolean hasIsoNumber(Country country) {
-        return country.getCurrency() != null && country.getCurrency().getIsoNumber() != 0;
+    private boolean hasIsoNumber(Currency currency) {
+        return currency != null && currency.getIsoNumber() != 0;
     }
 
     private Country getCountryWithoutCurrency(Country country) {
@@ -84,8 +83,8 @@ public final class ImportCountry {
                 .build();
     }
 
-    private void createCountry(Country importedCountry) {
-        Country countryToCreate = getCountryWithAssociation(importedCountry);
+    private void createCountry(Country country) {
+        Country countryToCreate = getCountryWithAssociation(country);
         targetRepository.create(countryToCreate);
     }
 }
