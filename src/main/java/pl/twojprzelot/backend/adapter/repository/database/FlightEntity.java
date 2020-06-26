@@ -1,8 +1,14 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.mapstruct.factory.Mappers;
+import pl.twojprzelot.backend.domain.entity.Flight;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -10,6 +16,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Entity(name = "flight")
 final class FlightEntity {
+    private static final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
     @Id @GeneratedValue(strategy = IDENTITY)
     private int id;
 
@@ -19,14 +27,14 @@ final class FlightEntity {
     @Embedded
     private GeographicPositionEmbeddable geographicPosition;
 
-    @ManyToOne
-    @JoinColumn(name = "departure_airport_id")
-    private AirportEntity departure;
+    @Embedded
+    private AirplaneSpeedEmbeddable airplaneSpeed;
 
-    @ManyToOne
-    @JoinColumn(name = "arrival_airport_id")
-    private AirportEntity arrival;
+    public static FlightEntity from(Flight flight) {
+        return mapper.mapToFlightEntity(flight);
+    }
 
-    @ManyToOne
-    private AirlineEntity airline;
+    public Flight toFlight() {
+        return mapper.mapFromFlightEntity(this);
+    }
 }

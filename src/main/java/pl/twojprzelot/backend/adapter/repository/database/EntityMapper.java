@@ -14,6 +14,12 @@ public interface EntityMapper {
     @Mapping(ignore = true, target = "from")
     ScheduledFlightEntity mapToScheduledFlightEntity(ScheduledFlight scheduledFlight);
 
+    Flight mapFromFlightEntity(FlightEntity flightEntity);
+
+    @InheritInverseConfiguration
+    @Mapping(ignore = true, target = "from")
+    FlightEntity mapToFlightEntity(Flight flight);
+
     Country mapToCountry(CountryEntity countryEntity);
 
     @InheritInverseConfiguration
