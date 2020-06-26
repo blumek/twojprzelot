@@ -49,4 +49,9 @@ final class CountryDatabaseRepository implements CountryMutableRepository {
     private boolean hasIdentifier(Country country) {
         return country.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }

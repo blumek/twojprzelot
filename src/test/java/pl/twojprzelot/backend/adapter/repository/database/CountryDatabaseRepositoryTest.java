@@ -155,4 +155,11 @@ class CountryDatabaseRepositoryTest {
 
         verify(countrySpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        countryDatabaseRepository.removeAll();
+
+        verify(countrySpringRepository).deleteAll();
+    }
 }

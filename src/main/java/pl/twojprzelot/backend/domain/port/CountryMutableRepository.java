@@ -5,4 +5,5 @@ import pl.twojprzelot.backend.domain.entity.Country;
 public interface CountryMutableRepository extends CountryImmutableRepository {
     Country create(Country country);
     Country update(Country country);
+    void removeAll();
 }
