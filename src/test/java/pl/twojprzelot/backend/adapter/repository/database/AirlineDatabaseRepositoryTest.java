@@ -184,4 +184,11 @@ class AirlineDatabaseRepositoryTest {
 
         verify(airlineSpringRepository, never()).save(null);
     }
+
+    @Test
+    void removeAllTest() {
+        airlineDatabaseRepository.removeAll();
+
+        verify(airlineSpringRepository).deleteAll();
+    }
 }

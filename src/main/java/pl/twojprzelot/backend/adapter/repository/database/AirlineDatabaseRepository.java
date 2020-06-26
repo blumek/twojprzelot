@@ -53,4 +53,9 @@ final class AirlineDatabaseRepository implements AirlineMutableRepository {
     private boolean hasIdentifier(Airline airline) {
         return airline.getId() > 0;
     }
+
+    @Override
+    public void removeAll() {
+        repository.deleteAll();
+    }
 }
