@@ -15,7 +15,6 @@ import static lombok.AccessLevel.PRIVATE;
 final class FlightWeb {
     private static final WebMapper mapper = Mappers.getMapper(WebMapper.class);
 
-    private int id;
     private FlightIdentifierWeb flightIdentifier;
     private GeographicPositionWeb geographicPosition;
     private AirplaneSpeedWeb airplaneSpeed;

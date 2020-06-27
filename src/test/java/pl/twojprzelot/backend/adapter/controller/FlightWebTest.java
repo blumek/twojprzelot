@@ -17,14 +17,6 @@ class FlightWebTest extends FlightWebTestHelper {
     }
 
     @Test
-    void fromTest_idNotAvailable() {
-        removeIdWeb();
-        removeId();
-
-        assertEquals(flightWeb, FlightWeb.from(flight));
-    }
-
-    @Test
     void fromTest_flightIdentifierNotAvailable() {
         removeFlightIdentifierWeb();
         removeFlightIdentifier();

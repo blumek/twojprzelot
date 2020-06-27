@@ -21,8 +21,8 @@ import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.SUCCE
 
 @ExtendWith(MockitoExtension.class)
 class SpringFlightControllerTest {
-    private static final int ID = 1;
-    private static final int ANOTHER_ID = 2;
+    private static final String NUMBER = "NUMBER";
+    private static final String ANOTHER_NUMBER = "ANOTHER_NUMBER";
 
     @InjectMocks
     private SpringFlightController springFlightController;
@@ -56,11 +56,15 @@ class SpringFlightControllerTest {
     @Test
     void findAllTest_twoFlightsAvailable() {
         FlightWeb firstFlightWeb = FlightWeb.builder()
-                .id(ID)
+                .flightIdentifier(FlightIdentifierWeb.builder()
+                        .number(NUMBER)
+                        .build())
                 .build();
 
         FlightWeb secondFlightWeb = FlightWeb.builder()
-                .id(ANOTHER_ID)
+                .flightIdentifier(FlightIdentifierWeb.builder()
+                        .number(ANOTHER_NUMBER)
+                        .build())
                 .build();
 
         ResponseWeb<List<FlightWeb>> expectedResponse = ResponseWeb.<List<FlightWeb>>builder()

@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Flight;
+import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 import pl.twojprzelot.backend.usecase.FindFlight;
 
 import java.util.List;
@@ -18,8 +19,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FlightControllerTest {
-    private static final int ID = 1;
-    private static final int ANOTHER_ID = 2;
+    private static final String NUMBER = "NUMBER";
+    private static final String ANOTHER_NUMBER = "ANOTHER_NUMBER";
 
     @InjectMocks
     private FlightController flightController;
@@ -38,24 +39,32 @@ class FlightControllerTest {
     }
 
     @Test
-    void findAllTest_FlightExists() {
+    void findAllTest_twoFlightsExist() {
         Flight firstFlight = Flight.builder()
-                .id(ID)
+                .flightIdentifier(FlightIdentifier.builder()
+                        .number(NUMBER)
+                        .build())
                 .build();
 
         Flight secondFlight = Flight.builder()
-                .id(ANOTHER_ID)
+                .flightIdentifier(FlightIdentifier.builder()
+                        .number(ANOTHER_NUMBER)
+                        .build())
                 .build();
 
         when(findFlight.findAll())
                 .thenReturn(Lists.newArrayList(firstFlight, secondFlight));
 
         FlightWeb firstFlightWeb = FlightWeb.builder()
-                .id(ID)
+                .flightIdentifier(FlightIdentifierWeb.builder()
+                        .number(NUMBER)
+                        .build())
                 .build();
 
         FlightWeb secondFlightWeb = FlightWeb.builder()
-                .id(ANOTHER_ID)
+                .flightIdentifier(FlightIdentifierWeb.builder()
+                        .number(ANOTHER_NUMBER)
+                        .build())
                 .build();
 
         List<FlightWeb> foundFlights = flightController.findAll();

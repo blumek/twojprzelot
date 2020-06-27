@@ -6,7 +6,6 @@ import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 import pl.twojprzelot.backend.domain.entity.GeographicPosition;
 
 class FlightWebTestHelper {
-    private static final int ID = 10;
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
     private static final String NUMBER = "123";
@@ -22,7 +21,6 @@ class FlightWebTestHelper {
 
     void init() {
         flight = Flight.builder()
-                .id(ID)
                 .flightIdentifier(FlightIdentifier.builder()
                         .iataNumber(IATA_NUMBER)
                         .icaoNumber(ICAO_NUMBER)
@@ -41,7 +39,6 @@ class FlightWebTestHelper {
                 .build();
 
         flightWeb = FlightWeb.builder()
-                .id(ID)
                 .flightIdentifier(FlightIdentifierWeb.builder()
                         .iataNumber(IATA_NUMBER)
                         .icaoNumber(ICAO_NUMBER)
@@ -57,18 +54,6 @@ class FlightWebTestHelper {
                         .horizontalSpeed(HORIZONTAL_SPEED)
                         .verticalSpeed(VERTICAL_SPEED)
                         .build())
-                .build();
-    }
-
-    void removeIdWeb() {
-        flightWeb = flightWeb.toBuilder()
-                .id(0)
-                .build();
-    }
-
-    void removeId() {
-        flight = flight.toBuilder()
-                .id(0)
                 .build();
     }
 
