@@ -76,7 +76,14 @@ public final class ImportCity {
 
     private void createCity(City city) {
         City cityToCreate = getCityWithAssociation(city);
+        cityToCreate = getCityWithoutId(cityToCreate);
         targetRepository.create(cityToCreate);
+    }
+
+    private City getCityWithoutId(City city) {
+        return city.toBuilder()
+                .id(0)
+                .build();
     }
 
     public void overrideAll() {

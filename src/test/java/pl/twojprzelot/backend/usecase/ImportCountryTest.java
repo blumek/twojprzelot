@@ -20,12 +20,13 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ImportCountryTest {
+    private static final int ID = 1;
+    private static final int ANOTHER_ID = 2;
     private static final int POPULATION = 10000;
     private static final String CURRENCY_CODE = "CURRENCY_CODE";
     private static final int CURRENCY_ISO_NUMBER = 123;
-    public static final String ISO_2_CODE = "ISO_2_CODE";
-    public static final int ID = 1;
-    public static final String CURRENCY_NAME = "CURRENCY_NAME";
+    private static final String ISO_2_CODE = "ISO_2_CODE";
+    private static final String CURRENCY_NAME = "CURRENCY_NAME";
 
     private ImportCountry importCountry;
     @Mock
@@ -58,6 +59,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneCountryWithoutIso2Code() {
         Country country = Country.builder()
+                .id(ID)
                 .population(POPULATION)
                 .build();
 
@@ -77,6 +79,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneNoExistingCountry_WithCurrencyCode_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -92,6 +95,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(alreadySavedCurrency)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -112,9 +117,16 @@ class ImportCountryTest {
         verify(currencyRepository, never()).findByIsoNumber(anyInt());
     }
 
+    private Country removeCountryId(Country country) {
+        return country.toBuilder()
+                .id(0)
+                .build();
+    }
+
     @Test
     void importAllTest_oneNoExistingCountry_WithCurrencyCode_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -125,6 +137,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(null)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -148,6 +162,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneNoExistingCountry_WithCurrencyIsoNumber_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -163,6 +178,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(alreadySavedCurrency)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -186,6 +203,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneNoExistingCountry_WithCurrencyIsoNumber_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -196,6 +214,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(null)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -219,6 +239,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneAlreadyExistingCountry_WithCurrencyCode_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -232,7 +253,7 @@ class ImportCountryTest {
                 .build();
 
         Country alreadySavedCountry = country.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         Country countryToUpdate = alreadySavedCountry.toBuilder()
@@ -260,6 +281,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneAlreadyExistingCountry_WithCurrencyCode_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -268,7 +290,7 @@ class ImportCountryTest {
                 .build();
 
         Country alreadySavedCountry = country.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         Country countryToUpdate = alreadySavedCountry.toBuilder()
@@ -296,6 +318,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneAlreadyExistingCountry_WithCurrencyIsoNumber_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -304,7 +327,7 @@ class ImportCountryTest {
                 .build();
 
         Country alreadySavedCountry = country.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         Currency alreadySavedCurrency = Currency.builder()
@@ -337,6 +360,7 @@ class ImportCountryTest {
     @Test
     void importAllTest_oneAlreadyExistingCountry_WithCurrencyIsoNumber_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -345,7 +369,7 @@ class ImportCountryTest {
                 .build();
 
         Country alreadySavedCountry = country.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         Country countryToUpdate = alreadySavedCountry.toBuilder()
@@ -385,6 +409,7 @@ class ImportCountryTest {
     @Test
     void overrideAllTest_oneCountry_WithCurrencyCode_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .population(POPULATION)
                 .currency(Currency.builder()
                         .code(CURRENCY_CODE)
@@ -399,6 +424,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(alreadySavedCurrency)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -418,6 +445,7 @@ class ImportCountryTest {
     @Test
     void overrideAllTest_oneCountry_WithCurrencyCode_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .population(POPULATION)
                 .currency(Currency.builder()
                         .code(CURRENCY_CODE)
@@ -427,6 +455,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(null)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -446,6 +476,7 @@ class ImportCountryTest {
     @Test
     void overrideAllTest_oneCountry_WithCurrencyIsoNumber_CurrencyExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -461,6 +492,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(alreadySavedCurrency)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
@@ -480,6 +513,7 @@ class ImportCountryTest {
     @Test
     void overrideAllTest_oneCountry_WithCurrencyIsoNumber_CurrencyNotExists() {
         Country country = Country.builder()
+                .id(ID)
                 .iso2Code(ISO_2_CODE)
                 .population(POPULATION)
                 .currency(Currency.builder()
@@ -490,6 +524,8 @@ class ImportCountryTest {
         Country countryToCreate = country.toBuilder()
                 .currency(null)
                 .build();
+
+        countryToCreate = removeCountryId(countryToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));

@@ -20,11 +20,12 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ImportCityTest {
+    private static final int ID = 1;
+    private static final int ANOTHER_ID = 2;
     private static final String IATA_CODE = "IATA_CODE";
     private static final String CITY_NAME = "NAME";
     private static final String COUNTRY_ISO_2_CODE = "COUNTRY_ISO_2_CODE";
-    public static final String COUNTRY_NAME = "COUNTRY_NAME";
-    public static final int ID = 1;
+    private static final String COUNTRY_NAME = "COUNTRY_NAME";
 
     private ImportCity importCity;
     @Mock
@@ -56,6 +57,7 @@ class ImportCityTest {
     @Test
     void importAllTest_oneCityWithoutIataCode() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .build();
 
@@ -74,6 +76,7 @@ class ImportCityTest {
     @Test
     void importAllTest_oneNoExistingCity_WithCountryIso2Code_CountryExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -89,6 +92,8 @@ class ImportCityTest {
         City cityToCreate = city.toBuilder()
                 .country(alreadySavedCountry)
                 .build();
+
+        cityToCreate = removeCityId(cityToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(city));
@@ -108,9 +113,16 @@ class ImportCityTest {
         verify(countryRepository).findByIso2Code(COUNTRY_ISO_2_CODE);
     }
 
+    private City removeCityId(City city) {
+        return city.toBuilder()
+                .id(0)
+                .build();
+    }
+
     @Test
     void importAllTest_oneNoExistingCity_WithCountryIso2Code_CountryNotExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -121,6 +133,8 @@ class ImportCityTest {
         City cityToCreate = city.toBuilder()
                 .country(null)
                 .build();
+
+        cityToCreate = removeCityId(cityToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(city));
@@ -143,6 +157,7 @@ class ImportCityTest {
     @Test
     void importAllTest_oneAlreadyExistingCity_WithCountryIso2Code_CountryExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -150,13 +165,13 @@ class ImportCityTest {
                         .build())
                 .build();
 
-        City alreadySavedCity = city.toBuilder()
-                .id(ID)
-                .build();
-
         Country alreadySavedCountry = Country.builder()
                 .name(COUNTRY_NAME)
                 .iso2Code(COUNTRY_ISO_2_CODE)
+                .build();
+
+        City alreadySavedCity = city.toBuilder()
+                .id(ANOTHER_ID)
                 .build();
 
         City cityToUpdate = alreadySavedCity.toBuilder()
@@ -184,6 +199,7 @@ class ImportCityTest {
     @Test
     void importAllTest_oneAlreadyExistingCity_WithCountryIso2Code_CountryNotExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -192,7 +208,7 @@ class ImportCityTest {
                 .build();
 
         City alreadySavedCity = city.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         City cityToUpdate = alreadySavedCity.toBuilder()
@@ -233,6 +249,7 @@ class ImportCityTest {
     @Test
     void overrideAllTest_oneCity_WithCountryIso2Code_CountryExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -248,6 +265,8 @@ class ImportCityTest {
         City cityToCreate = city.toBuilder()
                 .country(alreadySavedCountry)
                 .build();
+
+        cityToCreate = removeCityId(cityToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(city));
@@ -265,6 +284,7 @@ class ImportCityTest {
     @Test
     void overrideAllTest_oneCity_WithCountryIso2Code_CountryNotExists() {
         City city = City.builder()
+                .id(ID)
                 .name(CITY_NAME)
                 .iataCode(IATA_CODE)
                 .country(Country.builder()
@@ -275,6 +295,8 @@ class ImportCityTest {
         City cityToCreate = city.toBuilder()
                 .country(null)
                 .build();
+
+        cityToCreate = removeCityId(cityToCreate);
 
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(city));

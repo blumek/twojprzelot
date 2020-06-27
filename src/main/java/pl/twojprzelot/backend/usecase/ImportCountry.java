@@ -87,7 +87,14 @@ public final class ImportCountry {
 
     private void createCountry(Country country) {
         Country countryToCreate = getCountryWithAssociation(country);
+        countryToCreate = getCountryWithoutId(countryToCreate);
         targetRepository.create(countryToCreate);
+    }
+
+    private Country getCountryWithoutId(Country country) {
+        return country.toBuilder()
+                .id(0)
+                .build();
     }
 
     public void overrideAll() {

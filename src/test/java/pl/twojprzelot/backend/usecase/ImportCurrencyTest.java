@@ -51,6 +51,7 @@ class ImportCurrencyTest {
     void importAllTest_oneCurrencyWithoutCode() {
         Currency currencyWithoutCode = Currency.builder()
                 .id(ID)
+                .name(NAME)
                 .build();
 
         when(sourceRepository.findAll())
@@ -96,18 +97,18 @@ class ImportCurrencyTest {
     @Test
     void importAllTest_oneExistingCurrency() {
         Currency currency = Currency.builder()
-                .id(ANOTHER_ID)
+                .id(ID)
                 .name(NAME)
                 .code(CODE)
                 .build();
 
         Currency alreadySavedCurrency = Currency.builder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .code(CODE)
                 .build();
 
         Currency currencyToUpdate = currency.toBuilder()
-                .id(ID)
+                .id(ANOTHER_ID)
                 .build();
 
         when(sourceRepository.findAll())
