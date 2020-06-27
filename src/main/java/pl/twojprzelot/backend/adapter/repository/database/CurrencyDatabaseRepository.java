@@ -2,6 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.port.CurrencyMutableRepository;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Component
 @RequiredArgsConstructor
 final class CurrencyDatabaseRepository implements CurrencyMutableRepository {
     private final CurrencySpringRepository repository;
