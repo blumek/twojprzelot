@@ -90,7 +90,7 @@ public final class ImportCountry {
         targetRepository.create(countryToCreate);
     }
 
-    public void overrideAll() throws ImportException {
+    public void overrideAll() {
         List<Country> importedCountries = sourceRepository.findAll();
         if (importedCountries.isEmpty())
             throw new ImportException("No countries to import");
