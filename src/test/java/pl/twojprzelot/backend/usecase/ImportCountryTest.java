@@ -4,17 +4,18 @@ import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.entity.Currency;
+import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 import pl.twojprzelot.backend.domain.port.CountryMutableRepository;
 import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -354,5 +355,135 @@ class ImportCountryTest {
         verify(targetRepository).update(countryToUpdate);
         verify(currencyRepository, never()).findByCode(anyString());
         verify(currencyRepository).findByIsoNumber(CURRENCY_ISO_NUMBER);
+    }
+
+    @Test
+    void overrideAllTest_noCountriesToImport() {
+        when(sourceRepository.findAll())
+                .thenReturn(Lists.newArrayList());
+
+        assertThrows(ImportException.class, () -> importCountry.overrideAll());
+
+        verify(sourceRepository).findAll();
+        verify(targetRepository, never()).removeAll();
+        verify(targetRepository, never()).create(any());
+    }
+
+    @Test
+    void overrideAllTest_oneCountry_WithCurrencyCode_CurrencyExists() {
+        Currency currency = Currency.builder()
+                .code(CURRENCY_CODE)
+                .build();
+
+        Country country = Country.builder()
+                .population(POPULATION)
+                .currency(currency)
+                .build();
+
+        Country countryToCreate = country.toBuilder()
+                .currency(currency)
+                .build();
+
+        when(sourceRepository.findAll())
+                .thenReturn(Lists.newArrayList(country));
+
+        when(currencyRepository.findByCode(CURRENCY_CODE))
+                .thenReturn(Optional.of(currency));
+
+        importCountry.overrideAll();
+
+        verify(sourceRepository).findAll();
+        verify(targetRepository).removeAll();
+        verify(currencyRepository, never()).findByIsoNumber(anyInt());
+        verify(currencyRepository).findByCode(CURRENCY_CODE);
+        verify(targetRepository).create(countryToCreate);
+    }
+
+    @Test
+    void overrideAllTest_oneCountry_WithCurrencyCode_CurrencyNotExists() {
+        Country country = Country.builder()
+                .population(POPULATION)
+                .currency(Currency.builder()
+                        .code(CURRENCY_CODE)
+                        .build())
+                .build();
+
+        Country countryToCreate = country.toBuilder()
+                .currency(null)
+                .build();
+
+        when(sourceRepository.findAll())
+                .thenReturn(Lists.newArrayList(country));
+
+        when(currencyRepository.findByCode(CURRENCY_CODE))
+                .thenReturn(Optional.empty());
+
+        importCountry.overrideAll();
+
+        verify(sourceRepository).findAll();
+        verify(targetRepository).removeAll();
+        verify(currencyRepository, never()).findByIsoNumber(anyInt());
+        verify(currencyRepository).findByCode(CURRENCY_CODE);
+        verify(targetRepository).create(countryToCreate);
+    }
+
+    @Test
+    void overrideAllTest_oneCountry_WithCurrencyIsoNumber_CurrencyExists() {
+        Currency currency = Currency.builder()
+                .isoNumber(CURRENCY_ISO_NUMBER)
+                .build();
+
+        Country country = Country.builder()
+                .iso2Code(ISO_2_CODE)
+                .population(POPULATION)
+                .currency(currency)
+                .build();
+
+        Country countryToCreate = country.toBuilder()
+                .currency(currency)
+                .build();
+
+        when(sourceRepository.findAll())
+                .thenReturn(Lists.newArrayList(country));
+
+        when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
+                .thenReturn(Optional.of(currency));
+
+        importCountry.overrideAll();
+
+        verify(sourceRepository).findAll();
+        verify(targetRepository).removeAll();
+        verify(currencyRepository, never()).findByCode(anyString());
+        verify(currencyRepository).findByIsoNumber(CURRENCY_ISO_NUMBER);
+        verify(targetRepository).create(countryToCreate);
+    }
+
+    @Test
+    void overrideAllTest_oneCountry_WithCurrencyIsoNumber_CurrencyNotExists() {
+        Country country = Country.builder()
+                .iso2Code(ISO_2_CODE)
+                .population(POPULATION)
+                .currency(Currency.builder()
+                        .isoNumber(CURRENCY_ISO_NUMBER)
+                        .build())
+                .build();
+
+        Country countryToCreate = country.toBuilder()
+                .currency(null)
+                .build();
+
+        when(sourceRepository.findAll())
+                .thenReturn(Lists.newArrayList(country));
+
+        when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
+                .thenReturn(Optional.empty());
+
+        importCountry.overrideAll();
+
+        verify(sourceRepository).findAll();
+        verify(targetRepository).removeAll();
+        verify(currencyRepository, never()).findByCode(anyString());
+        verify(currencyRepository).findByIsoNumber(CURRENCY_ISO_NUMBER);
+        verify(targetRepository).create(countryToCreate);
     }
 }

@@ -1,12 +1,14 @@
 package pl.twojprzelot.backend.usecase;
 
 import lombok.RequiredArgsConstructor;
+import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 import pl.twojprzelot.backend.domain.port.CountryMutableRepository;
 import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -86,5 +88,14 @@ public final class ImportCountry {
     private void createCountry(Country country) {
         Country countryToCreate = getCountryWithAssociation(country);
         targetRepository.create(countryToCreate);
+    }
+
+    public void overrideAll() throws ImportException {
+        List<Country> importedCountries = sourceRepository.findAll();
+        if (importedCountries.isEmpty())
+            throw new ImportException("No countries to import");
+
+        targetRepository.removeAll();
+        importedCountries.forEach(this::createCountry);
     }
 }
