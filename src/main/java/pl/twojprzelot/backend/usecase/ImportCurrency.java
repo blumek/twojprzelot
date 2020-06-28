@@ -9,6 +9,8 @@ import pl.twojprzelot.backend.domain.port.CurrencyMutableRepository;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 public final class ImportCurrency {
     private final CurrencyImmutableRepository sourceRepository;
@@ -58,7 +60,9 @@ public final class ImportCurrency {
         if (importedCurrencies.isEmpty())
             throw new ImportException("No currencies to import");
 
-        targetRepository.removeAll();
-        importedCurrencies.forEach(this::createCurrency);
+        List<Currency> currenciesToCreate = importedCurrencies.stream()
+                .map(this::getCurrencyWithoutId)
+                .collect(toList());
+        targetRepository.overrideAll(currenciesToCreate);
     }
 }
