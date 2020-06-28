@@ -23,6 +23,7 @@ class CurrencyDatabaseRepositoryTest {
     private static final int ISO_NUMBER = 10;
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
+    private static final String NAME = "NAME";
 
     @InjectMocks
     private CurrencyDatabaseRepository currencyDatabaseRepository;
@@ -147,6 +148,47 @@ class CurrencyDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.create(null));
 
         verify(currencySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_noCurrenciesToImport() {
+        List<Currency> createdCurrencies = currencyDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdCurrencies.isEmpty());
+
+        verify(currencySpringRepository).deleteAll();
+        verify(currencySpringRepository).flush();
+        verify(currencySpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneCurrencyToImport() {
+        Currency currency = Currency.builder()
+                .name(NAME)
+                .build();
+
+        Currency createdCurrency = currency.toBuilder()
+                .id(ID)
+                .build();
+
+        CurrencyEntity currencyEntity = new CurrencyEntity();
+        currencyEntity.setName(NAME);
+
+        CurrencyEntity createdCurrencyEntity = new CurrencyEntity();
+        createdCurrencyEntity.setId(ID);
+        createdCurrencyEntity.setName(NAME);
+
+        List<CurrencyEntity> currencyEntitiesToCreate = Lists.newArrayList(currencyEntity);
+        List<CurrencyEntity> createdCurrencyEntities = Lists.newArrayList(createdCurrencyEntity);
+        when(currencySpringRepository.saveAll(currencyEntitiesToCreate))
+                .thenReturn(createdCurrencyEntities);
+
+        List<Currency> currenciesToCreate = Lists.newArrayList(currency);
+        List<Currency> createdCurrencies = currencyDatabaseRepository.overrideAll(currenciesToCreate);
+        assertThat(createdCurrencies, containsInAnyOrder(createdCurrency));
+
+        verify(currencySpringRepository).deleteAll();
+        verify(currencySpringRepository).flush();
+        verify(currencySpringRepository).saveAll(currencyEntitiesToCreate);
     }
 
     @Test

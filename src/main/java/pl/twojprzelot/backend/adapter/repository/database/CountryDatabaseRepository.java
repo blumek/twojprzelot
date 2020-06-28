@@ -3,6 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.port.CountryMutableRepository;
 
@@ -14,7 +15,7 @@ import static java.util.stream.StreamSupport.stream;
 
 @Component
 @RequiredArgsConstructor
-final class CountryDatabaseRepository implements CountryMutableRepository {
+class CountryDatabaseRepository implements CountryMutableRepository {
     private final CountrySpringRepository repository;
 
     @Override
@@ -37,6 +38,7 @@ final class CountryDatabaseRepository implements CountryMutableRepository {
         return createdCountry.toCountry();
     }
 
+    @Transactional
     @Override
     public List<Country> overrideAll(Iterable<Country> countries) {
         removeAllAndFlush();
