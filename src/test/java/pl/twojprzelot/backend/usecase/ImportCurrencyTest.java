@@ -132,7 +132,7 @@ class ImportCurrencyTest {
         assertThrows(ImportException.class, () -> importCurrency.overrideAll());
 
         verify(sourceRepository).findAll();
-        verify(targetRepository, never()).overrideAll(any());
+        verify(targetRepository, never()).overrideAll(anyList());
     }
 
     @Test

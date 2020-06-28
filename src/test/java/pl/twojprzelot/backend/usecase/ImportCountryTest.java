@@ -402,8 +402,7 @@ class ImportCountryTest {
         assertThrows(ImportException.class, () -> importCountry.overrideAll());
 
         verify(sourceRepository).findAll();
-        verify(targetRepository, never()).removeAll();
-        verify(targetRepository, never()).create(any());
+        verify(targetRepository, never()).overrideAll(anyList());
     }
 
     @Test
@@ -436,10 +435,9 @@ class ImportCountryTest {
         importCountry.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).removeAll();
         verify(currencyRepository, never()).findByIsoNumber(anyInt());
         verify(currencyRepository).findByCode(CURRENCY_CODE);
-        verify(targetRepository).create(countryToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(countryToCreate));
     }
 
     @Test
@@ -467,10 +465,9 @@ class ImportCountryTest {
         importCountry.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).removeAll();
         verify(currencyRepository, never()).findByIsoNumber(anyInt());
         verify(currencyRepository).findByCode(CURRENCY_CODE);
-        verify(targetRepository).create(countryToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(countryToCreate));
     }
 
     @Test
@@ -504,10 +501,9 @@ class ImportCountryTest {
         importCountry.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).removeAll();
         verify(currencyRepository, never()).findByCode(anyString());
         verify(currencyRepository).findByIsoNumber(CURRENCY_ISO_NUMBER);
-        verify(targetRepository).create(countryToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(countryToCreate));
     }
 
     @Test
@@ -536,9 +532,8 @@ class ImportCountryTest {
         importCountry.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).removeAll();
         verify(currencyRepository, never()).findByCode(anyString());
         verify(currencyRepository).findByIsoNumber(CURRENCY_ISO_NUMBER);
-        verify(targetRepository).create(countryToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(countryToCreate));
     }
 }
