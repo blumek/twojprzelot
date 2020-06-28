@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CityMutableRepository extends CityImmutableRepository {
     City create(City city);
-    List<City> overrideAll(List<City> cities);
+    List<City> overrideAll(Iterable<City> cities);
     City update(City city);
     void removeAll();
 }

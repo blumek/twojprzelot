@@ -155,7 +155,7 @@ class CityDatabaseRepositoryTest {
         when(citySpringRepository.saveAll(cityEntitiesToCreate))
                 .thenReturn(createdCityEntities);
 
-        ArrayList<City> citiesToCreate = Lists.newArrayList(city);
+        List<City> citiesToCreate = Lists.newArrayList(city);
         List<City> createdCities = cityDatabaseRepository.overrideAll(citiesToCreate);
         assertThat(createdCities, containsInAnyOrder(createdCity));
 

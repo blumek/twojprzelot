@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +35,26 @@ final class CountryDatabaseRepository implements CountryMutableRepository {
         CountryEntity countryToCreate = CountryEntity.from(country);
         CountryEntity createdCountry = repository.save(countryToCreate);
         return createdCountry.toCountry();
+    }
+
+    @Override
+    public List<Country> overrideAll(Iterable<Country> countries) {
+        removeAllAndFlush();
+
+        List<CountryEntity> countriesToCreate = stream(countries.spliterator(), false)
+                .map(CountryEntity::from)
+                .collect(toList());
+
+        List<CountryEntity> createdCountries = repository.saveAll(countriesToCreate);
+
+        return createdCountries.stream()
+                .map(CountryEntity::toCountry)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override

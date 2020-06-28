@@ -22,6 +22,7 @@ class CountryDatabaseRepositoryTest {
     private static final String ISO_2_CODE = "ISO_2_CODE";
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
+    private static final String NAME = "NAME";
 
     @InjectMocks
     private CountryDatabaseRepository countryDatabaseRepository;
@@ -121,6 +122,47 @@ class CountryDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> countryDatabaseRepository.create(null));
 
         verify(countrySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_noCountriesToImport() {
+        List<Country> createdCountries = countryDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdCountries.isEmpty());
+
+        verify(countrySpringRepository).deleteAll();
+        verify(countrySpringRepository).flush();
+        verify(countrySpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneCountryToImport() {
+        Country country = Country.builder()
+                .name(NAME)
+                .build();
+
+        Country createdCountry = country.toBuilder()
+                .id(ID)
+                .build();
+
+        CountryEntity countryEntity = new CountryEntity();
+        countryEntity.setName(NAME);
+
+        CountryEntity createdCountryEntity = new CountryEntity();
+        createdCountryEntity.setId(ID);
+        createdCountryEntity.setName(NAME);
+
+        List<CountryEntity> countryEntitiesToCreate = Lists.newArrayList(countryEntity);
+        List<CountryEntity> createdCountryEntities = Lists.newArrayList(createdCountryEntity);
+        when(countrySpringRepository.saveAll(countryEntitiesToCreate))
+                .thenReturn(createdCountryEntities);
+
+        List<Country> countriesToCreate = Lists.newArrayList(country);
+        List<Country> createdCountries = countryDatabaseRepository.overrideAll(countriesToCreate);
+        assertThat(createdCountries, containsInAnyOrder(createdCountry));
+
+        verify(countrySpringRepository).deleteAll();
+        verify(countrySpringRepository).flush();
+        verify(countrySpringRepository).saveAll(countryEntitiesToCreate);
     }
 
     @Test

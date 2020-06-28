@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Component
 @RequiredArgsConstructor
@@ -39,10 +40,10 @@ class CityDatabaseRepository implements CityMutableRepository {
 
     @Transactional
     @Override
-    public List<City> overrideAll(List<City> cities) {
+    public List<City> overrideAll(Iterable<City> cities) {
         removeAllAndFlush();
 
-        List<CityEntity> citiesToCreate = cities.stream()
+        List<CityEntity> citiesToCreate = stream(cities.spliterator(), false)
                 .map(CityEntity::from)
                 .collect(toList());
 
