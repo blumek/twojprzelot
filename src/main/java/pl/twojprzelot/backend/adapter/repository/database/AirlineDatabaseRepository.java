@@ -2,6 +2,8 @@ package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.Airline;
 import pl.twojprzelot.backend.domain.port.AirlineMutableRepository;
 
@@ -9,9 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
+@Component
 @RequiredArgsConstructor
-final class AirlineDatabaseRepository implements AirlineMutableRepository {
+class AirlineDatabaseRepository implements AirlineMutableRepository {
     private final AirlineSpringRepository repository;
 
     @Override
@@ -38,6 +42,27 @@ final class AirlineDatabaseRepository implements AirlineMutableRepository {
         AirlineEntity airlineToCreate = AirlineEntity.from(airline);
         AirlineEntity createdAirline = repository.save(airlineToCreate);
         return createdAirline.toAirline();
+    }
+
+    @Transactional
+    @Override
+    public List<Airline> overrideAll(@NonNull Iterable<Airline> airlines) {
+        removeAllAndFlush();
+
+        List<AirlineEntity> airlinesToCreate = stream(airlines.spliterator(), false)
+                .map(AirlineEntity::from)
+                .collect(toList());
+
+        List<AirlineEntity> createdAirlines = repository.saveAll(airlinesToCreate);
+
+        return createdAirlines.stream()
+                .map(AirlineEntity::toAirline)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override

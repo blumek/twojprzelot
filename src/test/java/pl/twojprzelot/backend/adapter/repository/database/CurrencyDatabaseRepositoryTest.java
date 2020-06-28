@@ -151,6 +151,15 @@ class CurrencyDatabaseRepositoryTest {
     }
 
     @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> currencyDatabaseRepository.overrideAll(null));
+
+        verify(currencySpringRepository, never()).deleteAll();
+        verify(currencySpringRepository, never()).flush();
+        verify(currencySpringRepository, never()).saveAll(any());
+    }
+
+    @Test
     void overrideAllTest_noCurrenciesToImport() {
         List<Currency> createdCurrencies = currencyDatabaseRepository.overrideAll(Lists.newArrayList());
         assertTrue(createdCurrencies.isEmpty());

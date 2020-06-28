@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.City;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,6 +120,15 @@ class CityDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> cityDatabaseRepository.create(null));
 
         verify(citySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> cityDatabaseRepository.overrideAll(null));
+
+        verify(citySpringRepository, never()).deleteAll();
+        verify(citySpringRepository, never()).flush();
+        verify(citySpringRepository, never()).saveAll(any());
     }
 
     @Test

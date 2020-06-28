@@ -78,9 +78,14 @@ public final class ImportCity {
     }
 
     private void createCity(City city) {
+        City cityToCreate = getCityToCreate(city);
+        targetRepository.create(cityToCreate);
+    }
+
+    private City getCityToCreate(City city) {
         City cityToCreate = getCityWithAssociation(city);
         cityToCreate = getCityWithoutId(cityToCreate);
-        targetRepository.create(cityToCreate);
+        return cityToCreate;
     }
 
     private City getCityWithoutId(City city) {
@@ -95,12 +100,9 @@ public final class ImportCity {
             throw new ImportException("No cities to import");
 
         List<City> citiesToCreate = importedCities.stream()
-                .map(importedCity -> {
-                    City cityToCreate = getCityWithAssociation(importedCity);
-                    cityToCreate = getCityWithoutId(cityToCreate);
-                    return cityToCreate;
-                })
+                .map(this::getCityToCreate)
                 .collect(toList());
+
         targetRepository.overrideAll(citiesToCreate);
     }
 }

@@ -23,6 +23,7 @@ class AirlineDatabaseRepositoryTest {
     private static final int ANOTHER_ID = 2;
     private static final String IATA_CODE = "IATA_CODE";
     private static final String ICAO_CODE = "ICAO_CODE";
+    private static final String NAME = "NAME";
 
     @InjectMocks
     private AirlineDatabaseRepository airlineDatabaseRepository;
@@ -151,6 +152,56 @@ class AirlineDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.create(null));
 
         verify(airlineSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.overrideAll(null));
+
+        verify(airlineSpringRepository, never()).deleteAll();
+        verify(airlineSpringRepository, never()).flush();
+        verify(airlineSpringRepository, never()).saveAll(any());
+    }
+
+    @Test
+    void overrideAllTest_noAirlinesToImport() {
+        List<Airline> createdAirlines = airlineDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdAirlines.isEmpty());
+
+        verify(airlineSpringRepository).deleteAll();
+        verify(airlineSpringRepository).flush();
+        verify(airlineSpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneAirlineToImport() {
+        Airline airline = Airline.builder()
+                .name(NAME)
+                .build();
+
+        Airline createdAirline = airline.toBuilder()
+                .id(ID)
+                .build();
+
+        AirlineEntity airlineEntity = new AirlineEntity();
+        airlineEntity.setName(NAME);
+
+        AirlineEntity createdAirlineEntity = new AirlineEntity();
+        createdAirlineEntity.setId(ID);
+        createdAirlineEntity.setName(NAME);
+
+        List<AirlineEntity> airlineEntitiesToCreate = Lists.newArrayList(airlineEntity);
+        List<AirlineEntity> createdAirlineEntities = Lists.newArrayList(createdAirlineEntity);
+        when(airlineSpringRepository.saveAll(airlineEntitiesToCreate))
+                .thenReturn(createdAirlineEntities);
+
+        List<Airline> airlinesToCreate = Lists.newArrayList(airline);
+        List<Airline> createdAirlines = airlineDatabaseRepository.overrideAll(airlinesToCreate);
+        assertThat(createdAirlines, containsInAnyOrder(createdAirline));
+
+        verify(airlineSpringRepository).deleteAll();
+        verify(airlineSpringRepository).flush();
+        verify(airlineSpringRepository).saveAll(airlineEntitiesToCreate);
     }
 
     @Test

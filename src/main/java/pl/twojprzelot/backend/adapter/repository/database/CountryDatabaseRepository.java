@@ -40,7 +40,7 @@ class CountryDatabaseRepository implements CountryMutableRepository {
 
     @Transactional
     @Override
-    public List<Country> overrideAll(Iterable<Country> countries) {
+    public List<Country> overrideAll(@NonNull Iterable<Country> countries) {
         removeAllAndFlush();
 
         List<CountryEntity> countriesToCreate = stream(countries.spliterator(), false)

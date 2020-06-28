@@ -53,7 +53,7 @@ class CurrencyDatabaseRepository implements CurrencyMutableRepository {
 
     @Transactional
     @Override
-    public List<Currency> overrideAll(Iterable<Currency> currencies) {
+    public List<Currency> overrideAll(@NonNull Iterable<Currency> currencies) {
         removeAllAndFlush();
 
         List<CurrencyEntity> currenciesToCreate = stream(currencies.spliterator(), false)

@@ -88,9 +88,14 @@ public final class ImportCountry {
     }
 
     private void createCountry(Country country) {
+        Country countryToCreate = getCountryToCreate(country);
+        targetRepository.create(countryToCreate);
+    }
+
+    private Country getCountryToCreate(Country country) {
         Country countryToCreate = getCountryWithAssociation(country);
         countryToCreate = getCountryWithoutId(countryToCreate);
-        targetRepository.create(countryToCreate);
+        return countryToCreate;
     }
 
     private Country getCountryWithoutId(Country country) {
@@ -105,12 +110,9 @@ public final class ImportCountry {
             throw new ImportException("No countries to import");
 
         List<Country> countriesToCreate = importedCountries.stream()
-                .map(importedCountry -> {
-                    Country countryToCreate = getCountryWithAssociation(importedCountry);
-                    countryToCreate = getCountryWithoutId(countryToCreate);
-                    return countryToCreate;
-                })
+                .map(this::getCountryToCreate)
                 .collect(toList());
+
         targetRepository.overrideAll(countriesToCreate);
     }
 }

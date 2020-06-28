@@ -63,6 +63,7 @@ public final class ImportCurrency {
         List<Currency> currenciesToCreate = importedCurrencies.stream()
                 .map(this::getCurrencyWithoutId)
                 .collect(toList());
+
         targetRepository.overrideAll(currenciesToCreate);
     }
 }

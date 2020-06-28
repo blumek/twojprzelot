@@ -40,7 +40,7 @@ class CityDatabaseRepository implements CityMutableRepository {
 
     @Transactional
     @Override
-    public List<City> overrideAll(Iterable<City> cities) {
+    public List<City> overrideAll(@NonNull Iterable<City> cities) {
         removeAllAndFlush();
 
         List<CityEntity> citiesToCreate = stream(cities.spliterator(), false)

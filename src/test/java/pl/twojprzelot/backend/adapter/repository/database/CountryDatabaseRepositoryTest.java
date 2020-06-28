@@ -125,6 +125,15 @@ class CountryDatabaseRepositoryTest {
     }
 
     @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> countryDatabaseRepository.overrideAll(null));
+
+        verify(countrySpringRepository, never()).deleteAll();
+        verify(countrySpringRepository, never()).flush();
+        verify(countrySpringRepository, never()).saveAll(any());
+    }
+
+    @Test
     void overrideAllTest_noCountriesToImport() {
         List<Country> createdCountries = countryDatabaseRepository.overrideAll(Lists.newArrayList());
         assertTrue(createdCountries.isEmpty());
