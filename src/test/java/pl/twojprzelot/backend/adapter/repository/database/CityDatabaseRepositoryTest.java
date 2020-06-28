@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.City;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ class CityDatabaseRepositoryTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
     private static final String IATA_CODE = "IATA_CODE";
+    private static final String NAME = "NAME";
 
     @InjectMocks
     private CityDatabaseRepository cityDatabaseRepository;
@@ -119,6 +121,47 @@ class CityDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> cityDatabaseRepository.create(null));
 
         verify(citySpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_noCitiesToImport() {
+        List<City> createdCities = cityDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdCities.isEmpty());
+
+        verify(citySpringRepository).deleteAll();
+        verify(citySpringRepository).flush();
+        verify(citySpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneCityToImport() {
+        City city = City.builder()
+                .name(NAME)
+                .build();
+
+        City createdCity = city.toBuilder()
+                .id(ID)
+                .build();
+
+        CityEntity cityEntity = new CityEntity();
+        cityEntity.setName(NAME);
+
+        CityEntity createdCityEntity = new CityEntity();
+        createdCityEntity.setId(ID);
+        createdCityEntity.setName(NAME);
+
+        List<CityEntity> cityEntitiesToCreate = Lists.newArrayList(cityEntity);
+        List<CityEntity> createdCityEntities = Lists.newArrayList(createdCityEntity);
+        when(citySpringRepository.saveAll(cityEntitiesToCreate))
+                .thenReturn(createdCityEntities);
+
+        ArrayList<City> citiesToCreate = Lists.newArrayList(city);
+        List<City> createdCities = cityDatabaseRepository.overrideAll(citiesToCreate);
+        assertThat(createdCities, containsInAnyOrder(createdCity));
+
+        verify(citySpringRepository).deleteAll();
+        verify(citySpringRepository).flush();
+        verify(citySpringRepository).saveAll(cityEntitiesToCreate);
     }
 
     @Test

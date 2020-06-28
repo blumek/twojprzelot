@@ -3,6 +3,7 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.City;
 import pl.twojprzelot.backend.domain.port.CityMutableRepository;
 
@@ -13,7 +14,7 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
-final class CityDatabaseRepository implements CityMutableRepository {
+class CityDatabaseRepository implements CityMutableRepository {
     private final CitySpringRepository repository;
 
     @Override
@@ -34,6 +35,27 @@ final class CityDatabaseRepository implements CityMutableRepository {
         CityEntity cityToCreate = CityEntity.from(city);
         CityEntity createdCity = repository.save(cityToCreate);
         return createdCity.toCity();
+    }
+
+    @Transactional
+    @Override
+    public List<City> overrideAll(List<City> cities) {
+        removeAllAndFlush();
+
+        List<CityEntity> citiesToCreate = cities.stream()
+                .map(CityEntity::from)
+                .collect(toList());
+
+        List<CityEntity> createdCities = repository.saveAll(citiesToCreate);
+
+        return createdCities.stream()
+                .map(CityEntity::toCity)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override
