@@ -10,6 +10,9 @@ import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 public final class ImportCity {
@@ -91,7 +94,13 @@ public final class ImportCity {
         if (importedCities.isEmpty())
             throw new ImportException("No cities to import");
 
-        targetRepository.removeAll();
-        importedCities.forEach(this::createCity);
+        List<City> citiesToCreate = importedCities.stream()
+                .map(importedCity -> {
+                    City cityToCreate = getCityWithAssociation(importedCity);
+                    cityToCreate = getCityWithoutId(cityToCreate);
+                    return cityToCreate;
+                })
+                .collect(toList());
+        targetRepository.overrideAll(citiesToCreate);
     }
 }

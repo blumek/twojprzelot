@@ -241,9 +241,8 @@ class ImportCityTest {
         assertThrows(ImportException.class, () -> importCity.overrideAll());
 
         verify(sourceRepository).findAll();
-        verify(targetRepository, never()).removeAll();
-        verify(targetRepository, never()).create(any());
         verify(countryRepository, never()).findByIso2Code(anyString());
+        verify(targetRepository, never()).overrideAll(anyList());
     }
 
     @Test
@@ -277,7 +276,7 @@ class ImportCityTest {
         importCity.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).create(cityToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(cityToCreate));
         verify(countryRepository).findByIso2Code(COUNTRY_ISO_2_CODE);
     }
 
@@ -307,7 +306,7 @@ class ImportCityTest {
         importCity.overrideAll();
 
         verify(sourceRepository).findAll();
-        verify(targetRepository).create(cityToCreate);
+        verify(targetRepository).overrideAll(Lists.newArrayList(cityToCreate));
         verify(countryRepository).findByIso2Code(COUNTRY_ISO_2_CODE);
     }
 }
