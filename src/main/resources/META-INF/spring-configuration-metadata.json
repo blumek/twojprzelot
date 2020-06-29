@@ -3,7 +3,17 @@
     {
       "name": "application.key.header",
       "type": "java.lang.String",
-      "description": "Application key header name."
+      "description": "Application key header name"
+    },
+    {
+      "name": "scheduling.enabled",
+      "type": "java.lang.String",
+      "description": "Decides whether enable task scheduling or not"
+    },
+    {
+      "name": "scheduling.flights.delayString",
+      "type": "java.lang.String",
+      "description": "Delay between scheduled tasks"
     }
   ]
 }

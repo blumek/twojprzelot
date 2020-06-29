@@ -18,7 +18,7 @@ class SpringConfig {
     }
 
     @Bean
-    FindFlight findFlight(@Qualifier("flightAERepository") FlightImmutableRepository repository) {
+    FindFlight findFlight(@Qualifier("flightDatabaseRepository") FlightImmutableRepository repository) {
         return new FindFlight(repository);
     }
 }
