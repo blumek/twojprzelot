@@ -2,6 +2,8 @@ package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.Airport;
 import pl.twojprzelot.backend.domain.port.AirportMutableRepository;
 
@@ -9,9 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
+@Component
 @RequiredArgsConstructor
-final class AirportDatabaseRepository implements AirportMutableRepository {
+class AirportDatabaseRepository implements AirportMutableRepository {
     private final AirportSpringRepository repository;
 
     @Override
@@ -38,6 +42,27 @@ final class AirportDatabaseRepository implements AirportMutableRepository {
         AirportEntity airportToCreate = AirportEntity.from(airport);
         AirportEntity createdAirport = repository.save(airportToCreate);
         return createdAirport.toAirport();
+    }
+
+    @Transactional
+    @Override
+    public List<Airport> overrideAll(@NonNull Iterable<Airport> airports) {
+        removeAllAndFlush();
+
+        List<AirportEntity> airportsToCreate = stream(airports.spliterator(), false)
+                .map(AirportEntity::from)
+                .collect(toList());
+
+        List<AirportEntity> createdAirports = repository.saveAll(airportsToCreate);
+
+        return createdAirports.stream()
+                .map(AirportEntity::toAirport)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override
