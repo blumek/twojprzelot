@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 
 import java.util.List;
@@ -146,6 +147,61 @@ class ScheduledFlightDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.create(null));
 
         verify(scheduledFlightSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.overrideAll(null));
+
+        verify(scheduledFlightSpringRepository, never()).deleteAll();
+        verify(scheduledFlightSpringRepository, never()).flush();
+        verify(scheduledFlightSpringRepository, never()).saveAll(any());
+    }
+
+    @Test
+    void overrideAllTest_noScheduledFlightsToImport() {
+        List<ScheduledFlight> createdScheduledFlights = scheduledFlightDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdScheduledFlights.isEmpty());
+
+        verify(scheduledFlightSpringRepository).deleteAll();
+        verify(scheduledFlightSpringRepository).flush();
+        verify(scheduledFlightSpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneScheduledFlightToImport() {
+        ScheduledFlight scheduledFlight = ScheduledFlight.builder()
+                .flightIdentifier(FlightIdentifier.builder()
+                        .iataNumber(IATA_NUMBER)
+                        .build())
+                .build();
+
+        ScheduledFlight createdScheduledFlight = scheduledFlight.toBuilder()
+                .id(ID)
+                .build();
+
+        FlightIdentifierEmbeddable flightIdentifier = new FlightIdentifierEmbeddable();
+        flightIdentifier.setIataNumber(IATA_NUMBER);
+
+        ScheduledFlightEntity scheduledFlightEntity = new ScheduledFlightEntity();
+        scheduledFlightEntity.setFlightIdentifier(flightIdentifier);
+
+        ScheduledFlightEntity createdScheduledFlightEntity = new ScheduledFlightEntity();
+        createdScheduledFlightEntity.setId(ID);
+        createdScheduledFlightEntity.setFlightIdentifier(flightIdentifier);
+
+        List<ScheduledFlightEntity> scheduledFlightEntitiesToCreate = Lists.newArrayList(scheduledFlightEntity);
+        List<ScheduledFlightEntity> createdScheduledFlightEntities = Lists.newArrayList(createdScheduledFlightEntity);
+        when(scheduledFlightSpringRepository.saveAll(scheduledFlightEntitiesToCreate))
+                .thenReturn(createdScheduledFlightEntities);
+
+        List<ScheduledFlight> scheduledFlightsToCreate = Lists.newArrayList(scheduledFlight);
+        List<ScheduledFlight> createdScheduledFlights = scheduledFlightDatabaseRepository.overrideAll(scheduledFlightsToCreate);
+        assertThat(createdScheduledFlights, containsInAnyOrder(createdScheduledFlight));
+
+        verify(scheduledFlightSpringRepository).deleteAll();
+        verify(scheduledFlightSpringRepository).flush();
+        verify(scheduledFlightSpringRepository).saveAll(scheduledFlightEntitiesToCreate);
     }
 
     @Test

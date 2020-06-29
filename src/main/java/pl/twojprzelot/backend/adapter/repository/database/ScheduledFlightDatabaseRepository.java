@@ -2,15 +2,19 @@ package pl.twojprzelot.backend.adapter.repository.database;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightMutableRepository;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
+@Component
 @RequiredArgsConstructor
-public final class ScheduledFlightDatabaseRepository implements ScheduledFlightMutableRepository {
+class ScheduledFlightDatabaseRepository implements ScheduledFlightMutableRepository {
     private final ScheduledFlightSpringRepository repository;
 
     @Override
@@ -39,6 +43,27 @@ public final class ScheduledFlightDatabaseRepository implements ScheduledFlightM
         ScheduledFlightEntity scheduledFlightToCreate = ScheduledFlightEntity.from(scheduledFlight);
         ScheduledFlightEntity createdScheduledFlight = repository.save(scheduledFlightToCreate);
         return createdScheduledFlight.toScheduledFlight();
+    }
+
+    @Transactional
+    @Override
+    public List<ScheduledFlight> overrideAll(@NonNull Iterable<ScheduledFlight> scheduledFlights) {
+        removeAllAndFlush();
+
+        List<ScheduledFlightEntity> scheduledFlightsToCreate = stream(scheduledFlights.spliterator(), false)
+                .map(ScheduledFlightEntity::from)
+                .collect(toList());
+
+        List<ScheduledFlightEntity> createdScheduledFlights = repository.saveAll(scheduledFlightsToCreate);
+
+        return createdScheduledFlights.stream()
+                .map(ScheduledFlightEntity::toScheduledFlight)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override
