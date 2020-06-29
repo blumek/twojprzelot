@@ -8,8 +8,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @Embeddable
 final class GeographicPositionEmbeddable {
-    private double latitude;
-    private double longitude;
-    private double altitude;
-    private double direction;
+    private Double latitude;
+    private Double longitude;
+    private Double altitude;
+    private Double direction;
 }

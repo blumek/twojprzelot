@@ -11,6 +11,6 @@ import javax.persistence.Embeddable;
 @EqualsAndHashCode
 @Embeddable
 final class AirplaneSpeedEmbeddable {
-    private double horizontalSpeed;
-    private double verticalSpeed;
+    private Double horizontalSpeed;
+    private Double verticalSpeed;
 }

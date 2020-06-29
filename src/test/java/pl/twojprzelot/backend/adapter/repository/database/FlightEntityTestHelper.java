@@ -10,12 +10,12 @@ class FlightEntityTestHelper {
     private static final String IATA_NUMBER = "IATA_NUMBER";
     private static final String ICAO_NUMBER = "ICAO_NUMBER";
     private static final String NUMBER = "NUMBER";
-    private static final int LATITUDE = 2;
-    private static final int LONGITUDE = 3;
-    private static final int ALTITUDE = 4;
-    private static final int DIRECTION = 5;
-    private static final int HORIZONTAL_SPEED = 10;
-    private static final int VERTICAL_SPEED = 20;
+    private static final double LATITUDE = 2;
+    private static final double LONGITUDE = 3;
+    private static final double ALTITUDE = 4;
+    private static final double DIRECTION = 5;
+    private static final double HORIZONTAL_SPEED = 10;
+    private static final double VERTICAL_SPEED = 20;
 
     FlightEntity flightEntity;
     Flight flight;
