@@ -2,6 +2,7 @@ package pl.twojprzelot.backend.adapter.repository.aviation_edge;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.domain.entity.Airline;
 import pl.twojprzelot.backend.domain.port.AirlineImmutableRepository;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 final class AirlineAERepository implements AirlineImmutableRepository {
     private final AviationEdgeClient client;

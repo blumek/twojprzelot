@@ -4,7 +4,6 @@ import lombok.*;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Airline;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,10 +21,7 @@ final class AirlineEntity{
 
     private String name;
 
-    @Column(unique = true)
     private String iataCode;
-
-    @Column(unique = true)
     private String icaoCode;
 
     public Airline toAirline() {
