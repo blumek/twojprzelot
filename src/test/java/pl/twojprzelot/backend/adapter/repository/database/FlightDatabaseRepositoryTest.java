@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Flight;
+import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 class FlightDatabaseRepositoryTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
+    private static final String IATA_NUMBER = "IATA_NUMBER";
 
     @InjectMocks
     private FlightDatabaseRepository flightDatabaseRepository;
@@ -86,6 +88,61 @@ class FlightDatabaseRepositoryTest {
         assertThrows(NullPointerException.class, () -> flightDatabaseRepository.create(null));
 
         verify(flightSpringRepository, never()).save(null);
+    }
+
+    @Test
+    void overrideAllTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> flightDatabaseRepository.overrideAll(null));
+
+        verify(flightSpringRepository, never()).deleteAll();
+        verify(flightSpringRepository, never()).flush();
+        verify(flightSpringRepository, never()).saveAll(any());
+    }
+
+    @Test
+    void overrideAllTest_noFlightsToImport() {
+        List<Flight> createdFlights = flightDatabaseRepository.overrideAll(Lists.newArrayList());
+        assertTrue(createdFlights.isEmpty());
+
+        verify(flightSpringRepository).deleteAll();
+        verify(flightSpringRepository).flush();
+        verify(flightSpringRepository).saveAll(Lists.newArrayList());
+    }
+
+    @Test
+    void overrideAllTest_oneFlightToImport() {
+        Flight flight = Flight.builder()
+                .flightIdentifier(FlightIdentifier.builder()
+                        .iataNumber(IATA_NUMBER)
+                        .build())
+                .build();
+
+        Flight createdFlight = flight.toBuilder()
+                .id(ID)
+                .build();
+
+        FlightIdentifierEmbeddable flightIdentifier = new FlightIdentifierEmbeddable();
+        flightIdentifier.setIataNumber(IATA_NUMBER);
+
+        FlightEntity flightEntity = new FlightEntity();
+        flightEntity.setFlightIdentifier(flightIdentifier);
+
+        FlightEntity createdFlightEntity = new FlightEntity();
+        createdFlightEntity.setId(ID);
+        createdFlightEntity.setFlightIdentifier(flightIdentifier);
+
+        List<FlightEntity> flightEntitiesToCreate = Lists.newArrayList(flightEntity);
+        List<FlightEntity> createdFlightEntities = Lists.newArrayList(createdFlightEntity);
+        when(flightSpringRepository.saveAll(flightEntitiesToCreate))
+                .thenReturn(createdFlightEntities);
+
+        List<Flight> flightsToCreate = Lists.newArrayList(flight);
+        List<Flight> createdFlights = flightDatabaseRepository.overrideAll(flightsToCreate);
+        assertThat(createdFlights, containsInAnyOrder(createdFlight));
+
+        verify(flightSpringRepository).deleteAll();
+        verify(flightSpringRepository).flush();
+        verify(flightSpringRepository).saveAll(flightEntitiesToCreate);
     }
 
     @Test

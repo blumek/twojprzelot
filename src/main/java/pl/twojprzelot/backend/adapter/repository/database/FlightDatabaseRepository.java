@@ -3,16 +3,18 @@ package pl.twojprzelot.backend.adapter.repository.database;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.twojprzelot.backend.domain.entity.Flight;
 import pl.twojprzelot.backend.domain.port.FlightMutableRepository;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
 
 @Component
 @RequiredArgsConstructor
-final class FlightDatabaseRepository implements FlightMutableRepository {
+class FlightDatabaseRepository implements FlightMutableRepository {
     private final FlightSpringRepository repository;
 
     @Override
@@ -28,6 +30,27 @@ final class FlightDatabaseRepository implements FlightMutableRepository {
         FlightEntity flightToCreate = FlightEntity.from(flight);
         FlightEntity createdFlight = repository.save(flightToCreate);
         return createdFlight.toFlight();
+    }
+
+    @Transactional
+    @Override
+    public List<Flight> overrideAll(@NonNull Iterable<Flight> flights) {
+        removeAllAndFlush();
+
+        List<FlightEntity> flightsToCreate = stream(flights.spliterator(), false)
+                .map(FlightEntity::from)
+                .collect(toList());
+
+        List<FlightEntity> createdFlights = repository.saveAll(flightsToCreate);
+
+        return createdFlights.stream()
+                .map(FlightEntity::toFlight)
+                .collect(toList());
+    }
+
+    private void removeAllAndFlush() {
+        repository.deleteAll();
+        repository.flush();
     }
 
     @Override
