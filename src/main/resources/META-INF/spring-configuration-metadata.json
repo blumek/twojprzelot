@@ -13,7 +13,12 @@
     {
       "name": "scheduling.flights.delayString",
       "type": "java.lang.String",
-      "description": "Delay between scheduled tasks"
+      "description": "Delay between import flight tasks"
+    },
+    {
+      "name": "scheduling.flights.initialDelayString",
+      "type": "java.lang.String",
+      "description": "Initial delay of import flights task"
     }
   ]
 }
