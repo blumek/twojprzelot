@@ -22,6 +22,8 @@ final class AirlineEntity{
     private String name;
 
     private String iataCode;
+
+    @Column(unique = true)
     private String icaoCode;
 
     @OneToMany(cascade = CascadeType.REMOVE)
