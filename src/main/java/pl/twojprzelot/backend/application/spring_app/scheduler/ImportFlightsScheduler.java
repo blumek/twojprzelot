@@ -12,7 +12,7 @@ import pl.twojprzelot.backend.usecase.ImportFlight;
 public class ImportFlightsScheduler {
     private final ImportFlight importFlight;
 
-    @Scheduled(fixedDelayString = "${scheduling.flights.delayString}")
+    @Scheduled(fixedDelayString = "${flightsImportDelayString:scheduling.flights.delayString}")
     void importFlights() {
         log.info("Import flights - scheduled task");
         importFlight.overrideAll();
