@@ -34,6 +34,13 @@ class UseCaseConfig {
     }
 
     @Bean
+    ImportAirport importAirport(@Qualifier("airportAERepository") AirportImmutableRepository airportSourceRepository,
+                                @Qualifier("airportDatabaseRepository") AirportMutableRepository airportTargetRepository,
+                                @Qualifier("cityDatabaseRepository") CityImmutableRepository cityRepository) {
+        return new ImportAirport(airportSourceRepository, airportTargetRepository, cityRepository);
+    }
+
+    @Bean
     ImportAirline importAirline(@Qualifier("airlineAERepository") AirlineImmutableRepository airlineSourceRepository,
                                 @Qualifier("airlineDatabaseRepository") AirlineMutableRepository airlineTargetRepository) {
         return new ImportAirline(airlineSourceRepository, airlineTargetRepository);
