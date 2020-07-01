@@ -4,9 +4,9 @@ import lombok.*;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Airline;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,6 +23,9 @@ final class AirlineEntity{
 
     private String iataCode;
     private String icaoCode;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<ScheduledFlightEntity> scheduledFlights;
 
     public Airline toAirline() {
         return mapper.mapToAirline(this);

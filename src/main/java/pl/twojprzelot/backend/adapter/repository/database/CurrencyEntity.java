@@ -4,10 +4,9 @@ import lombok.*;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Currency;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -28,6 +27,9 @@ final class CurrencyEntity {
 
     @Column(unique = true)
     private int isoNumber;
+
+    @OneToMany(mappedBy = "currency", cascade = CascadeType.REMOVE)
+    private List<CountryEntity> countries;
 
     public Currency toCurrency() {
         return mapper.mapToCurrency(this);

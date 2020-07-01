@@ -7,6 +7,7 @@ import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.entity.Language;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 import static javax.persistence.EnumType.STRING;
@@ -42,6 +43,9 @@ final class CountryEntity {
     @MapKeyColumn(name = "language")
     @Column(name = "translation")
     private Map<Language, String> nameTranslations = Maps.newEnumMap(Language.class);
+
+    @OneToMany(mappedBy = "country", cascade = CascadeType.REMOVE)
+    private List<CityEntity> cities;
 
     public Country toCountry() {
         return mapper.mapToCountry(this);
