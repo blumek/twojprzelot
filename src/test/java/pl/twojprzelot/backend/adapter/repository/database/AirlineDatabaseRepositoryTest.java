@@ -83,30 +83,32 @@ class AirlineDatabaseRepositoryTest {
     }
 
     @Test
-    void findByIataCodeTest_airlineWithGivenIataCodeNotExists() {
-        when(airlineSpringRepository.findByIataCode(IATA_CODE))
-                .thenReturn(Optional.empty());
+    void findAllByIataCodeTest_airlineWithGivenIataCodeNotExists() {
+        when(airlineSpringRepository.findAllByIataCode(IATA_CODE))
+                .thenReturn(Lists.newArrayList());
 
-        assertEquals(Optional.empty(), airlineDatabaseRepository.findByIataCode(IATA_CODE));
+        List<Airline> foundAirlines = airlineDatabaseRepository.findAllByIataCode(IATA_CODE);
+        assertTrue(foundAirlines.isEmpty());
 
-        verify(airlineSpringRepository).findByIataCode(IATA_CODE);
+        verify(airlineSpringRepository).findAllByIataCode(IATA_CODE);
     }
 
     @Test
-    void findByIataCodeTest_airlineWithGivenIataCodeExists() {
-        when(airlineSpringRepository.findByIataCode(IATA_CODE))
-                .thenReturn(Optional.of(airlineEntity));
+    void findAllByIataCodeTest_airlineWithGivenIataCodeExists() {
+        when(airlineSpringRepository.findAllByIataCode(IATA_CODE))
+                .thenReturn(Lists.newArrayList(airlineEntity));
 
-        assertEquals(Optional.of(airline), airlineDatabaseRepository.findByIataCode(IATA_CODE));
+        List<Airline> foundAirlines = airlineDatabaseRepository.findAllByIataCode(IATA_CODE);
+        assertThat(foundAirlines, containsInAnyOrder(airline));
 
-        verify(airlineSpringRepository).findByIataCode(IATA_CODE);
+        verify(airlineSpringRepository).findAllByIataCode(IATA_CODE);
     }
 
     @Test
-    void findByIataCodeTest_nullPassed() {
-        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.findByIataCode(null));
+    void findAllByIataCodeTest_nullPassed() {
+        assertThrows(NullPointerException.class, () -> airlineDatabaseRepository.findAllByIataCode(null));
 
-        verify(airlineSpringRepository, never()).findByIataCode(null);
+        verify(airlineSpringRepository, never()).findAllByIataCode(null);
     }
 
     @Test

@@ -26,9 +26,11 @@ class AirlineDatabaseRepository implements AirlineMutableRepository {
     }
 
     @Override
-    public Optional<Airline> findByIataCode(@NonNull String iataCode) {
-        return repository.findByIataCode(iataCode)
-                .map(AirlineEntity::toAirline);
+    public List<Airline> findAllByIataCode(@NonNull String iataCode) {
+        return repository.findAllByIataCode(iataCode)
+                .stream()
+                .map(AirlineEntity::toAirline)
+                .collect(toList());
     }
 
     @Override

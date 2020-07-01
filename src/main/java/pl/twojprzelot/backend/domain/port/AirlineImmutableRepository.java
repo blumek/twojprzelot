@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface AirlineImmutableRepository {
     List<Airline> findAll();
-    Optional<Airline> findByIataCode(String iataCode);
+    List<Airline> findAllByIataCode(String iataCode);
     Optional<Airline> findByIcaoCode(String icaoCode);
 }

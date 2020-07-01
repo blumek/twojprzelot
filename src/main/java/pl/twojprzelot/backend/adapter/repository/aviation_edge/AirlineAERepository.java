@@ -8,7 +8,8 @@ import pl.twojprzelot.backend.domain.port.AirlineImmutableRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 @RequiredArgsConstructor
@@ -23,19 +24,19 @@ final class AirlineAERepository implements AirlineImmutableRepository {
         return airlineRequest.get()
                 .stream()
                 .map(AirlineAE::toAirline)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Override
-    public Optional<Airline> findByIataCode(@NonNull String iataCode) {
+    public List<Airline> findAllByIataCode(@NonNull String iataCode) {
         AviationEdgeRequest<AirlineAE> airlineRequest = client.createAirlineRequest()
                 .iataCode(iataCode)
                 .build();
 
         return airlineRequest.get()
                 .stream()
-                .findFirst()
-                .map(AirlineAE::toAirline);
+                .map(AirlineAE::toAirline)
+                .collect(toList());
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
-public class ImportAirport {
+public final class ImportAirport {
     private final AirportImmutableRepository sourceRepository;
     private final AirportMutableRepository targetRepository;
     private final CityImmutableRepository cityRepository;
