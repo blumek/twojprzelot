@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.usecase;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.twojprzelot.backend.domain.entity.Airport;
 import pl.twojprzelot.backend.domain.entity.City;
 import pl.twojprzelot.backend.domain.exception.ImportException;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class ImportAirport {
     private final AirportImmutableRepository sourceRepository;
@@ -20,6 +22,8 @@ public final class ImportAirport {
     private final CityImmutableRepository cityRepository;
 
     public void importAll() {
+        log.info("Importing all airports");
+
         sourceRepository.findAll()
                 .stream()
                 .filter(this::hasIataCode)
@@ -31,6 +35,8 @@ public final class ImportAirport {
                     else
                         createAirport(importedAirport);
                 });
+
+        log.info("Imported all airports");
     }
 
     private boolean hasIataCode(Airport airport) {
@@ -103,6 +109,8 @@ public final class ImportAirport {
     }
 
     public void overrideAll() {
+        log.info("Overriding all airports");
+
         List<Airport> importedAirports = sourceRepository.findAll();
         if (importedAirports.isEmpty())
             throw new ImportException("No airports to import");
@@ -112,5 +120,7 @@ public final class ImportAirport {
                 .collect(toList());
 
         targetRepository.overrideAll(airportsToCreate);
+
+        log.info("Overridden all airports");
     }
 }

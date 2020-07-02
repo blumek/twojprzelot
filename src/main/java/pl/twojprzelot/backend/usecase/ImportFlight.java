@@ -19,6 +19,7 @@ public final class ImportFlight {
 
     public void overrideAll() {
         log.info("Overriding all flights");
+
         List<Flight> importedFlights = sourceRepository.findAll();
         if (importedFlights.isEmpty())
             throw new ImportException("No flights to import");
@@ -28,6 +29,7 @@ public final class ImportFlight {
                 .collect(toList());
 
         targetRepository.overrideAll(flightsToCreate);
+
         log.info("Overridden all flights");
     }
 

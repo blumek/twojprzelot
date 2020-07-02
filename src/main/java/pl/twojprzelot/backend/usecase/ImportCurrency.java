@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.usecase;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
@@ -11,12 +12,15 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class ImportCurrency {
     private final CurrencyImmutableRepository sourceRepository;
     private final CurrencyMutableRepository targetRepository;
 
     public void importAll() {
+        log.info("Importing all countries");
+
         sourceRepository.findAll().stream()
                 .filter(this::hasCode)
                 .forEach(importedCurrency -> {
@@ -27,6 +31,8 @@ public final class ImportCurrency {
                     else
                         createCurrency(importedCurrency);
                 });
+
+        log.info("Imported all countries");
     }
 
     private boolean hasCode(Currency currency) {
@@ -56,6 +62,8 @@ public final class ImportCurrency {
     }
 
     public void overrideAll() {
+        log.info("Overriding all currencies");
+
         List<Currency> importedCurrencies = sourceRepository.findAll();
         if (importedCurrencies.isEmpty())
             throw new ImportException("No currencies to import");
@@ -65,5 +73,7 @@ public final class ImportCurrency {
                 .collect(toList());
 
         targetRepository.overrideAll(currenciesToCreate);
+
+        log.info("Overridden all currencies");
     }
 }

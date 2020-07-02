@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.usecase;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.twojprzelot.backend.domain.entity.Country;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.exception.ImportException;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class ImportCountry {
     private final CountryImmutableRepository sourceRepository;
@@ -20,6 +22,8 @@ public final class ImportCountry {
     private final CurrencyImmutableRepository currencyImmutableRepository;
 
     public void importAll() {
+        log.info("Importing all countries");
+
         sourceRepository.findAll()
                 .stream()
                 .filter(this::hasIso2Code)
@@ -32,6 +36,8 @@ public final class ImportCountry {
                     else
                         createCountry(importedCountry);
                 });
+
+        log.info("Imported all countries");
     }
 
     private boolean hasIso2Code(Country country) {
@@ -105,6 +111,8 @@ public final class ImportCountry {
     }
 
     public void overrideAll() {
+        log.info("Overriding all countries");
+
         List<Country> importedCountries = sourceRepository.findAll();
         if (importedCountries.isEmpty())
             throw new ImportException("No countries to import");
@@ -114,5 +122,7 @@ public final class ImportCountry {
                 .collect(toList());
 
         targetRepository.overrideAll(countriesToCreate);
+
+        log.info("Overridden all countries");
     }
 }

@@ -1,6 +1,7 @@
 package pl.twojprzelot.backend.usecase;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.twojprzelot.backend.adapter.repository.AssociateScheduledFlight;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.exception.ImportException;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class ImportScheduledFlight {
     private final ScheduledFlightImmutableRepository sourceRepository;
@@ -18,6 +20,8 @@ public final class ImportScheduledFlight {
     private final AssociateScheduledFlight associateScheduledFlight;
 
     public void overrideAll() {
+        log.info("Overriding all scheduled flights");
+
         List<ScheduledFlight> importedScheduledFlights = sourceRepository.findAll();
         if (importedScheduledFlights.isEmpty())
             throw new ImportException("No Scheduled Flights to import");
@@ -27,6 +31,8 @@ public final class ImportScheduledFlight {
                 .collect(toList());
 
         targetRepository.overrideAll(scheduledFlightsToCreate);
+
+        log.info("Overridden all scheduled flights");
     }
 
     private ScheduledFlight getScheduledFlightToCreate(ScheduledFlight scheduledFlight) {
