@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.twojprzelot.backend.adapter.repository.AssociateScheduledFlight;
 import pl.twojprzelot.backend.domain.entity.Currency;
 import pl.twojprzelot.backend.domain.port.*;
 
@@ -17,6 +18,13 @@ class UseCaseConfig {
     ImportFlight importFlight(@Qualifier("flightAERepository") FlightImmutableRepository flightSourceRepository,
                               @Qualifier("flightDatabaseRepository") FlightMutableRepository flightTargetRepository) {
         return new ImportFlight(flightSourceRepository, flightTargetRepository);
+    }
+
+    @Bean
+    ImportScheduledFlight importScheduledFlight(@Qualifier("scheduledFlightAERepository") ScheduledFlightImmutableRepository scheduledFlightSourceRepository,
+                                                @Qualifier("scheduledFlightDatabaseRepository") ScheduledFlightMutableRepository scheduledFlightTargetRepository,
+                                                AssociateScheduledFlight associateScheduledFlight) {
+        return new ImportScheduledFlight(scheduledFlightSourceRepository, scheduledFlightTargetRepository, associateScheduledFlight);
     }
 
     @Bean
