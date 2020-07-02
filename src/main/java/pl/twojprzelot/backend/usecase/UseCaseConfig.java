@@ -28,6 +28,12 @@ class UseCaseConfig {
     }
 
     @Bean
+    ImportStaticData importStaticData(ImportCurrency importCurrency, ImportCountry importCountry, ImportCity importCity,
+                                      ImportAirport importAirport) {
+        return new ImportStaticData(importCurrency, importCountry, importCity, importAirport);
+    }
+
+    @Bean
     ImportCountry importCountry(@Qualifier("countryAERepository") CountryImmutableRepository countrySourceRepository,
                                 @Qualifier("countryDatabaseRepository") CountryMutableRepository countryTargetRepository,
                                 @Qualifier("currencyDatabaseRepository") CurrencyImmutableRepository currencyRepository) {
