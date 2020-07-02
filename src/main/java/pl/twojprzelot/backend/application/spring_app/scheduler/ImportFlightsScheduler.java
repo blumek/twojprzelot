@@ -9,10 +9,10 @@ import pl.twojprzelot.backend.usecase.ImportFlight;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ImportFlightsScheduler {
+final class ImportFlightsScheduler {
     private final ImportFlight importFlight;
 
-    @Scheduled(fixedDelayString = "${flightsImportDelayString:scheduling.flights.delayString}")
+    @Scheduled(fixedDelayString = "${scheduling.flights.delayString}")
     void importFlights() {
         log.info("Import flights - scheduled task");
         importFlight.overrideAll();
