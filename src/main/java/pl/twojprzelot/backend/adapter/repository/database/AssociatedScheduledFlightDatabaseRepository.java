@@ -9,12 +9,12 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-final class ScheduledFlightWithAssociationDatabaseRepository extends ForwardingScheduledFlightDatabaseRepository
+final class AssociatedScheduledFlightDatabaseRepository extends ForwardingScheduledFlightDatabaseRepository
         implements ScheduledFlightImmutableRepository {
     private final AssociateScheduledFlight associateScheduledFlight;
 
-    public ScheduledFlightWithAssociationDatabaseRepository(ScheduledFlightImmutableRepository repository,
-                                                            AssociateScheduledFlight associateScheduledFlight) {
+    public AssociatedScheduledFlightDatabaseRepository(ScheduledFlightImmutableRepository repository,
+                                                       AssociateScheduledFlight associateScheduledFlight) {
         super(repository);
         this.associateScheduledFlight = associateScheduledFlight;
     }

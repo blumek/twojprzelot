@@ -1,12 +1,14 @@
 package pl.twojprzelot.backend.adapter.repository.database;
 
 import com.google.common.collect.Maps;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import pl.twojprzelot.backend.domain.entity.Airport;
 import pl.twojprzelot.backend.domain.entity.Language;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 import static javax.persistence.EnumType.STRING;
@@ -26,7 +28,6 @@ final class AirportEntity{
     @Column(unique = true)
     private String iataCode;
 
-    @Column(unique = true)
     private String icaoCode;
 
     @Embedded
@@ -40,6 +41,12 @@ final class AirportEntity{
     @MapKeyColumn(name = "language")
     @Column(name = "translation")
     private Map<Language, String> nameTranslations = Maps.newEnumMap(Language.class);
+
+    @OneToMany(mappedBy = "arrival.airport", cascade = CascadeType.REMOVE)
+    private List<ScheduledFlightEntity> arrivalScheduledFlights;
+
+    @OneToMany(mappedBy = "departure.airport", cascade = CascadeType.REMOVE)
+    private List<ScheduledFlightEntity> departureScheduledFlights;
 
     public Airport toAirport() {
         return mapper.mapToAirport(this);

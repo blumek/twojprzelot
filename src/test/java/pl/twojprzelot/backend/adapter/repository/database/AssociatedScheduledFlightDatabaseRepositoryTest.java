@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class ScheduledFlightWithAssociationDatabaseRepositoryTest {
+class AssociatedScheduledFlightDatabaseRepositoryTest {
     private static final int ID = 1;
     private static final int DELAY_MINUTES = 10;
     public static final String IATA_NUMBER = "IATA_NUMBER";
     public static final String ICAO_NUMBER = "ICAO_NUMBER";
 
     @InjectMocks
-    private ScheduledFlightWithAssociationDatabaseRepository associationDatabaseRepository;
+    private AssociatedScheduledFlightDatabaseRepository associationDatabaseRepository;
     @Mock
     private ScheduledFlightImmutableRepository scheduledFightRepository;
     @Mock
