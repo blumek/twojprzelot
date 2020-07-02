@@ -11,6 +11,6 @@ class DatabaseRepositoryConfig {
     @Bean
     ScheduledFlightImmutableRepository scheduledFlightWithAssociationDatabaseRepository(@Qualifier("scheduledFlightAERepository") ScheduledFlightImmutableRepository scheduledFlightRepository,
                                                                                         AssociateScheduledFlight associateScheduledFlight) {
-        return new ScheduledFlightWithAssociationDatabaseRepository(scheduledFlightRepository, associateScheduledFlight);
+        return new AssociatedScheduledFlightDatabaseRepository(scheduledFlightRepository, associateScheduledFlight);
     }
 }
