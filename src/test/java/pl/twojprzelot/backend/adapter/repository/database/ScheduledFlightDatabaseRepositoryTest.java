@@ -75,60 +75,60 @@ class ScheduledFlightDatabaseRepositoryTest {
 
     @Test
     void findAllByIataNumberTest_flightsWithGivenIataNumberNotExist() {
-        when(scheduledFlightSpringRepository.findAllByFlightIdentifier_IataNumber(IATA_NUMBER))
+        when(scheduledFlightSpringRepository.findAllByFlightIdentifierIataNumber(IATA_NUMBER))
                 .thenReturn(Lists.newArrayList());
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIataNumber(IATA_NUMBER);
         assertTrue(foundFlights.isEmpty());
 
-        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IataNumber(IATA_NUMBER);
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifierIataNumber(IATA_NUMBER);
     }
 
     @Test
     void findAllByIataNumberTest_flightWithGivenIataNumberExist() {
-        when(scheduledFlightSpringRepository.findAllByFlightIdentifier_IataNumber(IATA_NUMBER))
+        when(scheduledFlightSpringRepository.findAllByFlightIdentifierIataNumber(IATA_NUMBER))
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIataNumber(IATA_NUMBER);
         assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
 
-        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IataNumber(IATA_NUMBER);
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifierIataNumber(IATA_NUMBER);
     }
 
     @Test
     void findAllByIataNumberTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.findAllByIataNumber(null));
 
-        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifier_IataNumber(null);
+        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifierIataNumber(null);
     }
 
     @Test
     void findAllByIcaoNumber_flightsWithGivenIcaoNumberNotExist() {
-        when(scheduledFlightSpringRepository.findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER))
+        when(scheduledFlightSpringRepository.findAllByFlightIdentifierIcaoNumber(ICAO_NUMBER))
                 .thenReturn(Lists.newArrayList());
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIcaoNumber(ICAO_NUMBER);
         assertTrue(foundFlights.isEmpty());
 
-        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifierIcaoNumber(ICAO_NUMBER);
     }
 
     @Test
     void findAllByIcaoNumber_flightWithGivenIcaoNumberExist() {
-        when(scheduledFlightSpringRepository.findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER))
+        when(scheduledFlightSpringRepository.findAllByFlightIdentifierIcaoNumber(ICAO_NUMBER))
                 .thenReturn(Lists.newArrayList(scheduledFlightEntity));
 
         List<ScheduledFlight> foundFlights = scheduledFlightDatabaseRepository.findAllByIcaoNumber(ICAO_NUMBER);
         assertThat(foundFlights, containsInAnyOrder(scheduledFlight));
 
-        verify(scheduledFlightSpringRepository).findAllByFlightIdentifier_IcaoNumber(ICAO_NUMBER);
+        verify(scheduledFlightSpringRepository).findAllByFlightIdentifierIcaoNumber(ICAO_NUMBER);
     }
 
     @Test
     void findAllByIcaoNumberTest_nullPassed() {
         assertThrows(NullPointerException.class, () -> scheduledFlightDatabaseRepository.findAllByIcaoNumber(null));
 
-        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifier_IcaoNumber(null);
+        verify(scheduledFlightSpringRepository, never()).findAllByFlightIdentifierIcaoNumber(null);
     }
 
     @Test

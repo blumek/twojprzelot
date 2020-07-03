@@ -26,14 +26,14 @@ class ScheduledFlightDatabaseRepository implements ScheduledFlightMutableReposit
 
     @Override
     public List<ScheduledFlight> findAllByIataNumber(@NonNull String iataNumber) {
-        return repository.findAllByFlightIdentifier_IataNumber(iataNumber).stream()
+        return repository.findAllByFlightIdentifierIataNumber(iataNumber).stream()
                 .map(ScheduledFlightEntity::toScheduledFlight)
                 .collect(toList());
     }
 
     @Override
     public List<ScheduledFlight> findAllByIcaoNumber(@NonNull String icaoNumber) {
-        return repository.findAllByFlightIdentifier_IcaoNumber(icaoNumber).stream()
+        return repository.findAllByFlightIdentifierIcaoNumber(icaoNumber).stream()
                 .map(ScheduledFlightEntity::toScheduledFlight)
                 .collect(toList());
     }

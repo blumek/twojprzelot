@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ScheduledFlightSpringRepository extends JpaRepository<ScheduledFlightEntity, Integer> {
-    List<ScheduledFlightEntity> findAllByFlightIdentifier_IataNumber(String iataNumber);
-    List<ScheduledFlightEntity> findAllByFlightIdentifier_IcaoNumber(String icaoNumber);
+    List<ScheduledFlightEntity> findAllByFlightIdentifierIataNumber(String iataNumber);
+    List<ScheduledFlightEntity> findAllByFlightIdentifierIcaoNumber(String icaoNumber);
 }

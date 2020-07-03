@@ -10,14 +10,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.entity.Flight;
 import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
 
-import java.util.Currency;
 import java.util.List;
-import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FlightAERepositoryTest {
@@ -39,11 +38,6 @@ class FlightAERepositoryTest {
     private FlightAE anotherFlightAE;
     private Flight expectedFlight;
     private Flight anotherExpectedFlight;
-
-    @Test
-    void name() {
-        Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();
-    }
 
     @BeforeEach
     void setUp() {
