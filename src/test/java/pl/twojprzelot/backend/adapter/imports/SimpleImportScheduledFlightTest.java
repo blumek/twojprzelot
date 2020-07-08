@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.adapter.repository.AssociateScheduledFlight;
 import pl.twojprzelot.backend.domain.entity.FlightEndpointDetails;
-import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.entity.FlightIdentifier;
+import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightMutableRepository;
@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportScheduledFlightTest {
+class SimpleImportScheduledFlightTest {
     private static final int ID = 1;
     private static final String IATA_CODE = "IATA_CODE";
 
-    private ImportScheduledFlight importScheduledFlight;
+    private SimpleImportScheduledFlight simpleImportScheduledFlight;
     @Mock
     private ScheduledFlightImmutableRepository sourceRepository;
     @Mock
@@ -32,7 +32,7 @@ class ImportScheduledFlightTest {
 
     @BeforeEach
     void setUp() {
-        importScheduledFlight = new ImportScheduledFlight(sourceRepository, targetRepository, associateScheduledFlight);
+        simpleImportScheduledFlight = new SimpleImportScheduledFlight(sourceRepository, targetRepository, associateScheduledFlight);
     }
 
     @Test
@@ -40,7 +40,7 @@ class ImportScheduledFlightTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        assertThrows(ImportException.class, () -> importScheduledFlight.overrideAll());
+        assertThrows(ImportException.class, () -> simpleImportScheduledFlight.overrideAll());
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).overrideAll(anyList());
@@ -69,7 +69,7 @@ class ImportScheduledFlightTest {
         when(associateScheduledFlight.getAssociatedScheduledFlight(scheduledFlight))
                 .thenReturn(scheduledFlightWithAssociation);
 
-        importScheduledFlight.overrideAll();
+        simpleImportScheduledFlight.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(associateScheduledFlight).getAssociatedScheduledFlight(scheduledFlight);

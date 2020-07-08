@@ -1,17 +1,19 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.twojprzelot.backend.domain.exception.ImportException;
+import pl.twojprzelot.backend.domain.port.*;
 
 @Slf4j
 @RequiredArgsConstructor
-public class ImportStaticData {
+final class SimpleImportStaticData implements ImportStaticData {
     private final ImportCurrency importCurrency;
     private final ImportCountry importCountry;
     private final ImportCity importCity;
     private final ImportAirport importAirport;
 
+    @Override
     public void overrideAll() {
         log.info("Overriding Static Data");
 

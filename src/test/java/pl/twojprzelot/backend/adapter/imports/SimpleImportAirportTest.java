@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportAirportTest {
+class SimpleImportAirportTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
     private static final String IATA_CODE = "IATA_CODE";
@@ -27,7 +27,7 @@ class ImportAirportTest {
     private static final String CITY_IATA_CODE = "CITY_IATA_CODE";
     private static final String CITY_NAME = "CITY_NAME";
 
-    private ImportAirport importAirport;
+    private SimpleImportAirport simpleImportAirport;
     @Mock
     private AirportImmutableRepository sourceRepository;
     @Mock
@@ -37,7 +37,7 @@ class ImportAirportTest {
 
     @BeforeEach
     void setUp() {
-        importAirport = new ImportAirport(sourceRepository, targetRepository, cityRepository);
+        simpleImportAirport = new SimpleImportAirport(sourceRepository, targetRepository, cityRepository);
     }
 
     @Test
@@ -45,7 +45,7 @@ class ImportAirportTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(sourceRepository, never()).findByIataCode(anyString());
@@ -64,7 +64,7 @@ class ImportAirportTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(airport));
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).findByIataCode(IATA_CODE);
@@ -104,7 +104,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.of(alreadySavedCity));
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -145,7 +145,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.empty());
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -187,7 +187,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.of(alreadySavedCity));
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -224,7 +224,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.empty());
 
-        importAirport.importAll();
+        simpleImportAirport.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -238,7 +238,7 @@ class ImportAirportTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        assertThrows(ImportException.class, () -> importAirport.overrideAll());
+        assertThrows(ImportException.class, () -> simpleImportAirport.overrideAll());
 
         verify(sourceRepository).findAll();
         verify(cityRepository, never()).findByIataCode(anyString());
@@ -273,7 +273,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.of(alreadySavedCity));
 
-        importAirport.overrideAll();
+        simpleImportAirport.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).overrideAll(Lists.newArrayList(airportToCreate));
@@ -303,7 +303,7 @@ class ImportAirportTest {
         when(cityRepository.findByIataCode(CITY_IATA_CODE))
                 .thenReturn(Optional.empty());
 
-        importAirport.overrideAll();
+        simpleImportAirport.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).overrideAll(Lists.newArrayList(airportToCreate));

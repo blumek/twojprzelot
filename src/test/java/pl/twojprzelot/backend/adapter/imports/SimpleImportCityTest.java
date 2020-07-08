@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportCityTest {
+class SimpleImportCityTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
     private static final String IATA_CODE = "IATA_CODE";
@@ -27,7 +27,7 @@ class ImportCityTest {
     private static final String COUNTRY_ISO_2_CODE = "COUNTRY_ISO_2_CODE";
     private static final String COUNTRY_NAME = "COUNTRY_NAME";
 
-    private ImportCity importCity;
+    private SimpleImportCity simpleImportCity;
     @Mock
     private CityImmutableRepository sourceRepository;
     @Mock
@@ -37,7 +37,7 @@ class ImportCityTest {
 
     @BeforeEach
     void setUp() {
-        importCity = new ImportCity(sourceRepository, targetRepository, countryRepository);
+        simpleImportCity = new SimpleImportCity(sourceRepository, targetRepository, countryRepository);
     }
 
     @Test
@@ -45,7 +45,7 @@ class ImportCityTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(sourceRepository, never()).findByIataCode(anyString());
@@ -64,7 +64,7 @@ class ImportCityTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(city));
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).findByIataCode(IATA_CODE);
@@ -104,7 +104,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.of(alreadySavedCountry));
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -145,7 +145,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.empty());
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -187,7 +187,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.of(alreadySavedCountry));
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -224,7 +224,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.empty());
 
-        importCity.importAll();
+        simpleImportCity.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIataCode(IATA_CODE);
@@ -238,7 +238,7 @@ class ImportCityTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        assertThrows(ImportException.class, () -> importCity.overrideAll());
+        assertThrows(ImportException.class, () -> simpleImportCity.overrideAll());
 
         verify(sourceRepository).findAll();
         verify(countryRepository, never()).findByIso2Code(anyString());
@@ -273,7 +273,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.of(alreadySavedCountry));
 
-        importCity.overrideAll();
+        simpleImportCity.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).overrideAll(Lists.newArrayList(cityToCreate));
@@ -303,7 +303,7 @@ class ImportCityTest {
         when(countryRepository.findByIso2Code(COUNTRY_ISO_2_CODE))
                 .thenReturn(Optional.empty());
 
-        importCity.overrideAll();
+        simpleImportCity.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).overrideAll(Lists.newArrayList(cityToCreate));

@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.port.AirportImmutableRepository;
 import pl.twojprzelot.backend.domain.port.AirportMutableRepository;
 import pl.twojprzelot.backend.domain.port.CityImmutableRepository;
+import pl.twojprzelot.backend.domain.port.ImportAirport;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,12 @@ import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class ImportAirport {
+final class SimpleImportAirport implements ImportAirport {
     private final AirportImmutableRepository sourceRepository;
     private final AirportMutableRepository targetRepository;
     private final CityImmutableRepository cityRepository;
 
+    @Override
     public void importAll() {
         log.info("Importing all airports");
 
@@ -108,6 +110,7 @@ public final class ImportAirport {
                 .build();
     }
 
+    @Override
     public void overrideAll() {
         log.info("Overriding all airports");
 

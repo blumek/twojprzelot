@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportAirlineTest {
+class SimpleImportAirlineTest {
     private static final int ID = 1;
     private static final String NAME = "NAME";
     private static final String IATA_CODE = "IATA_CODE";
 
-    private ImportAirline importAirline;
+    private SimpleImportAirline simpleImportAirline;
     @Mock
     private AirlineImmutableRepository sourceRepository;
     @Mock
@@ -28,7 +28,7 @@ class ImportAirlineTest {
 
     @BeforeEach
     void setUp() {
-        importAirline = new ImportAirline(sourceRepository, targetRepository);
+        simpleImportAirline = new SimpleImportAirline(sourceRepository, targetRepository);
     }
 
     @Test
@@ -36,7 +36,7 @@ class ImportAirlineTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        assertThrows(ImportException.class, () -> importAirline.overrideAll());
+        assertThrows(ImportException.class, () -> simpleImportAirline.overrideAll());
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).overrideAll(anyList());
@@ -55,7 +55,7 @@ class ImportAirlineTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(airline));
 
-        importAirline.overrideAll();
+        simpleImportAirline.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).overrideAll(Lists.newArrayList(airlineToCreate));

@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,13 +6,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.twojprzelot.backend.domain.exception.ImportException;
+import pl.twojprzelot.backend.domain.port.*;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportStaticDataTest {
+class SimpleImportStaticDataTest {
     @InjectMocks
-    private ImportStaticData importStaticData;
+    private SimpleImportStaticData simpleImportStaticData;
     @Mock
     private ImportCurrency importCurrency;
     @Mock
@@ -24,7 +25,19 @@ class ImportStaticDataTest {
 
     @Test
     void overrideAllTest() {
-        importStaticData.overrideAll();
+        doNothing()
+                .when(importCurrency).overrideAll();
+
+        doNothing()
+                .when(importCountry).overrideAll();
+
+        doNothing()
+                .when(importCity).overrideAll();
+
+        doNothing()
+                .when(importAirport).overrideAll();
+
+        simpleImportStaticData.overrideAll();
 
         verify(importCurrency).overrideAll();
         verify(importCountry).overrideAll();
@@ -37,7 +50,16 @@ class ImportStaticDataTest {
         doThrow(ImportException.class)
                 .when(importCurrency).overrideAll();
 
-        importStaticData.overrideAll();
+        doNothing()
+                .when(importCountry).overrideAll();
+
+        doNothing()
+                .when(importCity).overrideAll();
+
+        doNothing()
+                .when(importAirport).overrideAll();
+
+        simpleImportStaticData.overrideAll();
 
         verify(importCurrency).overrideAll();
         verify(importCountry).overrideAll();
@@ -47,10 +69,19 @@ class ImportStaticDataTest {
 
     @Test
     void overrideAllTest_importExceptionInCountryImport() {
+        doNothing()
+                .when(importCurrency).overrideAll();
+
         doThrow(ImportException.class)
                 .when(importCountry).overrideAll();
 
-        importStaticData.overrideAll();
+        doNothing()
+                .when(importCity).overrideAll();
+
+        doNothing()
+                .when(importAirport).overrideAll();
+
+        simpleImportStaticData.overrideAll();
 
         verify(importCurrency).overrideAll();
         verify(importCountry).overrideAll();
@@ -60,10 +91,19 @@ class ImportStaticDataTest {
 
     @Test
     void overrideAllTest_importExceptionInCityImport() {
+        doNothing()
+                .when(importCurrency).overrideAll();
+
+        doNothing()
+                .when(importCountry).overrideAll();
+
         doThrow(ImportException.class)
                 .when(importCity).overrideAll();
 
-        importStaticData.overrideAll();
+        doNothing()
+                .when(importAirport).overrideAll();
+
+        simpleImportStaticData.overrideAll();
 
         verify(importCurrency).overrideAll();
         verify(importCountry).overrideAll();
@@ -73,10 +113,19 @@ class ImportStaticDataTest {
 
     @Test
     void overrideAllTest_importExceptionInAirportImport() {
+        doNothing()
+                .when(importCurrency).overrideAll();
+
+        doNothing()
+                .when(importCountry).overrideAll();
+
+        doNothing()
+                .when(importCity).overrideAll();
+
         doThrow(ImportException.class)
                 .when(importAirport).overrideAll();
 
-        importStaticData.overrideAll();
+        simpleImportStaticData.overrideAll();
 
         verify(importCurrency).overrideAll();
         verify(importCountry).overrideAll();

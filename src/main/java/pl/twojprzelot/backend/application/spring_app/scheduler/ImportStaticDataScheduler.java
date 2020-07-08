@@ -3,11 +3,9 @@ package pl.twojprzelot.backend.application.spring_app.scheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import pl.twojprzelot.backend.usecase.ImportStaticData;
+import pl.twojprzelot.backend.domain.port.ImportStaticData;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 final class ImportStaticDataScheduler {
     private final ImportStaticData importStaticData;

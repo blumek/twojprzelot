@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +15,11 @@ import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ImportCountryTest {
+class SimpleImportCountryTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
     private static final int POPULATION = 10000;
@@ -28,7 +28,7 @@ class ImportCountryTest {
     private static final String ISO_2_CODE = "ISO_2_CODE";
     private static final String CURRENCY_NAME = "CURRENCY_NAME";
 
-    private ImportCountry importCountry;
+    private SimpleImportCountry simpleImportCountry;
     @Mock
     private CountryImmutableRepository sourceRepository;
     @Mock
@@ -38,7 +38,7 @@ class ImportCountryTest {
 
     @BeforeEach
     void setUp() {
-        importCountry = new ImportCountry(sourceRepository, targetRepository, currencyRepository);
+        simpleImportCountry = new SimpleImportCountry(sourceRepository, targetRepository, currencyRepository);
     }
 
     @Test
@@ -46,7 +46,7 @@ class ImportCountryTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).findByIso2Code(anyString());
@@ -66,7 +66,7 @@ class ImportCountryTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList(country));
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).findByIso2Code(anyString());
@@ -107,7 +107,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIso2Code(ISO_2_CODE);
@@ -149,7 +149,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.empty());
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIso2Code(ISO_2_CODE);
@@ -190,7 +190,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIso2Code(ISO_2_CODE);
@@ -226,7 +226,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.empty());
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository).findByIso2Code(ISO_2_CODE);
@@ -269,7 +269,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).create(any());
@@ -306,7 +306,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.empty());
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).create(any());
@@ -348,7 +348,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).create(any());
@@ -385,7 +385,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.empty());
 
-        importCountry.importAll();
+        simpleImportCountry.importAll();
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).create(any());
@@ -399,7 +399,7 @@ class ImportCountryTest {
         when(sourceRepository.findAll())
                 .thenReturn(Lists.newArrayList());
 
-        assertThrows(ImportException.class, () -> importCountry.overrideAll());
+        assertThrows(ImportException.class, () -> simpleImportCountry.overrideAll());
 
         verify(sourceRepository).findAll();
         verify(targetRepository, never()).overrideAll(anyList());
@@ -432,7 +432,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.overrideAll();
+        simpleImportCountry.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(currencyRepository, never()).findByIsoNumber(anyInt());
@@ -462,7 +462,7 @@ class ImportCountryTest {
         when(currencyRepository.findByCode(CURRENCY_CODE))
                 .thenReturn(Optional.empty());
 
-        importCountry.overrideAll();
+        simpleImportCountry.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(currencyRepository, never()).findByIsoNumber(anyInt());
@@ -498,7 +498,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.of(alreadySavedCurrency));
 
-        importCountry.overrideAll();
+        simpleImportCountry.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(currencyRepository, never()).findByCode(anyString());
@@ -529,7 +529,7 @@ class ImportCountryTest {
         when(currencyRepository.findByIsoNumber(CURRENCY_ISO_NUMBER))
                 .thenReturn(Optional.empty());
 
-        importCountry.overrideAll();
+        simpleImportCountry.overrideAll();
 
         verify(sourceRepository).findAll();
         verify(currencyRepository, never()).findByCode(anyString());

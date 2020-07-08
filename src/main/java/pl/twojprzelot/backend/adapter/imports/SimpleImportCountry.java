@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.usecase;
+package pl.twojprzelot.backend.adapter.imports;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import pl.twojprzelot.backend.domain.exception.ImportException;
 import pl.twojprzelot.backend.domain.port.CountryImmutableRepository;
 import pl.twojprzelot.backend.domain.port.CountryMutableRepository;
 import pl.twojprzelot.backend.domain.port.CurrencyImmutableRepository;
+import pl.twojprzelot.backend.domain.port.ImportCountry;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,12 @@ import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class ImportCountry {
+final class SimpleImportCountry implements ImportCountry {
     private final CountryImmutableRepository sourceRepository;
     private final CountryMutableRepository targetRepository;
     private final CurrencyImmutableRepository currencyImmutableRepository;
 
+    @Override
     public void importAll() {
         log.info("Importing all countries");
 
@@ -110,6 +112,7 @@ public final class ImportCountry {
                 .build();
     }
 
+    @Override
     public void overrideAll() {
         log.info("Overriding all countries");
 
