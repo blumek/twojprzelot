@@ -24,4 +24,28 @@ final class FlightAERepository implements FlightImmutableRepository {
                 .map(FlightAE::toFlight)
                 .collect(toList());
     }
+
+    @Override
+    public List<Flight> findAllByIataNumber(String iataNumber) {
+        AviationEdgeRequest<FlightAE> flightRequest = client.createFlightRequest()
+                .iataNumber(iataNumber)
+                .build();
+
+        return flightRequest.get()
+                .stream()
+                .map(FlightAE::toFlight)
+                .collect(toList());
+    }
+
+    @Override
+    public List<Flight> findAllByIcaoNumber(String icaoNumber) {
+        AviationEdgeRequest<FlightAE> flightRequest = client.createFlightRequest()
+                .icaoNumber(icaoNumber)
+                .build();
+
+        return flightRequest.get()
+                .stream()
+                .map(FlightAE::toFlight)
+                .collect(toList());
+    }
 }

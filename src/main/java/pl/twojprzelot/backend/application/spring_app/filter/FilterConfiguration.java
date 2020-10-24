@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class FilterConfig {
+class FilterConfiguration {
     @Bean
     AuthenticationFilter authenticationFilter(@Value("${application.key.header}") String applicationKeyHeaderName,
                                               @Value("${applicationKey}") String applicationKey,

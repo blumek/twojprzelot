@@ -10,7 +10,7 @@ import pl.twojprzelot.backend.domain.port.ImportStaticData;
 @Configuration
 @EnableScheduling
 @ConditionalOnProperty(name = "scheduling.enabled", matchIfMissing = true)
-public class SchedulerConfig {
+public class SchedulerConfiguration {
 
     @Bean
     ImportFlightsScheduler importFlightsScheduler(ImportFlight importFlight) {

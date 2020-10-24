@@ -1,4 +1,4 @@
-package pl.twojprzelot.backend.application.spring_app.config;
+package pl.twojprzelot.backend.application.spring_app.configuration;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 
 @Configuration
-class ObjectMapperConfig {
+class ObjectMapperConfiguration {
 
     @Bean
     SimpleModule emptyStringAsNullModule() {

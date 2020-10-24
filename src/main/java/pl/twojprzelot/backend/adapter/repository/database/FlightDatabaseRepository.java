@@ -26,6 +26,22 @@ class FlightDatabaseRepository implements FlightMutableRepository {
     }
 
     @Override
+    public List<Flight> findAllByIataNumber(String iataNumber) {
+        return repository.findAllByFlightIdentifierIataNumber(iataNumber)
+                .stream()
+                .map(FlightEntity::toFlight)
+                .collect(toList());
+    }
+
+    @Override
+    public List<Flight> findAllByIcaoNumber(String icaoNumber) {
+        return repository.findAllByFlightIdentifierIcaoNumber(icaoNumber)
+                .stream()
+                .map(FlightEntity::toFlight)
+                .collect(toList());
+    }
+
+    @Override
     public Flight create(@NonNull Flight flight) {
         FlightEntity flightToCreate = FlightEntity.from(flight);
         FlightEntity createdFlight = repository.save(flightToCreate);

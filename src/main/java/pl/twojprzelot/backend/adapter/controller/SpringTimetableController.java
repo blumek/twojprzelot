@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -13,11 +14,12 @@ import static org.springframework.http.HttpStatus.*;
 import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.*;
 
 @RequiredArgsConstructor
+@RequestMapping("timetable")
 @RestController
 final class SpringTimetableController {
     private final TimetableController timetableController;
 
-    @GetMapping("/timetable/{identifier}")
+    @GetMapping("/{identifier}")
     public ResponseEntity<ResponseWeb<List<ScheduledFlightWeb>>> findAllByFlightIdentifier(@PathVariable String identifier) {
         List<ScheduledFlightWeb> foundFlights = timetableController.findAllByFlightIdentifier(identifier);
         if (foundFlights.isEmpty())

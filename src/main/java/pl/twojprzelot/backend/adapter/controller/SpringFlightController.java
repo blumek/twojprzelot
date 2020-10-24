@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.ERROR
 import static pl.twojprzelot.backend.adapter.controller.ResponseWeb.Status.SUCCESS;
 
 @RequiredArgsConstructor
+@RequestMapping("flights")
 @RestController
 final class SpringFlightController {
     private final FlightController flightController;
 
-    @GetMapping("/flights")
+    @GetMapping
     public ResponseEntity<ResponseWeb<List<FlightWeb>>> findAllBy() {
         List<FlightWeb> foundFlights = flightController.findAll();
         if (foundFlights.isEmpty())

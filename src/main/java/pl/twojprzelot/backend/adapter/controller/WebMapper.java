@@ -18,4 +18,6 @@ interface WebMapper {
     ScheduledFlightWeb mapToScheduledFlightWeb(ScheduledFlight scheduledFlight);
 
     FlightWeb mapToFlightWeb(Flight flight);
+
+    FlightInformationWeb mapToFlightInformationWeb(FlightWeb flight, ScheduledFlightWeb scheduledFlight);
 }
