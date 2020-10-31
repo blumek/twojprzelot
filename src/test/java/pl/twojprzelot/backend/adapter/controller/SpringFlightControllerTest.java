@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.controller;
 
+import io.restassured.mapper.TypeRef;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,7 @@ class SpringFlightControllerTest {
                 .contentType(JSON)
                 .status(NOT_FOUND)
                 .extract()
-                .as(new ParameterizedTypeReference<ResponseWeb<List<FlightWeb>>>() {}.getType());
+                .as(new TypeRef<>() {});
 
         assertEquals(expectedResponse, foundFlights);
     }
@@ -83,7 +84,7 @@ class SpringFlightControllerTest {
                 .contentType(JSON)
                 .status(OK)
                 .extract()
-                .as(new ParameterizedTypeReference<ResponseWeb<List<FlightWeb>>>() {}.getType());
+                .as(new TypeRef<>() {});
 
         assertEquals(expectedResponse, foundFlights);
     }

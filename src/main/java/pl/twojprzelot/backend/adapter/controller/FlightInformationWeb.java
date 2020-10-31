@@ -2,7 +2,6 @@ package pl.twojprzelot.backend.adapter.controller;
 
 import lombok.*;
 import org.mapstruct.factory.Mappers;
-import pl.twojprzelot.backend.domain.entity.Flight;
 
 import static lombok.AccessLevel.PRIVATE;
 

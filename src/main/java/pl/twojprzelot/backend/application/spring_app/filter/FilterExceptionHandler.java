@@ -28,7 +28,7 @@ final class FilterExceptionHandler {
 
         MediaType contentType = errorResponse.getHeaders().getContentType();
         if (contentType != null)
-            response.setContentType(errorResponse.getHeaders().getContentType().toString());
+            response.setContentType(contentType.toString());
 
         PrintWriter responseWriter = response.getWriter();
         responseWriter.print(objectMapper.writeValueAsString(errorResponse.getBody()));

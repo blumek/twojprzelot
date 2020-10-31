@@ -1,5 +1,6 @@
 package pl.twojprzelot.backend.adapter.controller;
 
+import io.restassured.mapper.TypeRef;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +48,7 @@ class SpringTimetableControllerTest {
                 .contentType(JSON)
                 .status(NOT_FOUND)
                 .extract()
-                .as(new ParameterizedTypeReference<ResponseWeb<List<ScheduledFlightWeb>>>() {}.getType());
+                .as(new TypeRef<>() {});
 
         assertEquals(expectedResponse, foundScheduledFlights);
     }
@@ -78,7 +79,7 @@ class SpringTimetableControllerTest {
                 .contentType(JSON)
                 .status(OK)
                 .extract()
-                .as(new ParameterizedTypeReference<ResponseWeb<List<ScheduledFlightWeb>>>() {}.getType());
+                .as(new TypeRef<>() {});
 
         assertEquals(expectedResponse, foundScheduledFlights);
     }
