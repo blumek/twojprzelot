@@ -20,4 +20,10 @@ interface WebMapper {
     FlightWeb mapToFlightWeb(Flight flight);
 
     FlightInformationWeb mapToFlightInformationWeb(FlightWeb flight, ScheduledFlightWeb scheduledFlight);
+
+    @Mapping(ignore = true, target = "scheduledFlight")
+    FlightInformationWeb mapToFlightInformationWeb(FlightWeb flight);
+
+    @Mapping(ignore = true, target = "flight")
+    FlightInformationWeb mapToFlightInformationWeb(ScheduledFlightWeb scheduledFlight);
 }

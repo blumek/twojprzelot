@@ -1,14 +1,11 @@
 package pl.twojprzelot.backend.adapter.controller;
 
-import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.twojprzelot.backend.usecase.FindFlight;
 import pl.twojprzelot.backend.usecase.FindScheduledFlight;
 
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -16,31 +13,28 @@ final class FlightInformationController {
     private final FindFlight findFlight;
     private final FindScheduledFlight findScheduledFlight;
 
-    public List<FlightInformationWeb> findAllByFlightIdentifier(String identifier) {
-        List<FlightWeb> flights = flightsByIdentifier(identifier);
-        List<ScheduledFlightWeb> scheduledFlights = scheduledFlightsByIdentifier(identifier);
-        return createFlightInformation(flights, scheduledFlights);
+    public Optional<FlightInformationWeb> findCurrentByFlightIdentifier(String identifier) {
+        Optional<FlightWeb> flight = currentFlightByIdentifier(identifier);
+        Optional<ScheduledFlightWeb> scheduledFlight = currentScheduledFlightByIdentifier(identifier);
+        return createFlightInformation(flight, scheduledFlight);
     }
 
-    private List<FlightWeb> flightsByIdentifier(String identifier) {
-        return findFlight.findAllByFlightIdentifier(identifier)
-                .stream()
-                .map(FlightWeb::from)
-                .collect(toList());
+    private Optional<FlightWeb> currentFlightByIdentifier(String identifier) {
+        return findFlight.findCurrentByIdentifier(identifier)
+                .map(FlightWeb::from);
     }
 
-    private List<ScheduledFlightWeb> scheduledFlightsByIdentifier(String identifier) {
-        return findScheduledFlight.findAllByFlightIdentifier(identifier)
-                .stream()
-                .map(ScheduledFlightWeb::from)
-                .collect(toList());
+    private Optional<ScheduledFlightWeb> currentScheduledFlightByIdentifier(String identifier) {
+        return findScheduledFlight.findCurrentByFlightIdentifier(identifier)
+                .map(ScheduledFlightWeb::from);
     }
 
-    private List<FlightInformationWeb> createFlightInformation(List<FlightWeb> flights,
-                                                               List<ScheduledFlightWeb> scheduledFlights) {
-        List<FlightInformationWeb> flightInformation = Lists.newArrayList();
-        // TODO Add logic
+    private Optional<FlightInformationWeb> createFlightInformation(Optional<FlightWeb> flight,
+                                                         Optional<ScheduledFlightWeb> scheduledFlight) {
+        if (flight.isPresent() && scheduledFlight.isPresent())
+            return Optional.of(FlightInformationWeb.from(flight.get(), scheduledFlight.get()));
 
-        return flightInformation;
+        return flight.map(FlightInformationWeb::from)
+                .or(() -> scheduledFlight.map(FlightInformationWeb::from));
     }
 }

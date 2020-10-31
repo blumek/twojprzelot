@@ -5,6 +5,7 @@ import pl.twojprzelot.backend.domain.entity.Flight;
 import pl.twojprzelot.backend.domain.port.FlightImmutableRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public final class FindFlight {
@@ -20,5 +21,11 @@ public final class FindFlight {
             return flightsByIataNumber;
 
         return repository.findAllByIcaoNumber(flightIdentifier);
+    }
+
+    public Optional<Flight> findCurrentByIdentifier(String flightIdentifier) {
+        return findAllByFlightIdentifier(flightIdentifier)
+                .stream()
+                .findFirst();
     }
 }

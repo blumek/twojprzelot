@@ -21,4 +21,12 @@ final class FlightInformationWeb {
     public static FlightInformationWeb from(FlightWeb flight, ScheduledFlightWeb scheduledFlight) {
         return mapper.mapToFlightInformationWeb(flight, scheduledFlight);
     }
+
+    public static FlightInformationWeb from(FlightWeb flight) {
+        return mapper.mapToFlightInformationWeb(flight);
+    }
+
+    public static FlightInformationWeb from(ScheduledFlightWeb scheduledFlight) {
+        return mapper.mapToFlightInformationWeb(scheduledFlight);
+    }
 }
