@@ -23,7 +23,7 @@ public final class FindFlight {
         return repository.findAllByIcaoNumber(flightIdentifier);
     }
 
-    public Optional<Flight> findCurrentByIdentifier(String flightIdentifier) {
+    public Optional<Flight> findCurrentByFlightIdentifier(String flightIdentifier) {
         return findAllByFlightIdentifier(flightIdentifier)
                 .stream()
                 .findFirst();

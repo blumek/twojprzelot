@@ -20,7 +20,7 @@ final class FlightInformationController {
     }
 
     private Optional<FlightWeb> currentFlightByIdentifier(String identifier) {
-        return findFlight.findCurrentByIdentifier(identifier)
+        return findFlight.findCurrentByFlightIdentifier(identifier)
                 .map(FlightWeb::from);
     }
 
