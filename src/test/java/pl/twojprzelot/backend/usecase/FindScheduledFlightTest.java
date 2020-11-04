@@ -6,19 +6,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.twojprzelot.backend.domain.entity.FlightEndpointDetails;
 import pl.twojprzelot.backend.domain.entity.ScheduledFlight;
 import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
+import pl.twojprzelot.backend.utils.Time;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class})
 class FindScheduledFlightTest {
     private static final String FLIGHT_IDENTIFIER = "FLIGHT_IDENTIFIER";
     private static final int ID = 1;
@@ -36,10 +41,16 @@ class FindScheduledFlightTest {
     void setUp() {
         firstScheduledFlight = ScheduledFlight.builder()
                 .id(ID)
+                .departure(FlightEndpointDetails.builder()
+                        .scheduledTime(LocalDateTime.of(2020, 10, 10, 0, 0))
+                        .build())
                 .build();
 
         secondScheduledFlight = ScheduledFlight.builder()
                 .id(ANOTHER_ID)
+                .departure(FlightEndpointDetails.builder()
+                        .scheduledTime(LocalDateTime.of(2020, 10, 8, 0, 0))
+                        .build())
                 .build();
     }
 
@@ -86,6 +97,67 @@ class FindScheduledFlightTest {
 
         assertThat(foundScheduledFlights, containsInAnyOrder(firstScheduledFlight, secondScheduledFlight));
 
+        verify(scheduledFlightImmutableRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_noCurrentScheduledFlightWithGivenFlightIdentifierAvailable() {
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
+
+        when(scheduledFlightImmutableRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
+
+        Optional<ScheduledFlight> foundScheduledFlight =
+                findScheduledFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+        assertTrue(foundScheduledFlight.isEmpty());
+
+        verify(scheduledFlightImmutableRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
+        verify(scheduledFlightImmutableRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_currentScheduledFlightWithGivenFlightIdentifierAvailable_IataAvailable() {
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
+
+        Optional<ScheduledFlight> expectedScheduledFlight = Optional.of(secondScheduledFlight);
+
+        LocalDateTime fakeNow = LocalDateTime.of(2020, 10, 9, 0, 0);
+        try(MockedStatic<Time> mockedTime = mockStatic(Time.class)) {
+            mockedTime.when(Time::now).thenReturn(fakeNow);
+
+            Optional<ScheduledFlight> foundScheduledFlight =
+                    findScheduledFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+            assertEquals(expectedScheduledFlight, foundScheduledFlight);
+        }
+
+        verify(scheduledFlightImmutableRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_currentScheduledFlightWithGivenFlightIdentifierAvailable_IcaoAvailable() {
+        when(scheduledFlightImmutableRepository.findAllByIataNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList());
+
+        when(scheduledFlightImmutableRepository.findAllByIcaoNumber(FLIGHT_IDENTIFIER))
+                .thenReturn(Lists.newArrayList(firstScheduledFlight, secondScheduledFlight));
+
+        Optional<ScheduledFlight> expectedScheduledFlight = Optional.of(secondScheduledFlight);
+
+        LocalDateTime fakeNow = LocalDateTime.of(2020, 10, 9, 0, 0);
+        try(MockedStatic<Time> mockedTime = mockStatic(Time.class)) {
+            mockedTime.when(Time::now).thenReturn(fakeNow);
+
+            Optional<ScheduledFlight> foundScheduledFlight =
+                    findScheduledFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+            assertEquals(expectedScheduledFlight, foundScheduledFlight);
+        }
+
+        verify(scheduledFlightImmutableRepository).findAllByIataNumber(FLIGHT_IDENTIFIER);
         verify(scheduledFlightImmutableRepository).findAllByIcaoNumber(FLIGHT_IDENTIFIER);
     }
 }

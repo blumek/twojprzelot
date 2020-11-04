@@ -7,7 +7,8 @@ import pl.twojprzelot.backend.domain.port.ScheduledFlightImmutableRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingLong;
+import static pl.twojprzelot.backend.utils.FlightTime.millisUntilNow;
 
 @RequiredArgsConstructor
 public final class FindScheduledFlight {
@@ -24,6 +25,13 @@ public final class FindScheduledFlight {
     public Optional<ScheduledFlight> findCurrentByFlightIdentifier(String flightIdentifier) {
         return findAllByFlightIdentifier(flightIdentifier)
                 .stream()
-                .min(comparing(scheduledFlight -> scheduledFlight.getDeparture().getEstimatedTime()));
+                .filter(scheduledFlight -> scheduledFlight.getDeparture() != null)
+                .min(comparingLong(this::untilNow));
     }
+
+    private long untilNow(ScheduledFlight scheduledFlight) {
+        return millisUntilNow(scheduledFlight.getDeparture())
+                .orElse(Long.MAX_VALUE);
+    }
+
 }

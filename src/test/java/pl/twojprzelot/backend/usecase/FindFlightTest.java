@@ -11,10 +11,13 @@ import pl.twojprzelot.backend.domain.entity.Flight;
 import pl.twojprzelot.backend.domain.port.FlightImmutableRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +25,7 @@ import static org.mockito.Mockito.when;
 class FindFlightTest {
     private static final int ID = 1;
     private static final int ANOTHER_ID = 2;
+    private static final String FLIGHT_IDENTIFIER = "FLIGHT_IDENTIFIER";
 
     @InjectMocks
     private FindFlight findFlight;
@@ -62,5 +66,45 @@ class FindFlightTest {
         assertThat(foundFlights, containsInAnyOrder(firstFlight, secondFlight));
 
         verify(flightImmutableRepository).findAll();
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_noCurrentFlightWithGivenFlightIdentifier() {
+        when(flightImmutableRepository.findAllByIataNumber(any()))
+                .thenReturn(Lists.newArrayList());
+
+        when(flightImmutableRepository.findAllByIcaoNumber(any()))
+                .thenReturn(Lists.newArrayList());
+
+        Optional<Flight> foundFlight = findFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+        assertEquals(Optional.empty(), foundFlight);
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_flightWithGivenFlightIdentifier_IataAvailable() {
+        when(flightImmutableRepository.findAllByIataNumber(any()))
+                .thenReturn(Lists.newArrayList(firstFlight, secondFlight));
+
+        Optional<Flight> expectedFlight = Optional.of(firstFlight);
+
+        Optional<Flight> foundFlight = findFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+        assertEquals(expectedFlight, foundFlight);
+    }
+
+    @Test
+    void findCurrentByFlightIdentifier_flightWithGivenFlightIdentifier_IcaoAvailable() {
+        when(flightImmutableRepository.findAllByIataNumber(any()))
+                .thenReturn(Lists.newArrayList());
+
+        when(flightImmutableRepository.findAllByIcaoNumber(any()))
+                .thenReturn(Lists.newArrayList(firstFlight, secondFlight));
+
+        Optional<Flight> expectedFlight = Optional.of(firstFlight);
+
+        Optional<Flight> foundFlight = findFlight.findCurrentByFlightIdentifier(FLIGHT_IDENTIFIER);
+
+        assertEquals(expectedFlight, foundFlight);
     }
 }
